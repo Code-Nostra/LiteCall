@@ -1,2 +1,2 @@
 # LiteCall-Servers
-Сервер для SignalR Core и сервер Авторизации-
+Сервер SignalR Core и сервер Авторизации
