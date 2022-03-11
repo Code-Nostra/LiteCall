@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using SignalRLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,6 @@ namespace SignalRServ
             }
             return Task.CompletedTask;
         }
-
 
         public Task SendAudio(byte[] message)
         {
@@ -128,7 +128,6 @@ namespace SignalRServ
         }
         public void RemoveFromRoom(string roomName)
         {
-
             //Узнать, существует ли комната
             var room = db.Rooms.ToList().Find(a => a.RoomName == roomName);
 
@@ -169,14 +168,6 @@ namespace SignalRServ
                 };
                 db.Users.Add(user);
             }
-
-            //var message = new Message
-            //{
-            //    text = $"New client connect {Context.Items["user_name"]}",
-            //    Sender = "Server",
-            //    DateSend =  DateTime.Now
-            //};
-            //Clients.Others.Send(message);
 
             return base.OnConnectedAsync();
         }

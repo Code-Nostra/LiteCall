@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SignalRServ
+namespace SignalRLibrary
 {
     public class Message
     {

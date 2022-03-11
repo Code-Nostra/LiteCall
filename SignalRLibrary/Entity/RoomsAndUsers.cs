@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SignalRServ
+namespace SignalRLibrary
 {
     public class RoomsAndUsers
     {

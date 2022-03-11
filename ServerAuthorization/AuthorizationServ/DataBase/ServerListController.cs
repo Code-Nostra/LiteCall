@@ -15,7 +15,7 @@ namespace AuthorizationServ.DataBase
         public IActionResult ServerAdd([FromBody] InfoServerModel Info)//Авторизация
         {
             UserAuth db = new UserAuth();
-
+            
             var Server = db.ServerDB.FirstOrDefault(x => x.Title.Trim().ToLower() == Info.Title.Trim().ToLower());
 
             if (Server == null)
