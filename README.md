@@ -1,4 +1,8 @@
 # Клиентская часть LiteCall
+<details>
+  <summary>Click to expand!</summary>
+
+# Клиентская часть LiteCall
 
 ![Project Image](https://raw.githubusercontent.com/Htomsik/Htomsik/main/Assets/collage.png)
 
@@ -90,6 +94,7 @@
 - Отсуствие нормальной валидации
 - Отсуствие нормального тестирования
 ---
+</details>
 ## __Ссылки на авторов__
 
 Клиентская часть:
