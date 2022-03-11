@@ -1,6 +1,6 @@
-# Клиентская часть LiteCall
+
 <details>
-  <summary>Click to expand!</summary>
+  <summary> #Клиентская часть LiteCall</summary>
 
 # Клиентская часть LiteCall
 
