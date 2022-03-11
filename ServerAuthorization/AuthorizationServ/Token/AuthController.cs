@@ -17,7 +17,7 @@ namespace AuthorizationServ.Token
     public class AuthController : ControllerBase
     {
         [HttpPost("token")]
-        public IActionResult Token([FromBody] AuthModel authModel,bool isReg)//Авторизация
+        public IActionResult Token([FromBody] AuthModel authModel)//Авторизация
         {
             UserAuth db = new UserAuth();
 
