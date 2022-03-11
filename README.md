@@ -1,6 +1,6 @@
 
 <details>
-  <summary> #Клиентская часть LiteCall</summary>
+  <summary> Клиентская часть LiteCall</summary>
 
 # Клиентская часть LiteCall
 
