@@ -98,8 +98,10 @@
 
 <details>
   <summary> Серверная часть LiteCall</summary>
+
 # Серверная часть LiteCall
 </details>
+
 ## __Ссылки на авторов__
 
 Клиентская часть:
