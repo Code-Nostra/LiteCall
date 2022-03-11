@@ -23,15 +23,15 @@ namespace AuthorizationServ.Token
 
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
 
-            var token = GetJwt(user);
+
 
             if (user == null)
-                Ok(GetJwt(new UserDB{Name= "Anonymous", Role= "Anonymous"}));
-
+                return Ok(GetJwt(new UserDB{Name= "Anonymous", Role= "Anonymous"}));
+            
             if (user.Password != authModel.Password)
                 return BadRequest();
 
-            return Ok(token);
+            return Ok(GetJwt(user));
         }
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация

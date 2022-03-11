@@ -20,8 +20,7 @@ namespace AuthorizationServ.DataBase
 
             if (Server == null)
             {
-                db.ServerDB.Add(new ServerDB { Title = Info.Title.Trim(), Country = Info.Country, City = Info.City });
-                    return Ok();
+               return Ok(Server);
             }
             return BadRequest();
         }
@@ -35,8 +34,7 @@ namespace AuthorizationServ.DataBase
 
             if (Server != null)
             {
-                var a = new ServerDB { Id=Server.Id,Title = Server.Title.Trim(), Country = Server.Country, City = Server.City,Ip=Server.Ip };
-                return Ok(a);
+                return Ok(Server);
             }
             return BadRequest();
         }
@@ -62,9 +60,10 @@ namespace AuthorizationServ.DataBase
             var user = db.UsersDB.FirstOrDefault(x => x.Name == Name);
 
             if (user == null)
-                return Ok($"Name");
+                return Ok($"{Name}");
             
             int temp = db.UsersDB.Where(a => a.Name == Name).Count();
+
             if (temp >= 1) Name += $"({temp + 1})";
             return Ok(Name);
         }

@@ -19,6 +19,7 @@ namespace SignalRServ
         /// <param name="message"></param>
         /// <returns></returns>
         public static UserContext db = new UserContext();
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public Task SendMessage(Message message)
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_name"].ToString())
@@ -30,7 +31,7 @@ namespace SignalRServ
             }
             return Task.CompletedTask;
         }
-
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public Task SendAudio(byte[] message)
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_name"].ToString())
@@ -46,6 +47,7 @@ namespace SignalRServ
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public string SetName(string name)
         {
             name = name.Trim();
@@ -65,6 +67,7 @@ namespace SignalRServ
         /// </summary>
         /// <param name="group"></param>
         /// <returns>true удчаное подключение к группе</returns>
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public bool GroupConnect(string group)
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
@@ -82,10 +85,9 @@ namespace SignalRServ
             Groups.AddToGroupAsync(Context.ConnectionId, group);
             Clients.All.UpdateRooms();
 
-
-
             return true;
         }
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public Task GroupDisconnect()
         {
             var message = new Message
@@ -130,6 +132,7 @@ namespace SignalRServ
             }
             return false;
         }
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public void RemoveFromRoom(string roomName)
         {
             //Узнать, существует ли комната
@@ -156,6 +159,7 @@ namespace SignalRServ
         }
         #region Event
         //События которые вызываются сами при:подключении, отключении, очистки ресурсов
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public override Task OnConnectedAsync()
         {
             Clients.All.UpdateRooms();
@@ -175,12 +179,13 @@ namespace SignalRServ
 
             return base.OnConnectedAsync();
         }
-
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public List<string> GetRooms()
         {
             List<string> rooms = db.Rooms.ToList().Select(a => a.RoomName).ToList();
             return rooms;
         }
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public List<ServerUser> GetUsersRoom(string group)
         {
             //var itme = from a in db.Rooms
@@ -194,6 +199,7 @@ namespace SignalRServ
             }
             return new List<ServerUser>() { null };
         }
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public List<RoomsAndUsers> GetRoomsAndUsers()
         {
             List<RoomsAndUsers> temp = new List<RoomsAndUsers>();
@@ -201,7 +207,7 @@ namespace SignalRServ
                 temp.Add(new RoomsAndUsers(a.RoomName, a.Users.ToList().Select(a => new ServerUser(a.UserName)).ToList()));
             return temp;
         }
-
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public override Task OnDisconnectedAsync(Exception exception)
         {
             Console.WriteLine($"-- {Context.Items["user_name"]} logged out {DateTime.Now}");
@@ -237,6 +243,7 @@ namespace SignalRServ
         /// Выйти из чата
         /// </summary>
         /// <param name="roomName"></param>
+        [Authorize(Roles = "User,Admin,Anonymous")]
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
