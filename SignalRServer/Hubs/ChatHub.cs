@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using ServerSignalR.ServerCheckMethods;
 using SignalRLibrary;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SignalRServ
 {
-    [Authorize(Roles = "User,Admin")]
+    
     public class ChatHub : Hub<IHubMethods>
     {
         /// <summary>
@@ -50,8 +51,10 @@ namespace SignalRServ
             name = name.Trim();
             int temp = db.Users.ToList().Where(a => a.UserName == name).Count();
             if (temp >= 1) name += $"({temp + 1})";
+            
+            
             //Context.Items.TryAdd("user_name", name);
-            Context.Items["user_name"] = name;
+            Context.Items["user_name"] = ServerCheckMethods.CheckName(name).Result;
             var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
             if (userid != null) userid.UserName = name.Trim();
             Console.WriteLine($"++ {name} logged in {DateTime.Now}");
@@ -104,6 +107,7 @@ namespace SignalRServ
             Clients.All.UpdateRooms();
             return Task.CompletedTask;
         }
+        [Authorize(Roles = "User,Admin")]
         public bool GroupCreate(string group)
         {
             var room = db.Rooms.Find(a => a.RoomName == group);

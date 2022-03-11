@@ -19,19 +19,18 @@ namespace AuthorizationServ.Token
         [HttpPost("token")]
         public IActionResult Token([FromBody] AuthModel authModel,bool isReg)//Авторизация
         {
-
             UserAuth db = new UserAuth();
 
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
 
+            var token = GetJwt(user);
+
             if (user == null)
-                return BadRequest();
+                Ok(GetJwt(new UserDB{Name= "Anonymous", Role= "Anonymous"}));
 
             if (user.Password != authModel.Password)
                 return BadRequest();
-            
-            var token = GetJwt(user);
-            
+
             return Ok(token);
         }
         [HttpPost("Registration")]
