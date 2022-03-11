@@ -46,8 +46,6 @@ namespace AuthorizationServ.Token
             return Ok(GetJwt(NewUser));
         }
         
-        
-
         private string GetJwt(UserDB User)
         {
             
@@ -64,9 +62,6 @@ namespace AuthorizationServ.Token
 
             return tokenString;
         }
-
-
-
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
             var claims = new List<Claim>

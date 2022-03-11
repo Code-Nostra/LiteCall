@@ -221,7 +221,6 @@ namespace SignalRServ
                 }
                 catch (Exception e)
                 {
-
                     Console.WriteLine(e);
                 }
 

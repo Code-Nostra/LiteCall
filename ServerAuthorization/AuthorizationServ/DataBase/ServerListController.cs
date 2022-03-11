@@ -54,5 +54,20 @@ namespace AuthorizationServ.DataBase
             }
             return BadRequest();
         }
+        [HttpPost("ServerGetInfo")]
+        public IActionResult CheckName([FromBody] string Name)//Проверка занятого имени, если имя есть то вернуть Name+Count(Name)
+        {
+            UserAuth db = new UserAuth();
+
+            var user = db.UsersDB.FirstOrDefault(x => x.Name == Name);
+
+            if (user == null)
+                return Ok(Name);
+            
+            int temp = db.UsersDB.Where(a => a.Name == Name).Count();
+            if (temp >= 1) Name += $"({temp + 1})";
+            return Ok(Name);
+        }
+
     }
 }
