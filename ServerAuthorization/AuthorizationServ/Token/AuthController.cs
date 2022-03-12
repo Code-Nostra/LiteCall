@@ -33,7 +33,7 @@ namespace AuthorizationServ.Token
 
             if(user!=null && user.Password == authModel.Password)
                 return Ok(GetJwt(user));
-
+            
             return BadRequest();
         }
         [HttpPost("Registration")]
