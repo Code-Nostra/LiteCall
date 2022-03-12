@@ -53,6 +53,8 @@
 
 ### __Окно сервера__
 
+![Project Image](https://raw.githubusercontent.com/Htomsik/LiteCall/master/ReadmeAssets/ServerConsol.png)
+
 #### Технологии
 
 #### **WCF версия**
@@ -64,7 +66,7 @@
 
 - .Net
 - WPF
-- SignalR
+- ASP.NET Core SignalR
 
 
 #### Паттерн
@@ -80,7 +82,6 @@
 ## __Серверная часть LiteCall__
 Серверная часть чата реализованна на ASP.NET Core SignalR, т.к. по сравнению с ASP.NET signalr он поддерживает
 потоковую передачу данных и более новее.
-
 
 **Задачи которые реализованны Сервером чата([SignalRServer](https://github.com/Code-Nostra/LiteCall-Servers/tree/master/SignalRServer)):**
 - Обмент текстовые сообщениями
