@@ -14,5 +14,19 @@ namespace SignalRServ
             var jsonObject = JsonSerializer.Deserialize<dynamic>(json);
             return JsonSerializer.Serialize(jsonObject, new JsonSerializerOptions { WriteIndented = true });
         }
+        public static string SafeSubstring(this string text, int start, int length)
+        {
+            try
+            {
+                if (length < 0) return " ";
+                return text.Length <= start ? ""
+                    : text.Length - start <= length ? text.Substring(start)
+                    : text.Substring(start, length);
+            }
+            catch
+            {
+                return " ";
+            }
+        }
     }
 }

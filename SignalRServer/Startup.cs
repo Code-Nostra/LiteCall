@@ -17,6 +17,7 @@ namespace SignalRServ
 {
     public class Startup
     {
+        public static string lastToken { get; set; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,7 +29,7 @@ namespace SignalRServ
             services.AddOptions();
 
             services.AddRazorPages();
-
+            
             var paramss = new TokenValidationParameters();
             AuthOptions.SetKey(Configuration.GetSection("PublicKey").Value);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -44,6 +45,7 @@ namespace SignalRServ
                                 context.Request.Path.StartsWithSegments("/LiteCall"))
                             {
                                 context.Token = accessToken;
+                                lastToken = accessToken;
                             }
                             return Task.CompletedTask;
                         }

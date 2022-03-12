@@ -12,19 +12,19 @@ namespace ServerSignalR.ServerCheckMethods
 {
     public static class ServerCheckMethods
     {
-        public static async Task<string> CheckName(string Name)
+        public static async Task<bool> CheckName(string Name,bool IsAuthorize)
         {
             using var httpClient = new HttpClient();
-            var json = JsonSerializer.Serialize(Name);
+            var json = JsonSerializer.Serialize(new { Name = Name, IsAuthorize = IsAuthorize });
             var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
             var response = await httpClient.PostAsync("http://localhost:57785/api/ServerList/CheckName", content);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return await response.Content.ReadAsStringAsync();
+                return Convert.ToBoolean(await response.Content.ReadAsStringAsync());
             }
             else
             {
-                return "";
+                return false;
             }
         }
     }

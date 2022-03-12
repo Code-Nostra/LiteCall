@@ -21,17 +21,20 @@ namespace AuthorizationServ.Token
         {
             UserAuth db = new UserAuth();
 
+
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
 
-
-
-            if (user == null)
-                return Ok(GetJwt(new UserDB{Name= "Anonymous", Role= "Anonymous"}));
-            
-            if (user.Password != authModel.Password)
+            if (user != null && user.Password != authModel.Password && authModel.Password != "X")
                 return BadRequest();
 
-            return Ok(GetJwt(user));
+            if (authModel.Password == "X")
+                return Ok(GetJwt(new UserDB{Name= "Anonymous", Role= "Anonymous"}));
+            
+
+            if(user!=null && user.Password == authModel.Password)
+                return Ok(GetJwt(user));
+
+            return BadRequest();
         }
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация

@@ -7,4 +7,10 @@
         public string City { get; set; }
         public string Description { get; internal set; }
     }
+
+    public class NameAndBool
+    {
+        public string Name { get; set; }
+        public bool IsAuthorize { get; set; }
+    }
 }

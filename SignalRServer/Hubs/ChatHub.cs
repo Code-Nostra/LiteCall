@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.WebUtilities;
 using ServerSignalR.ServerCheckMethods;
 using SignalRLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-
+using System.Text.Json.Nodes;
 
 namespace SignalRServ
 {
@@ -48,17 +50,41 @@ namespace SignalRServ
         /// <param name="name"></param>
         /// <returns></returns>
         [Authorize(Roles = "User,Admin,Anonymous")]
-        public string SetName(string name)
+        public string SetName(string name,bool IsAuthorize)
         {
             name = name.Trim();
-            int temp = db.Users.ToList().Where(a => a.UserName == name).Count();
-            if (temp >= 1) name += $"({temp + 1})";
-            
-            
+            bool _auth=ServerCheckMethods.CheckName(name, IsAuthorize).Result;
+            dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Startup.lastToken.Split('.')[1])));
+            IsAuthorize =(string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]!= "Anonymous"? true:false;
+
+            if (IsAuthorize==false &&_auth==true)
+            {
+                int temp = 1;
+                
+                temp = db.Users.ToList().Where(a =>a.UserName!=null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
+                name += $"({temp + 1})";
+            }
+            if (IsAuthorize == false && _auth == false)
+            {
+                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
+                if (temp >= 1) name += $"({temp + 1})";
+            }
+            else
+            {
+                var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
+                if (userid != null) userid.UserName = name.Trim();
+                Context.Items["user_name"] = name.Trim();
+            }
+
+            var userid2 = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
+            if (userid2 != null) userid2.UserName = name.Trim();
+            Context.Items["user_name"] = name.Trim();
+
+
             //Context.Items.TryAdd("user_name", name);
-            Context.Items["user_name"] = ServerCheckMethods.CheckName(name).Result;
-            var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
-            if (userid != null) userid.UserName = name.Trim();
+            //if(!IsAuthorize)
+            //    Context.Items["user_name"] = ServerCheckMethods.CheckName(name, IsAuthorize).Result;
+
             Console.WriteLine($"++ {name} logged in {DateTime.Now}");
             return name;
         }
@@ -109,7 +135,7 @@ namespace SignalRServ
             Clients.All.UpdateRooms();
             return Task.CompletedTask;
         }
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public bool GroupCreate(string group)
         {
             var room = db.Rooms.Find(a => a.RoomName == group);
