@@ -6,6 +6,7 @@
         public string Country { get; set; }
         public string City { get; set; }
         public string Description { get; internal set; }
+        public string Ip { get; internal set; }
     }
 
     public class NameAndBool

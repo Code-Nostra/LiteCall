@@ -12,7 +12,7 @@ namespace AuthorizationServ.DataBase
     public class ServerListController : ControllerBase
     {
         [HttpPost("ServerAddInfo")]
-        public IActionResult ServerAdd([FromBody] InfoServerModel Info)//Авторизация
+        public IActionResult ServerAdd([FromBody] InfoServerModel Info)//Добавление сервера
         {
             UserAuth db = new UserAuth();
             
@@ -20,7 +20,7 @@ namespace AuthorizationServ.DataBase
 
             if (Server == null)
             {
-               return Ok(Server);
+                return Ok(db.ServerDB.Add(new ServerDB { Title = Info.Title, City = Info.City, Country = Info.Country, Description = Info.Description, Ip = Info.Ip }));
             }
             return BadRequest();
         }
@@ -40,7 +40,7 @@ namespace AuthorizationServ.DataBase
         }
 
         [HttpGet("ServerAll")]
-        public IActionResult ServerAll()//Вернуть информацию по конкретному серверу
+        public IActionResult ServerAll()//Вернуть информацию по всем серверам
         {
             UserAuth db = new UserAuth();
 
