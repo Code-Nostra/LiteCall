@@ -35,15 +35,15 @@
 
 ### __Окно авторизации__
 
-![Project Image](https://raw.githubusercontent.com/Htomsik/LiteCall/master/ReadmeAssets/Login.png)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/Login.png?raw=true)
 
 ### __Окно подключения к серверу__
 
-![Project Image](https://raw.githubusercontent.com/Htomsik/LiteCall/master/ReadmeAssets/Main.png)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/Main.png?raw=true)
 
 ### __Страница сервера__
 
-![Project Image](https://raw.githubusercontent.com/Htomsik/LiteCall/master/ReadmeAssets/ServerRoom1.png)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/ServerRoom.png?raw=true)
 
 ### __Диаграмма классов клиента__
 
