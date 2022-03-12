@@ -1,4 +1,4 @@
-# Серверная часть  LiteCall
+# Мессенджер LiteCall
 
 ![Project Image](https://raw.githubusercontent.com/Htomsik/Htomsik/main/Assets/collage.png)
 
