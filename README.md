@@ -133,6 +133,8 @@
 **Конструкция JWT используемая нами**
 
 ![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/JWT.png)
+
+В полезной нагрузке расположена информация об имени пользователя,его роли, времени действия токена.
 </details>
 
 ## __Клиентская часть LiteCall__
