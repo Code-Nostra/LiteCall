@@ -110,9 +110,15 @@
 - Получения списка серверов и информации о них
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Подробнее про авторизацию</summary>
 <br>
-This is how you dropdown.
+Пароль при передаче шифруются однонаправленным алгоритмом SHA-1, целостность передачи важных данных гарантирует Json Web Token. Json Web Token зашифрован с помощью алгоритма SHA-256
+
+
+** **
+**Конструкция JWT используемая нами**
+
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/JWT.png)
 </details>
 
 ## __Клиентская часть LiteCall__
