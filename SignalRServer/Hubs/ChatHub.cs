@@ -135,7 +135,7 @@ namespace SignalRServ
             Clients.All.UpdateRooms();
             return Task.CompletedTask;
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin")]
         public bool GroupCreate(string group)
         {
             var room = db.Rooms.Find(a => a.RoomName == group);
