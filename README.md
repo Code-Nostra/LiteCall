@@ -1,4 +1,4 @@
-# Клиентская часть LiteCall
+# Серверная часть LiteCall
 
 ![Project Image](https://raw.githubusercontent.com/Htomsik/Htomsik/main/Assets/collage.png)
 
