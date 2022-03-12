@@ -1,4 +1,4 @@
-# Серверная часть LiteCall
+# Серверная часть  LiteCall
 
 ![Project Image](https://raw.githubusercontent.com/Htomsik/Htomsik/main/Assets/collage.png)
 
@@ -45,15 +45,15 @@
 
 ### __Окно авторизации__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/Login.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Login.png?raw=true)
 
 ### __Окно подключения к серверу__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/Main.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Main.png?raw=true)
 
 ### __Страница сервера__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/ServerRoom.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/ServerRoom.png?raw=true)
 
 ### __Диаграмма классов клиента__
 
@@ -63,7 +63,7 @@
 
 ### __Окно сервера__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/ServerConsol.png)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/ServerConsol.png)
 
 #### Технологии
 
@@ -132,7 +132,7 @@
 **Конструкция JWT используемая нами**
 В полезной нагрузке расположена информация об имени пользователя,его роли, времени действия токена.
 <br>
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReameAssets/JWT.png)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/JWT.png)
 
 </details>
 
