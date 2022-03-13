@@ -10,5 +10,9 @@ namespace AuthorizationServ.Token
         [Required]
         [StringLength(maximumLength: 50, MinimumLength = 1)]
         public string Password { get; set; }
+
+        [Required]
+        [StringLength(maximumLength: 50, MinimumLength = 1)]
+        public string Captcha { get; set; }
     }
 }

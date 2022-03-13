@@ -34,7 +34,22 @@ namespace AuthorizationServ
             services.AddControllers();
 
             services.AddCors();
+
             AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
+
+            //Для капчи
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            //Added for session state
+            //Added for session state
+
+
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(10);
+            //});
+
+
             //var paramss = new TokenValidationParameters();
             //AuthOptions auth = new AuthOptions(Configuration.GetSection("PrivateKey").Value);
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -56,7 +71,7 @@ namespace AuthorizationServ
             //            IssuerSigningKey = auth.PrivateKey
             //        };
 
-            //    });
+            //    });   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +81,9 @@ namespace AuthorizationServ
             {
                 app.UseDeveloperExceptionPage();
             }
+
+
+
 
             app.UseRouting();
             app.UseCors(policy=> 
@@ -78,8 +96,10 @@ namespace AuthorizationServ
             });
             app.UseAuthentication();
             app.UseAuthorization();
-
+            //Для капчи
+            app.UseSession();
             
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
