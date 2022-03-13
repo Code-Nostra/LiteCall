@@ -72,8 +72,8 @@ namespace SignalRServ
             if (IsAuthorize)
             {
                 //var AuthName  = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
-                int temp = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
-                if (temp >= 1) name += $"({temp + 1})";
+                //int temp = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
+                //if (temp >= 1) name += $"({temp + 1})";
             }
 
             //if (IsAuthorize==false &&_auth==true)
