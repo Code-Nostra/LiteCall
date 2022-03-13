@@ -31,11 +31,7 @@ namespace AuthorizationServ
         {
             services.AddOptions();
 
-            
-
             services.AddControllers();
-
-
 
             services.AddCors();
             AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);

@@ -50,7 +50,7 @@ namespace SignalRServ
                             return Task.CompletedTask;
                         }
                     };
-                    options.RequireHttpsMetadata = false;
+                    options.RequireHttpsMetadata = true;
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
