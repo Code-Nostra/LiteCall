@@ -18,7 +18,7 @@ namespace SignalRServ
         {
             try
             {
-                if (length < 0) return " ";
+                if (length < 0) return text;
                 return text.Length <= start ? ""
                     : text.Length - start <= length ? text.Substring(start)
                     : text.Substring(start, length);

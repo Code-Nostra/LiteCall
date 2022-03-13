@@ -60,18 +60,20 @@ namespace SignalRServ
             
             if(!IsAuthorize && !IsRegistered)
             {
-                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
+                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
                 if (temp >= 1) name += $"({temp + 1})";
             }
             else if (!IsAuthorize && IsRegistered)
             {
-                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
+                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
                 temp += 1;
                 if (temp >= 1) name += $"({temp + 1})";
             }
             if (IsAuthorize)
             {
-                var Authid  = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
+                //var AuthName  = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
+                int temp = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
+                if (temp >= 1) name += $"({temp + 1})";
             }
 
             //if (IsAuthorize==false &&_auth==true)
