@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRLibrary", "SignalRLibrary\SignalRLibrary.csproj", "{6D18078E-2D3F-4EDE-8A59-E9FE5294A479}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReameAssets", "ReameAssets", "{FFC2FC6D-8225-4809-A475-5446E1953877}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadmeAssets", "ReadmeAssets", "{FFC2FC6D-8225-4809-A475-5446E1953877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

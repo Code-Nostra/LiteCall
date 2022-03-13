@@ -50,41 +50,57 @@ namespace SignalRServ
         /// <param name="name"></param>
         /// <returns></returns>
         [Authorize(Roles = "User,Admin,Anonymous")]
-        public string SetName(string name,bool IsAuthorize)
+        public string SetName(string name)
         {
             name = name.Trim();
-            bool _auth=ServerCheckMethods.CheckName(name, IsAuthorize).Result;
             dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Startup.lastToken.Split('.')[1])));
-            IsAuthorize =(string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]!= "Anonymous"? true:false;
-
-            if (IsAuthorize==false &&_auth==true)
-            {
-                int temp = 1;
-                
-                temp = db.Users.ToList().Where(a =>a.UserName!=null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
-                name += $"({temp + 1})";
-            }
-            if (IsAuthorize == false && _auth == false)
+            bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] != "Anonymous" ? true : false;
+            bool IsRegistered =ServerCheckMethods.CheckName(name).Result;
+            
+            
+            if(!IsAuthorize && !IsRegistered)
             {
                 int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
                 if (temp >= 1) name += $"({temp + 1})";
             }
-            else
+            else if (!IsAuthorize && IsRegistered)
             {
-                var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
-                if (userid != null) userid.UserName = name.Trim();
-                Context.Items["user_name"] = name.Trim();
+                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
+                temp += 1;
+                if (temp >= 1) name += $"({temp + 1})";
+            }
+            if (IsAuthorize)
+            {
+                var Authid  = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
             }
 
-            var userid2 = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
-            if (userid2 != null) userid2.UserName = name.Trim();
-            Context.Items["user_name"] = name.Trim();
+            //if (IsAuthorize==false &&_auth==true)
+            //{
+            //    int temp = 1;
+
+            //    temp = db.Users.ToList().Where(a =>a.UserName!=null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
+            //    name += $"({temp + 1})";
+            //}
+            //if (IsAuthorize == false && _auth == false)
+            //{
+            //    int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
+            //    if (temp >= 1) name += $"({temp + 1})";
+            //}
+            //else
+            //{
+            //    var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
+            //    if (userid != null) userid.UserName = name.Trim();
+            //    Context.Items["user_name"] = name.Trim();
+            //}
+            //Context.Items["user_name"] = name.Trim();
 
 
-            //Context.Items.TryAdd("user_name", name);
-            //if(!IsAuthorize)
-            //    Context.Items["user_name"] = ServerCheckMethods.CheckName(name, IsAuthorize).Result;
 
+            ////if(!IsAuthorize)
+            ////    Context.Items["user_name"] = ServerCheckMethods.CheckName(name, IsAuthorize).Result;
+            var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
+            if (userid != null) userid.UserName = name;
+            Context.Items["user_name"] = name;
             Console.WriteLine($"++ {name} logged in {DateTime.Now}");
             return name;
         }
@@ -135,7 +151,7 @@ namespace SignalRServ
             Clients.All.UpdateRooms();
             return Task.CompletedTask;
         }
-        [Authorize(Roles = "User,Admin")]
+        [Authorize(Roles = "User,Admin,Anonymous")]
         public bool GroupCreate(string group)
         {
             var room = db.Rooms.Find(a => a.RoomName == group);
