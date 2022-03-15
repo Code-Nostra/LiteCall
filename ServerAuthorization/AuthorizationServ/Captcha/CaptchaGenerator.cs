@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +31,8 @@ namespace ServerAuthorization.Captcha
             // отрисовка строки
             g.DrawString(text, new Font("Arial", height / 2, FontStyle.Bold),
                                 Brushes.Red, new RectangleF(0, 0, width, height));
-
+            g.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.FromArgb(255, 0, 0, 0), Color.Transparent), g.ClipBounds);
+            g.FillRectangle(new HatchBrush(HatchStyle.ForwardDiagonal, Color.FromArgb(255, 0, 0, 0), Color.Transparent), g.ClipBounds);
             g.Dispose();
 
             Image = bitmap;

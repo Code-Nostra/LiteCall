@@ -16,7 +16,7 @@ namespace ServerAuthorization.Captcha
         /// <returns></returns>
         public static Image TakeScreen()
         {
-            Bitmap bitmap = new Bitmap(110, 50);
+            Bitmap bitmap = new Bitmap(60, 30);
             Graphics g = Graphics.FromImage(bitmap);
             g.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
             return bitmap;

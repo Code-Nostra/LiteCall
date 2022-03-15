@@ -22,9 +22,13 @@ namespace AuthorizationServ.Token
         [HttpPost("token")]
         public IActionResult Token([FromBody] AuthModel authModel)//Авторизация
         {
+            if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+            {
+                return BadRequest("Капча неверна");
+            }
+
             UserAuth db = new UserAuth();
-
-
+            
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
 
             if (user != null && user.Password != authModel.Password && authModel.Password != "X")
@@ -33,7 +37,6 @@ namespace AuthorizationServ.Token
             if (authModel.Password == "X")
                 return Ok(GetJwt(new UserDB{Name= "Anonymous", Role= "Anonymous"}));
             
-
             if(user!=null && user.Password == authModel.Password)
                 return Ok(GetJwt(user));
             
@@ -42,10 +45,10 @@ namespace AuthorizationServ.Token
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
         {
-            //if (authModel.Captcha != (string)HttpContext.Session.GetString("code"))
-            //{
-            //    ModelState.AddModelError("Captcha", "Текст с картинки введен неверно");
-            //}
+            if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+            {
+                return BadRequest("Капча неверна");
+            }
 
             UserAuth db = new UserAuth();
             var user = db.UsersDB.SingleOrDefault(a => a.Name.ToLower() == authModel.Login.Trim().ToLower());
@@ -58,7 +61,6 @@ namespace AuthorizationServ.Token
         
         private string GetJwt(UserDB User)
         {
-            
             var now = DateTime.UtcNow;
             var jwt = new JwtSecurityToken(
                 issuer: AuthOptions.Issuer,
@@ -78,40 +80,39 @@ namespace AuthorizationServ.Token
             {
                 new Claim("Name", User.Name),
                 new Claim(ClaimTypes.Role,User.Role)
-               // new Claim(ClaimTypes.Hash, AuthOptions.PrK),
             };
             return claims;
         }
-        //[HttpGet("CaptchaGenerator")]
-        //public ActionResult Captcha()
-        //{
-        //    string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
+        [HttpPost("CaptchaGenerator")]
+        public ActionResult Captcha([FromBody] string guid)
+        {
+            string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
+            
+            SessionClass.Session.TryAdd(guid, code);
+            SessionClass.Session[guid] = code;
+            #region Сессия
+            // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
+            // HttpContext.Session.SetString(guid.ToString(), code);
+            #endregion
 
-        //    // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
-        //    HttpContext.Session.SetString("code", code);
-        //    CaptchaImage captcha = new CaptchaImage(code, 110, 50);
+            CaptchaImage captcha = new CaptchaImage(code, 60, 30);
 
-        //    this.Response.Clear();
-        //    //this.Response.ContentType = "image/jpeg";
+            this.Response.Clear();
+            
+            Image image = captcha.Image;
+            // conver image to bytes
+            byte[] img_byte_arr = ImageMethod.ImageToBytes(image);
+            // creat packet
+            ImagePacket packet = new ImagePacket(img_byte_arr);
 
+            var json = JsonSerializer.Serialize(packet);
 
+            var json2 = JsonSerializer.Serialize<ImagePacket>(packet);
 
-        //    Image image = captcha.Image;
-        //    // conver image to bytes
-        //    byte[] img_byte_arr = ImageMethod.ImageToBytes(image);
-        //    // creat packet
-        //    ImagePacket packet = new ImagePacket(img_byte_arr);
+            return Ok(json2);
+            captcha.Dispose();
 
-        //    var json = JsonSerializer.Serialize(packet);
-
-        //    //var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
-        //    var json2=JsonSerializer.Serialize<ImagePacket>(packet);
-
-        //    //captcha.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
-        //    return Ok(json2);
-        //    //captcha.Dispose();
-        //    //return null;
-        //}
+        }
 
     }
 }

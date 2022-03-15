@@ -40,6 +40,7 @@ namespace AuthorizationServ
             //Для капчи
             services.AddDistributedMemoryCache();
             services.AddSession();
+
             //Added for session state
             //Added for session state
 
