@@ -14,9 +14,7 @@ namespace AuthorizationServ.Token
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 1)]
         public string Guid { get; set; }
-
-        [Required]
-        [StringLength(maximumLength: 10, MinimumLength = 1)]
+        
         public string Captcha { get; set; }
     }
 }
