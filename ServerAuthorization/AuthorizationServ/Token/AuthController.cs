@@ -22,11 +22,6 @@ namespace AuthorizationServ.Token
         [HttpPost("token")]
         public IActionResult Token([FromBody] AuthModel authModel)//Авторизация
         {
-            if (authModel.Captcha != SessionClass.Session[authModel.Guid])
-            {
-                return BadRequest("Капча неверна");
-            }
-
             UserAuth db = new UserAuth();
             
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
@@ -45,11 +40,19 @@ namespace AuthorizationServ.Token
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
         {
-            if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+            try
+            {
+                if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+                {
+                    //return new StatusCodeResult(1);//(int)response.StatusCode==1
+                    return NotFound();
+                }
+            }
+            catch
             {
                 return BadRequest("Капча неверна");
             }
-
+            
             UserAuth db = new UserAuth();
             var user = db.UsersDB.SingleOrDefault(a => a.Name.ToLower() == authModel.Login.Trim().ToLower());
             if (user != null) return BadRequest();
@@ -94,7 +97,7 @@ namespace AuthorizationServ.Token
             // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
             // HttpContext.Session.SetString(guid.ToString(), code);
             #endregion
-
+            
             CaptchaImage captcha = new CaptchaImage(code, 60, 30);
 
             this.Response.Clear();
