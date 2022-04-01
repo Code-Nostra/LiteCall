@@ -30,11 +30,11 @@ namespace ServerAuthorization.Captcha
             Graphics g = Graphics.FromImage(bitmap);
             // отрисовка строки
             g.DrawString(text, new Font("Arial", height / 2, FontStyle.Bold),
-                                Brushes.White, new RectangleF(6, 3, width, height));
+                                Brushes.Red, new RectangleF(0, 0, width, height));
             g.FillRectangle(new HatchBrush(HatchStyle.BackwardDiagonal, Color.FromArgb(255, 0, 0, 0), Color.Transparent), g.ClipBounds);
             g.FillRectangle(new HatchBrush(HatchStyle.ForwardDiagonal, Color.FromArgb(255, 0, 0, 0), Color.Transparent), g.ClipBounds);
             g.Dispose();
-            
+
             Image = bitmap;
         }
 
