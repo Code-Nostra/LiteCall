@@ -22,10 +22,10 @@ namespace AuthorizationServ.Token
         [HttpPost("token")]
         public IActionResult Token([FromBody] AuthModel authModel)//Авторизация
         {
-            if (authModel.Captcha != SessionClass.Session[authModel.Guid])
-            {
-                return BadRequest("Капча неверна");
-            }
+            //if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+            //{
+            //    return BadRequest("Капча неверна");
+            //}
 
             UserAuth db = new UserAuth();
 
