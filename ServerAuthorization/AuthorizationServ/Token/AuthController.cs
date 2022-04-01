@@ -46,9 +46,18 @@ namespace AuthorizationServ.Token
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
         {
             if (authModel.Captcha != SessionClass.Session[authModel.Guid])
-            {
-                return BadRequest("Капча неверна");
-            }
+                try
+                {
+                    if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+                    {
+                        //return new StatusCodeResult(1);//(int)response.StatusCode==1
+                        return NotFound();
+                    }
+                }
+                catch
+                {
+                    return BadRequest("Капча неверна");
+                }
 
             UserAuth db = new UserAuth();
             var user = db.UsersDB.SingleOrDefault(a => a.Name.ToLower() == authModel.Login.Trim().ToLower());
