@@ -24,9 +24,6 @@ namespace AuthorizationServ
             this.Configuration = configuration;
         }
 
-        
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
@@ -41,6 +38,7 @@ namespace AuthorizationServ
             services.AddDistributedMemoryCache();
             services.AddSession();
 
+            #region
             //Added for session state
             //Added for session state
 
@@ -73,18 +71,15 @@ namespace AuthorizationServ
             //        };
 
             //    });   
+            #endregion
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
-
 
             app.UseRouting();
             app.UseCors(policy=> 

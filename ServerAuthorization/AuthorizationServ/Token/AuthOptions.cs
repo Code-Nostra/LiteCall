@@ -12,7 +12,7 @@ namespace AuthorizationServ.Token
 {
     public static class AuthOptions
     {
-        internal const int Lifetime = 10; // время жизни токена - 1 минута
+        internal const int Lifetime = 10; // время жизни токена - 10 минут
         internal const string Issuer = "LiteCall"; //издатель токена
         internal const string Audience = "ClientLiteCall"; //потребитель токена
 
@@ -26,6 +26,7 @@ namespace AuthorizationServ.Token
             PrivateKey = new RsaSecurityKey(key);
         }
 
+        #region
         //private static SecurityKey GetPrivateKey(out string PrK)
         //{
 
@@ -39,7 +40,7 @@ namespace AuthorizationServ.Token
         //    //}, new JsonSerializerOptions { WriteIndented = true });
 
         //    //File.AppendAllText("rsaKey.json", json);
-            
+
         //    //return new RsaSecurityKey(key);
 
         //}
@@ -57,7 +58,7 @@ namespace AuthorizationServ.Token
         //    //}, new JsonSerializerOptions { WriteIndented = true });
 
         //    //File.WriteAllText("rsaKey.json", json);
-            
+
         //    //return new RsaSecurityKey(key);
         //}
 
@@ -81,10 +82,11 @@ namespace AuthorizationServ.Token
         //private static SecurityKey GetPublicKey()
         //{ 
         //    var key = RSA.Create();
-         
+
         //    key.ImportRSAPublicKey(source: Convert.FromBase64String(PublicKeyString), bytesRead: out int _);
         //    return new RsaSecurityKey(key);
         //}
+        #endregion
     }
 
 
