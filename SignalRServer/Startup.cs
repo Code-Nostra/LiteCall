@@ -8,9 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace SignalRServ
@@ -31,7 +34,14 @@ namespace SignalRServ
             services.AddRazorPages();
             
             var paramss = new TokenValidationParameters();
-            AuthOptions.SetKey(Configuration.GetSection("PublicKey").Value);
+            
+            //”правление секретами пользователей
+            //AuthOptions.SetKey(Configuration.GetSection("PublicKey").Value);
+
+
+            var key = JsonNode.Parse(File.ReadAllText(@"..\PublicKey\PublicKey.json"));
+            AuthOptions.SetKey((string)key["Public"]);
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

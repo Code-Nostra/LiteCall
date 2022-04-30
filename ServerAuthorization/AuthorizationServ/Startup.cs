@@ -10,7 +10,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace AuthorizationServ
@@ -31,9 +33,11 @@ namespace AuthorizationServ
             services.AddControllers();
 
             services.AddCors();
-
-            AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
-
+            
+            //Управление секретами пользователей
+            //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
+            var key = JsonNode.Parse(File.ReadAllText(@"..\..\PrivateKey\PrivateKey.json"));
+            AuthOptions.SetKey((string)key["Private"]);
             //Для капчи
             services.AddDistributedMemoryCache();
             services.AddSession();

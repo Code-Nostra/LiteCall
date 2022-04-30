@@ -12,6 +12,9 @@ namespace KeyGenerator
     {
         static void Main(string[] args)
         {
+
+            Directory.Delete("Keys", true);
+            
             using var key = RSA.Create();
             var privateKey = Convert.ToBase64String(key.ExportRSAPrivateKey());
             var publicKey = Convert.ToBase64String(key.ExportRSAPublicKey());
@@ -33,7 +36,7 @@ namespace KeyGenerator
             restart:
             Console.WriteLine("Зашифровать приватный ключ? Y-Да N-нет");
 
-            switch (Console.ReadLine()) 
+            switch (Console.ReadLine().ToUpper()) 
             {
                 case "Y":
                     Console.Write("Введите пароль:");
