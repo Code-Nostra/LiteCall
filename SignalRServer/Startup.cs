@@ -88,11 +88,11 @@ namespace SignalRServ
                         RequireAudience = true,
                         ValidateAudience = true,
                         ValidAudience = AuthOptions.Audience,
-                        RequireExpirationTime = IsAuthorize ? true : false,
-                        ValidateLifetime = IsAuthorize ? true : false,
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         RequireSignedTokens = true,
-                        IssuerSigningKey = IsAuthorize ? AuthOptions.PublicKey : AuthOptions.Certificate
+                        IssuerSigningKey = AuthOptions.PublicKey
 
                         #region Копия
                         /*

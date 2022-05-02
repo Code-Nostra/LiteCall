@@ -74,9 +74,9 @@ namespace AuthorizationServ.Token
             var jwt = new JwtSecurityToken(
                 issuer: AuthOptions.Issuer,
                 audience: AuthOptions.Audience,
-                //notBefore: now,
+                notBefore: now,
                 claims: GetClaims(User),
-                //expires: now.AddMinutes(AuthOptions.Lifetime),
+                expires: now.AddMinutes(AuthOptions.Lifetime),
                 signingCredentials: new SigningCredentials(AuthOptions.PrivateKey, SecurityAlgorithms.RsaSha256)
                 );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(jwt);

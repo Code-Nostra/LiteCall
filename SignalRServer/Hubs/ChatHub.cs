@@ -55,7 +55,7 @@ namespace SignalRServ
             name = name.Trim();
             dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Startup.lastToken.Split('.')[1])));
             bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] != "Anonymous" ? true : false;
-            bool IsRegistered =ServerCheckMethods.CheckName(name).Result;
+            bool IsRegistered = false;//ServerCheckMethods.CheckName(name).Result;//Нужно исправить
             
             
             if(!IsAuthorize && !IsRegistered)
