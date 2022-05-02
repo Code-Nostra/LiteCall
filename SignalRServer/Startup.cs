@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
@@ -34,13 +36,18 @@ namespace SignalRServ
             services.AddRazorPages();
             
             var paramss = new TokenValidationParameters();
-            
+
             //”правление секретами пользователей
             //AuthOptions.SetKey(Configuration.GetSection("PublicKey").Value);
 
-
+            #region ƒл€ анонимных пользователей (без сервера авторизации)
+            
+            
+            bool IsAuthorize = true;
+            #endregion
             var key = JsonNode.Parse(File.ReadAllText(@"..\PublicKey\PublicKey.json"));
             AuthOptions.SetKey((string)key["Public"]);
+            AuthOptions.SetCertificate();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -50,10 +57,21 @@ namespace SignalRServ
                         OnMessageReceived = context =>
                         {
                             var accessToken = context.Request.Query["token"];
-                            
+
+
                             if (!string.IsNullOrWhiteSpace(accessToken) &&
                                 context.Request.Path.StartsWithSegments("/LiteCall"))
                             {
+                                #region ƒл€ анонимных пользователей (без сервера авторизации)
+                                dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(accessToken.ToString().Split('.')[1])));
+                                IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] != "Anonymous" ? true : false;
+                                if (!IsAuthorize)
+                                {
+                                    options.TokenValidationParameters.RequireExpirationTime =  false;
+                                    options.TokenValidationParameters.ValidateLifetime = false;
+                                    options.TokenValidationParameters.IssuerSigningKey = AuthOptions.Certificate;
+                                }
+                                #endregion
                                 context.Token = accessToken;
                                 lastToken = accessToken;
                             }
@@ -70,11 +88,27 @@ namespace SignalRServ
                         RequireAudience = true,
                         ValidateAudience = true,
                         ValidAudience = AuthOptions.Audience,
+                        RequireExpirationTime = IsAuthorize ? true : false,
+                        ValidateLifetime = IsAuthorize ? true : false,
+                        ValidateIssuerSigningKey = true,
+                        RequireSignedTokens = true,
+                        IssuerSigningKey = IsAuthorize ? AuthOptions.PublicKey : AuthOptions.Certificate
+
+                        #region  опи€
+                        /*
+                        ValidateIssuer = true,
+                        ValidIssuer = AuthOptions.Issuer,
+                        RequireAudience = true,
+                        ValidateAudience = true,
+                        ValidAudience = AuthOptions.Audience,
                         RequireExpirationTime = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         RequireSignedTokens = true,
                         IssuerSigningKey = AuthOptions.PublicKey
+                        */
+                        #endregion
+
                     };
                 });
 
