@@ -54,55 +54,42 @@ namespace SignalRServ
         {
             name = name.Trim();
             dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Startup.lastToken.Split('.')[1])));
-            bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] != "Anonymous" ? true : false;
-            bool IsRegistered = false;//ServerCheckMethods.CheckName(name).Result;//Нужно исправить
-            
-            
-            if(!IsAuthorize && !IsRegistered)
+            bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "Anonymous" ? false : true;
+            //bool IsRegistered = false;//ServerCheckMethods.CheckName(name).Result;//Нужно исправить
+           
+
+            if (!IsAuthorize)
             {
                 int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
-                if (temp >= 1) name += $"({temp + 1})";
+                name += $"({temp + 1})";
             }
-            else if (!IsAuthorize && IsRegistered)
-            {
-                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
-                temp += 1;
-                if (temp >= 1) name += $"({temp + 1})";
-            }
-            if (IsAuthorize)
-            {
-                //var AuthName  = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
-                //int temp = db.Users.ToList().Where(a => a.UserName == name.ToLower()).Count();
-                //if (temp >= 1) name += $"({temp + 1})";
-            }
+                //if (IsAuthorize==false &&_auth==true)
+                //{
+                //    int temp = 1;
 
-            //if (IsAuthorize==false &&_auth==true)
-            //{
-            //    int temp = 1;
-
-            //    temp = db.Users.ToList().Where(a =>a.UserName!=null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
-            //    name += $"({temp + 1})";
-            //}
-            //if (IsAuthorize == false && _auth == false)
-            //{
-            //    int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
-            //    if (temp >= 1) name += $"({temp + 1})";
-            //}
-            //else
-            //{
-            //    var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
-            //    if (userid != null) userid.UserName = name.Trim();
-            //    Context.Items["user_name"] = name.Trim();
-            //}
-            //Context.Items["user_name"] = name.Trim();
+                //    temp = db.Users.ToList().Where(a =>a.UserName!=null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
+                //    name += $"({temp + 1})";
+                //}
+                //if (IsAuthorize == false && _auth == false)
+                //{
+                //    int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name).Count();
+                //    if (temp >= 1) name += $"({temp + 1})";
+                //}
+                //else
+                //{
+                //    var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
+                //    if (userid != null) userid.UserName = name.Trim();
+                //    Context.Items["user_name"] = name.Trim();
+                //}
+                //Context.Items["user_name"] = name.Trim();
 
 
 
-            ////if(!IsAuthorize)
-            ////    Context.Items["user_name"] = ServerCheckMethods.CheckName(name, IsAuthorize).Result;
+                ////if(!IsAuthorize)
+                ////    Context.Items["user_name"] = ServerCheckMethods.CheckName(name, IsAuthorize).Result;
+            Context.Items["user_name"] = name;
             var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
             if (userid != null) userid.UserName = name;
-            Context.Items["user_name"] = name;
             Console.WriteLine($"++ {name} logged in {DateTime.Now}");
             return name;
         }
@@ -143,7 +130,7 @@ namespace SignalRServ
             Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
 
             var user = db.Users.ToList().FirstOrDefault(u => u.UserId == Context.ConnectionId);
-            if (user != null)
+            if (user != null && user._Room!=null)
             {
                 // удалить пользователя из комнаты
                 RemoveFromRoom(user._Room.RoomName);
@@ -223,6 +210,34 @@ namespace SignalRServ
 
             return base.OnConnectedAsync();
         }
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            Console.WriteLine($"-- {Context.Items["user_name"]} logged out {DateTime.Now}");
+            var message = new Message
+            {
+                Text = $"{Context.Items["user_name"]} disconnected from {Context.Items["user_group"]} room",
+                Sender = "Server",
+                DateSend = DateTime.Now
+            };
+            Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
+
+            var user = db.Users.ToList().FirstOrDefault(u => u.UserId == Context.ConnectionId);
+            if (user != null)
+            {
+                try
+                {
+                    if (user._Room != null)
+                        RemoveFromRoom(user._Room.RoomName);
+                    db.Users.Remove(user);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            Clients.All.UpdateRooms();
+            return base.OnDisconnectedAsync(exception);
+        }
         [Authorize(Roles = "User,Admin,Anonymous")]
         public List<string> GetRooms()
         {
@@ -252,37 +267,7 @@ namespace SignalRServ
             return temp;
         }
         [Authorize(Roles = "User,Admin,Anonymous")]
-        public override Task OnDisconnectedAsync(Exception exception)
-        {
-            Console.WriteLine($"-- {Context.Items["user_name"]} logged out {DateTime.Now}");
-            var message = new Message
-            {
-                Text = $"{Context.Items["user_name"]} disconnected from {Context.Items["user_group"]} room",
-                Sender = "Server",
-                DateSend = DateTime.Now
-            };
-            Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
 
-            var user = db.Users.ToList().FirstOrDefault(u => u.UserId == Context.ConnectionId);
-            if (user != null)
-            {
-                try
-                {
-                    if(user._Room!=null) 
-                        RemoveFromRoom(user._Room.RoomName);
-
-                    db.Users.Remove(user);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-
-
-            }
-            Clients.All.UpdateRooms();
-            return base.OnDisconnectedAsync(exception);
-        }
         /// <summary>
         /// Выйти из чата
         /// </summary>
