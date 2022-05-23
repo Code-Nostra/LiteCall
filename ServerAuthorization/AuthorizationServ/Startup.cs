@@ -42,6 +42,7 @@ namespace AuthorizationServ
             services.AddDistributedMemoryCache();
             services.AddSession();
 
+
             #region
             //Added for session state
             //Added for session state
