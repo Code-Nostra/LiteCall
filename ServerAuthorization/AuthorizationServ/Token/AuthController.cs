@@ -25,21 +25,21 @@ namespace AuthorizationServ.Token
             //if (authModel.Captcha != SessionClass.Session[authModel.Guid])
             //{
             //    return BadRequest("Капча неверна");
-            //}
+            //}g
             UserAuth db = new UserAuth();
 
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
 
             if (user != null && user.Password != authModel.Password && authModel.Password != "X")
-                return Unauthorized("Invalid password");
-            
+                return Unauthorized("Invalid login or password");
+
             if (authModel.Password == "X")
                 return Ok(GetJwt(new UserDB { Name = "Anonymous", Role = "Anonymous" }));
 
             if (user != null && user.Password == authModel.Password)
                 return Ok(GetJwt(user));
 
-            return Unauthorized("Not authorized");
+            return Unauthorized("Invalid login or password");
         }
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
