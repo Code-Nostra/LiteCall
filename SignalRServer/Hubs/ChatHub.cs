@@ -39,7 +39,8 @@ namespace SignalRServ
             if (!string.IsNullOrWhiteSpace(Context.Items["user_name"].ToString())
                 && !string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString()))
             {
-                return Clients.OthersInGroup(Context.Items["user_group"].ToString()).SendAudio(Context.Items["user_name"].ToString(), message);
+                return Clients.OthersInGroup(Context.Items["user_group"].ToString())
+                    .SendAudio(Context.Items["user_name"].ToString(), message);
             }
             return Task.CompletedTask;
         }
@@ -53,14 +54,15 @@ namespace SignalRServ
         public string SetName(string name)
         {
             name = name.Trim();
-            dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Startup.lastToken.Split('.')[1])));
-            bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "Anonymous" ? false : true;
-            //bool IsRegistered = false;//ServerCheckMethods.CheckName(name).Result;//Нужно исправить
-           
+            dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.
+                Base64UrlDecode(Startup.lastToken.Split('.')[1])));
+            bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] 
+                == "Anonymous" ? false : true;
 
             if (!IsAuthorize)
             {
-                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
+                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, 
+                    a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
                 name += $"({temp + 1})";
             }
                 //if (IsAuthorize==false &&_auth==true)
@@ -102,8 +104,6 @@ namespace SignalRServ
         public bool GroupConnect(string group)
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
-            //  var temp = db.Rooms.Select(a => a.Users.Select(b => b.UserId == Context.ConnectionId));
-            // if (temp.Count() > 0) GroupDisconnect();
 
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
             if (room == null) return false;
@@ -111,7 +111,6 @@ namespace SignalRServ
             var user = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
             room.Users.Add(user);
             user._Room = room;
-            //Context.Items.TryAdd("user_group", group);
             Context.Items["user_group"] = group;
             Groups.AddToGroupAsync(Context.ConnectionId, group);
             Clients.All.UpdateRooms();
@@ -135,7 +134,6 @@ namespace SignalRServ
                 // удалить пользователя из комнаты
                 RemoveFromRoom(user._Room.RoomName);
             }
-            //Context.Items.TryAdd("user_group", string.Empty);
             Context.Items["user_group"] = string.Empty;
             Clients.All.UpdateRooms();
             return Task.CompletedTask;
@@ -147,8 +145,7 @@ namespace SignalRServ
             if (room == null)
             {
                 if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
-                //  var temp = db.Rooms.Select(a => a.Users.Select(b => b.UserId == Context.ConnectionId));
-                //    if (temp.Count() > 0) GroupDisconnect();
+
                 ConversationRoom cr = new ConversationRoom()
                 {
                     RoomName = group
@@ -156,7 +153,6 @@ namespace SignalRServ
 
                 db.Rooms.Add(cr);
                 GroupConnect(group);
-                //Context.Items.TryAdd("user_group", group);
                 Context.Items["user_group"] = group;
                 Console.WriteLine($"++ group {group} сreated {DateTime.Now}");
                 return true;
@@ -173,7 +169,7 @@ namespace SignalRServ
             {
                 //Найдите пользователя для удаления
                 var user = room.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
-                //удалить этого пользователя
+                //удалить этого пользователя из конкретной комнаты
                 room.Users.Remove(user);
                 user._Connection = null;
                 user._Room = null;
@@ -213,28 +209,21 @@ namespace SignalRServ
         public override Task OnDisconnectedAsync(Exception exception)
         {
             Console.WriteLine($"-- {Context.Items["user_name"]} logged out {DateTime.Now}");
-            var message = new Message
-            {
-                Text = $"{Context.Items["user_name"]} disconnected from {Context.Items["user_group"]} room",
-                Sender = "Server",
-                DateSend = DateTime.Now
-            };
-            Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
-
+            GroupDisconnect();
             var user = db.Users.ToList().FirstOrDefault(u => u.UserId == Context.ConnectionId);
             if (user != null)
             {
-                try
-                {
-                    if (user._Room != null)
-                        RemoveFromRoom(user._Room.RoomName);
-                    db.Users.Remove(user);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                //    try
+                //    {
+                //        if (user._Room != null)
+                //            RemoveFromRoom(user._Room.RoomName);
+                db.Users.Remove(user);
             }
+            //    catch (Exception e)
+            //    {
+            //        Console.WriteLine(e);
+            //    }
+            //}
             Clients.All.UpdateRooms();
             return base.OnDisconnectedAsync(exception);
         }
@@ -247,10 +236,6 @@ namespace SignalRServ
         [Authorize(Roles = "User,Admin,Anonymous")]
         public List<ServerUser> GetUsersRoom(string group)
         {
-            //var itme = from a in db.Rooms
-            //           where a.RoomName.ToString() == @group
-            //           select a.Users.;
-            //return itme.ToList<string>();
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
             if (room != null)
             {
@@ -263,7 +248,8 @@ namespace SignalRServ
         {
             List<RoomsAndUsers> temp = new List<RoomsAndUsers>();
             foreach (var a in db.Rooms)
-                temp.Add(new RoomsAndUsers(a.RoomName, a.Users.ToList().Select(a => new ServerUser(a.UserName)).ToList()));
+                temp.Add(new RoomsAndUsers(a.RoomName, a.Users.ToList().Select(a => 
+                new ServerUser(a.UserName)).ToList()));
             return temp;
         }
         [Authorize(Roles = "User,Admin,Anonymous")]
@@ -278,5 +264,10 @@ namespace SignalRServ
             base.Dispose(disposing);
         }
         #endregion
+
+        public Server GetServerRInfo()
+        {
+            return new Server { Ip = "localhost", City = "Moscow", Country = "Russian", Title="LiteCall main",Description="Тестовый сервер"};
+        }
     }
 }

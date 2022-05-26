@@ -30,17 +30,15 @@ namespace AuthorizationServ.Token
 
             var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
 
-            if (user != null && user.Password != authModel.Password && authModel.Password != "X")
+            if (user != null && user.Password != authModel.Password)
                 return Unauthorized("Invalid login or password");
-
-            if (authModel.Password == "X")
-                return Ok(GetJwt(new UserDB { Name = "Anonymous", Role = "Anonymous" }));
 
             if (user != null && user.Password == authModel.Password)
                 return Ok(GetJwt(user));
 
             return Unauthorized("Invalid login or password");
         }
+        //return new StatusCodeResult(1);//(int)response.StatusCode==1
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
         {
@@ -50,7 +48,7 @@ namespace AuthorizationServ.Token
                 {
                     if (authModel.Captcha != SessionClass.Session[authModel.Guid])
                     {
-                        //return new StatusCodeResult(1);//(int)response.StatusCode==1
+
                         return BadRequest("Captcha was not correct");
                     }
                 }
@@ -58,12 +56,13 @@ namespace AuthorizationServ.Token
                 {
                     return BadRequest("Captcha was not correct");
                 }
-
+            SessionClass.Session.Remove(authModel.Guid);
             UserAuth db = new UserAuth();
             var user = db.UsersDB.SingleOrDefault(a => a.Name.ToLower() == authModel.Login.Trim().ToLower());
             if (user != null) return Conflict(($"User name {0} is already taken",authModel.Login));
 
-            var NewUser = db.UsersDB.Add(new UserDB { Name = authModel.Login.Trim(), Password = authModel.Password, Role = "User" });
+            var NewUser = db.UsersDB.Add(new UserDB { Name = authModel.Login.Trim(), 
+                Password = authModel.Password, Role = "User" });
             db.SaveChanges();
             return Ok(GetJwt(NewUser));
         }
@@ -95,7 +94,6 @@ namespace AuthorizationServ.Token
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] JsonElement guid)
         {
-
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
             SessionClass.Session.TryAdd(guid.ToString(), code);
@@ -106,22 +104,15 @@ namespace AuthorizationServ.Token
             #endregion
 
             CaptchaImage captcha = new CaptchaImage(code, 60, 30);
-
             this.Response.Clear();
-
             Image image = captcha.Image;
             // conver image to bytes
             byte[] img_byte_arr = ImageMethod.ImageToBytes(image);
             // creat packet
             ImagePacket packet = new ImagePacket(img_byte_arr);
+            var json = JsonSerializer.Serialize<ImagePacket>(packet);
 
-            var json = JsonSerializer.Serialize(packet);
-
-            var json2 = JsonSerializer.Serialize<ImagePacket>(packet);
-            //captcha.Dispose();
-            return Ok(json2);
-           // 
-
+            return Ok(json);
         }
 
     }

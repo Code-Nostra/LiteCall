@@ -52,22 +52,22 @@ namespace AuthorizationServ.DataBase
             }
             return BadRequest();
         }
-        [HttpPost("CheckName")]
-        public IActionResult CheckName([FromBody] string Name)//Проверка занятого имени, если имя есть то вернуть Name+Count(Name)
-        {
-            UserAuth db = new UserAuth();
+        //[HttpPost("CheckName")]
+        //public IActionResult CheckName([FromBody] string Name)//Проверка занятого имени, если имя есть то вернуть Name+Count(Name)
+        //{
+        //    UserAuth db = new UserAuth();
 
-            var user = db.UsersDB.FirstOrDefault(x => x.Name == Name);
+        //    var user = db.UsersDB.FirstOrDefault(x => x.Name == Name);
 
-            if (user == null)
-                return Ok(false);
+        //    if (user == null)
+        //        return Ok(false);
             
-            int temp = db.UsersDB.Where(a => a.Name == Name).Count();
+        //    int temp = db.UsersDB.Where(a => a.Name == Name).Count();
 
-            if (temp >= 1) 
-                return Ok(true);
-            return Ok(false);
-        }
+        //    if (temp >= 1) 
+        //        return Ok(true);
+        //    return Ok(false);
+        //}
 
     }
 }

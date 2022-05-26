@@ -22,6 +22,7 @@ namespace SignalRServ
 {
     public class Startup
     {
+        
         public static string lastToken { get; set; }
         public Startup(IConfiguration configuration)
         {
