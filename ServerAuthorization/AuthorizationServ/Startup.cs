@@ -86,6 +86,8 @@ namespace AuthorizationServ
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHttpsRedirection();
+            //app.UseHsts();
             app.UseRouting();
             app.UseCors(policy=> 
             {
@@ -97,6 +99,7 @@ namespace AuthorizationServ
             });
             app.UseAuthentication();
             app.UseAuthorization();
+
             //Для капчи
             app.UseSession();
             

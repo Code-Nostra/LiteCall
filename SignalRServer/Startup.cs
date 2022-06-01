@@ -115,6 +115,11 @@ namespace SignalRServ
                     };
                 });
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 5001;
+            });
+
             services.AddAuthorization(options =>
             {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder()
@@ -148,9 +153,9 @@ namespace SignalRServ
 
 
             app.UseRouting();
+            //app.UseHsts();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseAuthentication();
             app.UseAuthorization();
             

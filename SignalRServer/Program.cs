@@ -21,6 +21,7 @@ namespace SignalRServ
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    //webBuilder.UseSetting("https_port", "5008");
                 });
     }
 }
