@@ -26,7 +26,7 @@ namespace AuthorizationServ.Token
         {
             //if (authModel.Captcha != SessionClass.Session[authModel.Guid])
             //{
-            //    return BadRequest("Капча неверна");
+            //    return BadRequest("Капча неверна ");
             //}g
             UserAuth db = new UserAuth();
 
