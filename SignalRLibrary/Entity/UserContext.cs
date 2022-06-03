@@ -103,6 +103,17 @@ namespace SignalRLibrary
         [Key]
         public string RoomName { get; set; }
 
+        public string Password { get; set; }
+
+        private bool _guard;
+        public bool Guard
+        {
+            get
+            {
+                return Password == string.Empty || Password == null ? false : true;
+            }
+        }
+
         /// <summary>
         /// Список пользователей в комнатах
         /// </summary>

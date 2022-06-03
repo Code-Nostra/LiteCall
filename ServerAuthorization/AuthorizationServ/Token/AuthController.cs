@@ -28,9 +28,11 @@ namespace AuthorizationServ.Token
             //{
             //    return BadRequest("Капча неверна ");
             //}g
-            UserAuth db = new UserAuth();
+            DB db = new DB();
 
-            var user = db.UsersDB.FirstOrDefault(x => x.Name == authModel.Login);
+            var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
+            if(user==null && (authModel.Password==null|| authModel.Password == string.Empty)) 
+                return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
 
             if (user != null && user.Password != authModel.Password)
                 return Unauthorized("Invalid login or password");
@@ -59,12 +61,12 @@ namespace AuthorizationServ.Token
                     return BadRequest("Captcha was not correct");
                 }
             SessionClass.Session.Remove(authModel.Guid);
-            UserAuth db = new UserAuth();
-            var user = db.UsersDB.SingleOrDefault(a => a.Name.ToLower() == authModel.Login.Trim().ToLower());
+            DB db = new DB();
+            var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == authModel.Login.Trim().ToLower());
             if (user != null) return Conflict(($"User name {0} is already taken",authModel.Login));
-
-            var NewUser = db.UsersDB.Add(new UserDB { Name = authModel.Login.Trim(), 
-                Password = authModel.Password, Role = "User" });
+            //!!!
+            var NewUser = db.Users.Add(new UserDB { Login = authModel.Login.Trim(), 
+                Password = authModel.Password, Role = "User" }).Entity;
             db.SaveChanges();
             return Ok(GetJwt(NewUser));
         }
@@ -86,10 +88,12 @@ namespace AuthorizationServ.Token
         }
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
+
             var claims = new List<Claim>
             {
-                new Claim("Name", User.Name),
-                new Claim(ClaimTypes.Role,User.Role)
+                new Claim("Name", User.Login),
+                new Claim(ClaimTypes.Role,User.Role),
+                new Claim("IP","sad")
             };
             return claims;
         }

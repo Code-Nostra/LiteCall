@@ -7,7 +7,7 @@
     }
   },
 
-  "AllowedHosts": "*",
+  "urls": "http://localhost:4444;http://localhost:4445;",
 
 
   "ApiKey": "ACbaAS324hnaASD324bzZwq41"

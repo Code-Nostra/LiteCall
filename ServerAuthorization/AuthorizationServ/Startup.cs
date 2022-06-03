@@ -28,6 +28,7 @@ namespace AuthorizationServ
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddOptions();
 
             services.AddControllers();
@@ -40,7 +41,7 @@ namespace AuthorizationServ
             AuthOptions.SetKey((string)key["Private"]);
             //Для капчи
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            
 
 
             #region
@@ -100,8 +101,7 @@ namespace AuthorizationServ
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //Для капчи
-            app.UseSession();
+
             
 
             app.UseEndpoints(endpoints =>
