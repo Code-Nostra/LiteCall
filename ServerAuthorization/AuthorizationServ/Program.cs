@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 
 namespace AuthorizationServ
@@ -26,14 +27,20 @@ namespace AuthorizationServ
         {
             var config = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("hosting.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile("ServerAuthorization.json", optional: true, reloadOnChange: true)
                             .Build();
             
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(config)
-                    .UseKestrel()
+                    .UseKestrel(kestrelOptions =>
+                    {
+                        kestrelOptions.ConfigureHttpsDefaults(httpsOptions =>
+                        {
+                            httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
+                        });
+                    })
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseStartup<Startup>();
                     webBuilder.UseStartup<Startup>();

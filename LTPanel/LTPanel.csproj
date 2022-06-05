@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.Zip" Version="22.5.0" />
     <PackageReference Include="CommandDotNet" Version="6.0.5" />
   </ItemGroup>
 

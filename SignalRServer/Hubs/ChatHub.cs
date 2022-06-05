@@ -53,6 +53,7 @@ namespace SignalRServ
         [Authorize(Roles = "User,Admin,Anonymous")]
         public string SetName(string name)
         {
+            if (string.IsNullOrEmpty(name.Trim())) return "Error";
             name = name.Trim();
             dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.
                 Base64UrlDecode(Startup.lastToken.Split('.')[1])));
@@ -143,20 +144,20 @@ namespace SignalRServ
         [Authorize(Roles = "User,Admin,Anonymous")]
         public bool GroupCreate(string group,string password=null)
         {
-            group = group.ToLower().Trim();
-            var room = db.Rooms.Find(a => a.RoomName.ToLower() == group);
+
+            var room = db.Rooms.Find(a => a.RoomName.ToLower().Trim() == group);
             if (room == null)
             {
                 if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
 
                 ConversationRoom cr = new ConversationRoom()
                 {
-                    RoomName = group,
+                    RoomName = group.Trim(),
                     Password=password
                 };
-
+                
                 db.Rooms.Add(cr);
-                GroupConnect(group);
+                GroupConnect(group,password);
                 Context.Items["user_group"] = group;
                 Console.WriteLine($"++ group {group} сreated {DateTime.Now}");
                 return true;
@@ -201,7 +202,7 @@ namespace SignalRServ
                 user._Connection = null;
                 user._Room = null;
                 //Если количество людей в комнате равно 0, удалить комнату
-                if (room.Users.Count <= 0 && room.Guard)
+                if (room.Users.Count <= 0)
                 {
                     db.Rooms.Remove(room);
                     Console.WriteLine($"-- group {roomName} deleted {DateTime.Now}");
@@ -266,7 +267,7 @@ namespace SignalRServ
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
             if (room != null)
             {
-                room.Guard
+                //room.Guard
                 return room.Users.ToList().Select(a => new ServerUser(a.UserName)).ToList();
             }
             return new List<ServerUser>() { null };
@@ -277,15 +278,11 @@ namespace SignalRServ
             List<RoomsAndUsers> temp = new List<RoomsAndUsers>();
             foreach (var a in db.Rooms)
                 temp.Add(new RoomsAndUsers(a.RoomName, a.Users.ToList().Select(a => 
-                new ServerUser(a.UserName)).ToList()));
+                new ServerUser(a.UserName)).ToList(),a.Guard));
             return temp;
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
 
-        /// <summary>
-        /// Выйти из чата
-        /// </summary>
-        /// <param name="roomName"></param>
+        
         [Authorize(Roles = "User,Admin,Anonymous")]
         protected override void Dispose(bool disposing)
         {

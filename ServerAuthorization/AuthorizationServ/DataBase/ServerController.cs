@@ -28,21 +28,21 @@ namespace AuthorizationServ.DataBase
         //    }
         //    return BadRequest();
         //}
+        
+        [HttpGet("ServerGetInfo")]
+        public IActionResult ServerGetInfo()//Вернуть информацию по конкретному серверу
+        {
+            DB db = new DB();
 
-        //[HttpPost("ServerGetInfo")]
-        //public IActionResult ServerGetInfo([FromBody] string Title)//Вернуть информацию по конкретному серверу
-        //{
-        //    DB db = new DB();
+            var Server = db.Servers.First();
 
-        //    var Server = db.ServerDB.FirstOrDefault(x => x.Title.Trim().ToLower() == Title.Trim().ToLower());
-
-        //    if (Server != null)
-        //    {
-        //        return Ok(Server);
-        //    }
-        //    return BadRequest();
-        //}
-
+            if (Server != null)
+            {
+                return Ok(Server);
+            }
+            else return Ok(new Server { Title = "LiteCall" });
+        }
+        
         // [HttpGet("ServerAll")]
         //public IActionResult ServerAll()//Вернуть информацию по всем серверам
         //{
@@ -72,6 +72,7 @@ namespace AuthorizationServ.DataBase
         //        return Ok(true);
         //    return Ok(false);
         //}
+
 
     }
 }

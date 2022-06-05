@@ -8,13 +8,14 @@ namespace SignalRLibrary
         public List<ServerUser> Users { get; set; }
        
         public bool Guard { get; set; }
-        public RoomsAndUsers(string _RoomName, List<ServerUser> _Users)
+        public RoomsAndUsers(string _RoomName, List<ServerUser> _Users,bool _guard)
         {
             RoomName = _RoomName;
             Users = _Users;
+            Guard = _guard;
         }
     }
-
+    
     public class ServerUser
     {
         public string Login { get; set; }

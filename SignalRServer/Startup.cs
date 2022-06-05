@@ -42,12 +42,16 @@ namespace SignalRServ
             //AuthOptions.SetKey(Configuration.GetSection("PublicKey").Value);
 
             #region Для анонимных пользователей (без сервера авторизации)
-            
-            
+
+
             //bool IsAuthorize = true;
             #endregion
-            var key = JsonNode.Parse(File.ReadAllText(@"..\PublicKey\PublicKey.json"));
-            AuthOptions.SetKey((string)key["Public"]);
+            try
+            {
+                var key = JsonNode.Parse(File.ReadAllText(@"PublicKey\PublicKey.json"));
+                AuthOptions.SetKey((string)key["Public"]);
+            }
+            catch { Console.WriteLine("Public key not found "+Directory.GetCurrentDirectory()); }
             //AuthOptions.SetCertificate();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -115,10 +119,10 @@ namespace SignalRServ
                     };
                 });
 
-            services.AddHttpsRedirection(options =>
-            {
-                options.HttpsPort = 5001;
-            });
+            //services.AddHttpsRedirection(options =>
+            //{
+            //    options.HttpsPort = 5001;
+            //});
 
             services.AddAuthorization(options =>
             {
@@ -126,6 +130,7 @@ namespace SignalRServ
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
                     .Build();
+               
             });
 
             services.AddSignalR(hubOptions =>
@@ -153,7 +158,7 @@ namespace SignalRServ
 
 
             app.UseRouting();
-            //app.UseHsts();
+            app.UseHsts();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();

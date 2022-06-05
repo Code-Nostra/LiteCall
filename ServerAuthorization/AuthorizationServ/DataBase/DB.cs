@@ -10,7 +10,7 @@ namespace AuthorizationServ
     public class DB : DbContext
     {
         public DbSet<UserDB> Users { get; set; }
-        //public DbSet<StandingRoomDB> Rooms { get; set; }
+        public DbSet<ServerDB> Servers { get; set; }
         public DB()
         {
             Database.EnsureCreated();
@@ -19,13 +19,12 @@ namespace AuthorizationServ
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Filename=LTdb_sqlite.db");
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserDB>().HasData(new UserDB { id=1,Login="admin",Password="asd",Role="admin"});
-            //modelBuilder.Entity<StandingRoomDB>().HasData(new StandingRoomDB { id = 1, Title = "Room1",Password="dfC35n"});
+            modelBuilder.Entity<ServerDB>().HasData(new ServerDB { Id=1,Title= "LiteCall", Description= "Community LiteCall Server" });
         }
 
 

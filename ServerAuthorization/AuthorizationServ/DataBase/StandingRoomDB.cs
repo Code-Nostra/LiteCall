@@ -2,25 +2,14 @@
 
 namespace AuthorizationServ
 {
-    public class StandingRoomDB
+    public class Server
     {
         [Key]
-        public int id { get; set; }
-        [Required]
+        public int Id { get; set; }
         public string Title { get; set; }
-        public string Password { get; set; }
-
-        private bool _guard;
-        public bool Guard {
-            get
-            {
-                _guard = Password == string.Empty || Password == null ? false : true;
-                return _guard ;
-            }
-            set
-            {
-                _guard = value;
-            }
-        }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Ip { get; set; }
+        public string Description { get; set; }
     }
 }

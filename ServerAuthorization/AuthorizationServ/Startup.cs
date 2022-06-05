@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -28,17 +29,23 @@ namespace AuthorizationServ
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            IdentityModelEventSource.ShowPII = true;
             services.AddOptions();
 
             services.AddControllers();
 
             services.AddCors();
-            
+
             //Управление секретами пользователей
             //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
-            var key = JsonNode.Parse(File.ReadAllText(@"..\..\PrivateKey\PrivateKey.json"));
-            AuthOptions.SetKey((string)key["Private"]);
+            try
+            {
+
+                var key = JsonNode.Parse(File.ReadAllText(@"PrivateKey\PrivateKey.json"));
+                AuthOptions.SetKey((string)key["Private"]);
+            }
+            catch { Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()); }
+
             //Для капчи
             services.AddDistributedMemoryCache();
             
@@ -87,8 +94,8 @@ namespace AuthorizationServ
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
-            //app.UseHsts();
+            app.UseHttpsRedirection();
+            app.UseHsts();
             app.UseRouting();
             app.UseCors(policy=> 
             {

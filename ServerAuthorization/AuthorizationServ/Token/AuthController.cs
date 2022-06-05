@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,12 +48,13 @@ namespace AuthorizationServ.Token
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
         {
             if (authModel.Guid == null) return NoContent();
-            if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+            string ServerCaptcha;
+            SessionClass.Session.TryGetValue(authModel.Guid, out ServerCaptcha);
+            
                 try
                 {
-                    if (authModel.Captcha != SessionClass.Session[authModel.Guid])
+                    if (authModel.Captcha != ServerCaptcha)
                     {
-
                         return BadRequest("Captcha was not correct");
                     }
                 }
@@ -89,21 +91,41 @@ namespace AuthorizationServ.Token
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
 
-            var claims = new List<Claim>
+            
+            //JsonObject key = JsonNode.Parse(new { F=""});
+            try
             {
+                var key= JsonNode.Parse(System.IO.File.ReadAllText("ServerAuthorization.json"));
+                var claims = new List<Claim>
+                {
                 new Claim("Name", User.Login),
                 new Claim(ClaimTypes.Role,User.Role),
-                new Claim("IP","sad")
-            };
-            return claims;
+                new Claim("IP",(string)((key["IPchat"]==null|| (string)key["IPchat"]==string.Empty)?"Set the IP of the chat server using IPchat":(string)key["IPchat"]))
+                };
+                return claims;
+            }
+            
+            catch 
+            {
+                var claims = new List<Claim>
+                {
+                new Claim("Name", User.Login),
+                new Claim(ClaimTypes.Role,User.Role),
+                new Claim("IP","Set the IP of the chat server using IPchat")
+                };
+                return claims;
+            }
+            //AuthOptions.SetKey((string)key["IPchat"]);
+
+            
         }
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] JsonElement guid)
         {
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
-            SessionClass.Session.TryAdd(guid.ToString(), code);
-            SessionClass.Session[guid.ToString()] = code;
+            SessionClass.Session.TryAdd(guid.GetProperty("guid").GetString(), code);
+            //SessionClass.Session[guid.ToString()] = code;
             #region Сессия
             // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
             // HttpContext.Session.SetString(guid.ToString(), code);
@@ -117,7 +139,7 @@ namespace AuthorizationServ.Token
             // creat packet
             ImagePacket packet = new ImagePacket(img_byte_arr);
             var json = JsonSerializer.Serialize<ImagePacket>(packet);
-
+            image.Dispose();
             return Ok(json);
         }
 

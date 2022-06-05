@@ -12,21 +12,24 @@ namespace KeyGenerator
     {
         static void Main(string[] args)
         {
+            try
+            {
+                Directory.Delete("Keys", true);
+            }
+            catch { }
 
-            Directory.Delete("Keys", true);
-            
             using var key = RSA.Create();
             var privateKey = Convert.ToBase64String(key.ExportRSAPrivateKey());
             var publicKey = Convert.ToBase64String(key.ExportRSAPublicKey());
 
             var privateKeyJson = JsonSerializer.Serialize(new
             {
-                Private = privateKey
+               Private = privateKey
             }, new JsonSerializerOptions { WriteIndented = true });
 
             var publicKeyJson = JsonSerializer.Serialize(new
             {
-                Public = publicKey
+               Public = publicKey
             }, new JsonSerializerOptions { WriteIndented = true });
 
             Directory.CreateDirectory("Keys");

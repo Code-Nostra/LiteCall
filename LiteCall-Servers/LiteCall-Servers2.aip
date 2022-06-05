@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="19.5" version="19.5" Modules="professional" RootPath="." Language="ru" Id="{2E1ED351-67B0-4B3F-9FAE-4456B99275B7}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;MsiDriverPackagesComponent;UserAccountsComponent;ScheduledTasksComponent;SqlConnectionComponent;AutorunComponent;FirewallExceptionComponent;GameUxComponent;MsiDirectEditorComponent;SharePointSlnComponent;SilverlightSlnComponent;MultipleInstancesComponent;SccmComponent;ActSyncAppComponent;CPLAppletComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
+    <ROW Property="AI_PACKAGING_TOOL" Value="Advanced Installer 19.5 build 36301275" ValueLocId="-"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="Эта база данных установщика содержит логику и данные, необходимые для установки [|[ProductName]." ValueLocId="*"/>
+    <ROW Property="Manufacturer" Value="LiteCall-Server"/>
+    <ROW Property="ProductCode" Value="1049:{AB2BF359-65DC-484F-9A41-25C661830520} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="LiteCall-Servers"/>
+    <ROW Property="ProductVersion" Value="1.0.0"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{92C5F05B-A0F0-4A86-B8A6-FA5B4025B91C}"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="Auth_Dir" Directory_Parent="APPDIR" DefaultDir="Auth"/>
+    <ROW Directory="PrivateKey_Dir" Directory_Parent="Auth_Dir" DefaultDir="PRIVAT~1|PrivateKey"/>
+    <ROW Directory="PublicKey_Dir" Directory_Parent="SignalR_Dir" DefaultDir="PUBLIC~1|PublicKey"/>
+    <ROW Directory="SignalR_Dir" Directory_Parent="APPDIR" DefaultDir="SignalR"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="alpinex64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="ALPINE~1|alpine-x64"/>
+    <ROW Directory="bootstrap_1_Dir" Directory_Parent="lib_7_Dir" DefaultDir="BOOTST~1|bootstrap"/>
+    <ROW Directory="bootstrap_Dir" Directory_Parent="lib_6_Dir" DefaultDir="BOOTST~1|bootstrap"/>
+    <ROW Directory="cs_Dir" Directory_Parent="Auth_Dir" DefaultDir="cs"/>
+    <ROW Directory="css_2_Dir" Directory_Parent="dist_Dir" DefaultDir="css"/>
+    <ROW Directory="css_3_Dir" Directory_Parent="wwwroot_1_Dir" DefaultDir="css"/>
+    <ROW Directory="css_4_Dir" Directory_Parent="dist_5_Dir" DefaultDir="css"/>
+    <ROW Directory="css_Dir" Directory_Parent="wwwroot_Dir" DefaultDir="css"/>
+    <ROW Directory="de_Dir" Directory_Parent="Auth_Dir" DefaultDir="de"/>
+    <ROW Directory="dist_3_Dir" Directory_Parent="jquery_Dir" DefaultDir="dist"/>
+    <ROW Directory="dist_4_Dir" Directory_Parent="jqueryvalidation_Dir" DefaultDir="dist"/>
+    <ROW Directory="dist_5_Dir" Directory_Parent="bootstrap_1_Dir" DefaultDir="dist"/>
+    <ROW Directory="dist_6_Dir" Directory_Parent="jquery_1_Dir" DefaultDir="dist"/>
+    <ROW Directory="dist_7_Dir" Directory_Parent="jqueryvalidation_1_Dir" DefaultDir="dist"/>
+    <ROW Directory="dist_Dir" Directory_Parent="bootstrap_Dir" DefaultDir="dist"/>
+    <ROW Directory="es_Dir" Directory_Parent="Auth_Dir" DefaultDir="es"/>
+    <ROW Directory="fr_Dir" Directory_Parent="Auth_Dir" DefaultDir="fr"/>
+    <ROW Directory="it_Dir" Directory_Parent="Auth_Dir" DefaultDir="it"/>
+    <ROW Directory="ja_Dir" Directory_Parent="Auth_Dir" DefaultDir="ja"/>
+    <ROW Directory="jquery_1_Dir" Directory_Parent="lib_7_Dir" DefaultDir="jquery"/>
+    <ROW Directory="jquery_Dir" Directory_Parent="lib_6_Dir" DefaultDir="jquery"/>
+    <ROW Directory="jqueryvalidation_1_Dir" Directory_Parent="lib_7_Dir" DefaultDir="JQUERY~1|jquery-validation"/>
+    <ROW Directory="jqueryvalidation_Dir" Directory_Parent="lib_6_Dir" DefaultDir="JQUERY~1|jquery-validation"/>
+    <ROW Directory="jqueryvalidationunobtrusive_1_Dir" Directory_Parent="lib_7_Dir" DefaultDir="JQUERY~2|jquery-validation-unobtrusive"/>
+    <ROW Directory="jqueryvalidationunobtrusive_Dir" Directory_Parent="lib_6_Dir" DefaultDir="JQUERY~2|jquery-validation-unobtrusive"/>
+    <ROW Directory="js_2_Dir" Directory_Parent="dist_Dir" DefaultDir="js"/>
+    <ROW Directory="js_3_Dir" Directory_Parent="wwwroot_1_Dir" DefaultDir="js"/>
+    <ROW Directory="js_4_Dir" Directory_Parent="dist_5_Dir" DefaultDir="js"/>
+    <ROW Directory="js_Dir" Directory_Parent="wwwroot_Dir" DefaultDir="js"/>
+    <ROW Directory="ko_Dir" Directory_Parent="Auth_Dir" DefaultDir="ko"/>
+    <ROW Directory="lib_3_Dir" Directory_Parent="win_Dir" DefaultDir="lib"/>
+    <ROW Directory="lib_4_Dir" Directory_Parent="winarm_Dir" DefaultDir="lib"/>
+    <ROW Directory="lib_5_Dir" Directory_Parent="winarm64_Dir" DefaultDir="lib"/>
+    <ROW Directory="lib_6_Dir" Directory_Parent="wwwroot_Dir" DefaultDir="lib"/>
+    <ROW Directory="lib_7_Dir" Directory_Parent="wwwroot_1_Dir" DefaultDir="lib"/>
+    <ROW Directory="lib_Dir" Directory_Parent="unix_Dir" DefaultDir="lib"/>
+    <ROW Directory="linuxarm64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~2|linux-arm64"/>
+    <ROW Directory="linuxarm_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~1|linux-arm"/>
+    <ROW Directory="linuxarmel_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~3|linux-armel"/>
+    <ROW Directory="linuxmips64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~4|linux-mips64"/>
+    <ROW Directory="linuxmuslx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~5|linux-musl-x64"/>
+    <ROW Directory="linuxs390x_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~6|linux-s390x"/>
+    <ROW Directory="linuxx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~7|linux-x64"/>
+    <ROW Directory="linuxx86_Dir" Directory_Parent="runtimes_Dir" DefaultDir="LINUX-~8|linux-x86"/>
+    <ROW Directory="native_13_Dir" Directory_Parent="linuxarm_Dir" DefaultDir="native"/>
+    <ROW Directory="native_14_Dir" Directory_Parent="linuxarm64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_15_Dir" Directory_Parent="linuxarmel_Dir" DefaultDir="native"/>
+    <ROW Directory="native_16_Dir" Directory_Parent="linuxmips64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_17_Dir" Directory_Parent="linuxmuslx64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_18_Dir" Directory_Parent="linuxs390x_Dir" DefaultDir="native"/>
+    <ROW Directory="native_19_Dir" Directory_Parent="linuxx64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_20_Dir" Directory_Parent="linuxx86_Dir" DefaultDir="native"/>
+    <ROW Directory="native_21_Dir" Directory_Parent="osxarm64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_22_Dir" Directory_Parent="osxx64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_23_Dir" Directory_Parent="winarm_Dir" DefaultDir="native"/>
+    <ROW Directory="native_24_Dir" Directory_Parent="winarm64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_25_Dir" Directory_Parent="winx64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_26_Dir" Directory_Parent="winx86_Dir" DefaultDir="native"/>
+    <ROW Directory="native_Dir" Directory_Parent="alpinex64_Dir" DefaultDir="native"/>
+    <ROW Directory="net5.0_1_Dir" Directory_Parent="lib_5_Dir" DefaultDir="net5.0"/>
+    <ROW Directory="net5.0_Dir" Directory_Parent="lib_4_Dir" DefaultDir="net5.0"/>
+    <ROW Directory="netcoreapp2.1_2_Dir" Directory_Parent="lib_3_Dir" DefaultDir="NETCOR~1.1|netcoreapp2.1"/>
+    <ROW Directory="netcoreapp2.1_Dir" Directory_Parent="lib_Dir" DefaultDir="NETCOR~1.1|netcoreapp2.1"/>
+    <ROW Directory="netcoreapp3.1_2_Dir" Directory_Parent="lib_3_Dir" DefaultDir="NETCOR~2.1|netcoreapp3.1"/>
+    <ROW Directory="netcoreapp3.1_Dir" Directory_Parent="lib_Dir" DefaultDir="NETCOR~2.1|netcoreapp3.1"/>
+    <ROW Directory="netstandard2.0_Dir" Directory_Parent="lib_3_Dir" DefaultDir="NETSTA~1.0|netstandard2.0"/>
+    <ROW Directory="osxarm64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="OSX-AR~1|osx-arm64"/>
+    <ROW Directory="osxx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="osx-x64"/>
+    <ROW Directory="pl_Dir" Directory_Parent="Auth_Dir" DefaultDir="pl"/>
+    <ROW Directory="ptBR_Dir" Directory_Parent="Auth_Dir" DefaultDir="pt-BR"/>
+    <ROW Directory="ru_Dir" Directory_Parent="Auth_Dir" DefaultDir="ru"/>
+    <ROW Directory="runtimes_Dir" Directory_Parent="Auth_Dir" DefaultDir="runtimes"/>
+    <ROW Directory="tr_Dir" Directory_Parent="Auth_Dir" DefaultDir="tr"/>
+    <ROW Directory="unix_Dir" Directory_Parent="runtimes_Dir" DefaultDir="unix"/>
+    <ROW Directory="win_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win"/>
+    <ROW Directory="winarm64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="WIN-AR~1|win-arm64"/>
+    <ROW Directory="winarm_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-arm"/>
+    <ROW Directory="winx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x64"/>
+    <ROW Directory="winx86_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x86"/>
+    <ROW Directory="wwwroot_1_Dir" Directory_Parent="SignalR_Dir" DefaultDir="wwwroot"/>
+    <ROW Directory="wwwroot_Dir" Directory_Parent="Auth_Dir" DefaultDir="wwwroot"/>
+    <ROW Directory="zhHans_Dir" Directory_Parent="Auth_Dir" DefaultDir="zh-Hans"/>
+    <ROW Directory="zhHant_Dir" Directory_Parent="Auth_Dir" DefaultDir="zh-Hant"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="APPDIR" ComponentId="{24D770C7-809F-4A14-953D-A3F9A56AA339}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="EntityFramework.SqlServer.dll" ComponentId="{689F2BE8-0C08-4662-AF9C-BFFEA711DC52}" Directory_="Auth_Dir" Attributes="0" KeyPath="EntityFramework.SqlServer.dll"/>
+    <ROW Component="EntityFramework.dll" ComponentId="{18E76E40-DCD2-4DA3-9417-A68A82C6B74A}" Directory_="Auth_Dir" Attributes="0" KeyPath="EntityFramework.dll"/>
+    <ROW Component="Humanizer.dll" ComponentId="{912D8268-9495-4650-8835-FB198CF85AE0}" Directory_="Auth_Dir" Attributes="0" KeyPath="Humanizer.dll"/>
+    <ROW Component="LICENSE" ComponentId="{050F146D-D47A-4632-A58A-893E61771DD9}" Directory_="bootstrap_Dir" Attributes="0" KeyPath="LICENSE" Type="0"/>
+    <ROW Component="LICENSE.md" ComponentId="{0D1981DD-388F-416C-8A5D-67BC1311ABF3}" Directory_="jqueryvalidation_Dir" Attributes="0" KeyPath="LICENSE.md" Type="0"/>
+    <ROW Component="LICENSE.md_1" ComponentId="{EB140223-AD58-4832-AF5C-C8878A3EF1FE}" Directory_="jqueryvalidation_1_Dir" Attributes="0" KeyPath="LICENSE.md_1" Type="0"/>
+    <ROW Component="LICENSE.txt" ComponentId="{04F58C7F-9F86-4CA1-B269-15B14646B6C7}" Directory_="jquery_Dir" Attributes="0" KeyPath="LICENSE.txt" Type="0"/>
+    <ROW Component="LICENSE.txt_1" ComponentId="{A90B2B88-1BD8-4268-906F-4D01287A2FF9}" Directory_="jquery_1_Dir" Attributes="0" KeyPath="LICENSE.txt_3" Type="0"/>
+    <ROW Component="LICENSE_1" ComponentId="{3CFD578C-B279-4F60-B0BD-9A2CFE0A584C}" Directory_="bootstrap_1_Dir" Attributes="0" KeyPath="LICENSE_1" Type="0"/>
+    <ROW Component="Microsoft.AspNetCore.Authentication.JwtBearer.dll" ComponentId="{B052AB7C-0716-4C0A-83A0-42CE64B495A4}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.AspNetCore.Authentication.JwtBearer.dll"/>
+    <ROW Component="Microsoft.AspNetCore.Authentication.JwtBearer.dll_1" ComponentId="{D74019D0-0816-400E-82A4-217D03D4B5B2}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Microsoft.AspNetCore.Authentication.JwtBearer.dll_1"/>
+    <ROW Component="Microsoft.AspNetCore.Razor.Language.dll" ComponentId="{9EAAC6D7-B062-4957-BC2F-1CDC2EA38E6A}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.AspNetCore.Razor.Language.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{D7CDC2CC-755E-4B0A-A2E2-C3D6BC50BAF1}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.dll" ComponentId="{9BA95920-A120-433C-B86F-D9AC6F208469}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" ComponentId="{36287EC2-2EE6-4A0B-8437-9C0E617817E3}" Directory_="cs_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_13" ComponentId="{6ED704E4-13EF-4322-A4B7-DBBEFFE1B2E7}" Directory_="de_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_13"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_14" ComponentId="{609458FB-A07C-48EC-9C3E-38A1F5F0077A}" Directory_="es_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_14"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_15" ComponentId="{BED8851C-6509-44C8-9542-A7AF21271ED6}" Directory_="fr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_15"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_16" ComponentId="{36101776-13CE-46EC-9E23-FF0A826934CA}" Directory_="it_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_16"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_17" ComponentId="{84A8094F-8C24-4316-A8F4-C176522704B6}" Directory_="ja_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_17"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_18" ComponentId="{F71040ED-870E-4E25-8250-68DF779E381D}" Directory_="ko_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_18"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_19" ComponentId="{890F3E48-4E68-4CF3-9A47-7C00CACF4966}" Directory_="pl_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_19"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_20" ComponentId="{5D3B2F84-E10A-475B-901C-B2CCAB84A33B}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_20"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_21" ComponentId="{B8A9DB6D-8FD4-4ECD-8B04-B41F526D6A9B}" Directory_="ru_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_21"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_22" ComponentId="{903554ED-94EA-4CC9-917D-3CDAD68AADD6}" Directory_="tr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_22"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_23" ComponentId="{537FF521-3D6C-4E90-B897-7F4A15F71B20}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_23"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_24" ComponentId="{AF8FDF88-56EE-4D83-9011-730C2436F537}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_24"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.dll" ComponentId="{C921E4D7-977C-46C1-B6D7-E8F678D44B5F}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll" ComponentId="{DEAF9776-4F8E-42AC-B567-2E5F9301C6F4}" Directory_="cs_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_13" ComponentId="{82DA2AB3-0DDE-438C-BD86-69B1766381B1}" Directory_="de_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_13"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_14" ComponentId="{A9A6B9B8-BF4A-47BC-8CEA-B905AD0E78E1}" Directory_="es_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_14"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_15" ComponentId="{692EBCC4-A1E9-4BDF-A394-2F85C36A1CA8}" Directory_="fr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_15"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_16" ComponentId="{C02C65E3-5F53-48F6-B5E0-7F86EFF2CBBF}" Directory_="it_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_16"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_17" ComponentId="{8EF49B11-BCF2-45CC-B0A9-9F2E6A949ABD}" Directory_="ja_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_17"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_18" ComponentId="{A460CD33-BCCE-42AA-BA13-6D070ACDA88A}" Directory_="ko_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_18"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_19" ComponentId="{0EDD7A77-1CFE-49C5-B2A7-C2CF3EB0E454}" Directory_="pl_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_19"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_20" ComponentId="{0723B26B-E745-4A33-B258-B9B96BF55032}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_20"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_21" ComponentId="{739C50F5-5167-4058-8977-A31A8A8A77CF}" Directory_="ru_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_21"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_22" ComponentId="{31240509-35D0-400D-ADF3-B9E2F54F4099}" Directory_="tr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_22"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_23" ComponentId="{60110B50-40CF-4D87-81CF-D03F5FFA8424}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_23"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll_24" ComponentId="{9ED9D59B-EC56-407E-B615-9E7CED90BE30}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll_24"/>
+    <ROW Component="Microsoft.CodeAnalysis.Razor.dll" ComponentId="{1B70CDAE-569A-49EB-B3B1-37EF0E494EF0}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Razor.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.dll" ComponentId="{B48077BD-9821-4F53-8875-CB8F0450A840}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll" ComponentId="{CEDED587-E04F-4A98-BB38-FBB30AEC1B86}" Directory_="cs_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_13" ComponentId="{D8B6B6B5-1EF6-4CEB-B702-47E746C59793}" Directory_="de_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_13"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_14" ComponentId="{95BF71B5-5197-463F-8C01-69B80C06CC16}" Directory_="es_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_14"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_15" ComponentId="{CC2F1028-DDAC-4EA7-BD59-F70B5752E423}" Directory_="fr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_15"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_16" ComponentId="{60CE2870-E5E5-47C9-9BB2-F808AF3DD5C0}" Directory_="it_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_16"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_17" ComponentId="{88AD9CCF-58A6-4F2D-90B1-FBAE9EF5EEBA}" Directory_="ja_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_17"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_18" ComponentId="{B8E9000F-0F25-481F-9A20-F2B62CED74D7}" Directory_="ko_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_18"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_19" ComponentId="{58BD8797-8B50-406D-829D-606AF2B45371}" Directory_="pl_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_19"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_20" ComponentId="{4541F810-DBAF-4C91-9E83-CF23EB11FE83}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_20"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_21" ComponentId="{6098CF2D-D1B7-4554-B96A-B3897121C5E9}" Directory_="ru_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_21"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_22" ComponentId="{B70F8754-FA4F-4A9F-8845-E3B355BE9CA2}" Directory_="tr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_22"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_23" ComponentId="{76AD29A3-61B1-4BF8-A14F-64386DED1C2F}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_23"/>
+    <ROW Component="Microsoft.CodeAnalysis.Workspaces.resources.dll_24" ComponentId="{AB842A15-B510-441E-A5DD-F7AE7EB90D12}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.Workspaces.resources.dll_24"/>
+    <ROW Component="Microsoft.CodeAnalysis.dll" ComponentId="{7105C5C5-D91E-4CA8-A9A6-D0FD7F9EE5E6}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll" ComponentId="{718BEBEF-2C1B-4EBD-ACC8-A9A929841545}" Directory_="cs_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_13" ComponentId="{56BFBC9C-6845-4E46-A4D5-16E3BECFA794}" Directory_="de_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_13"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_14" ComponentId="{F8CC0E1A-78F7-4026-B284-1ED912F05DA0}" Directory_="es_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_14"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_15" ComponentId="{B3A970DF-ADB1-4C43-8DCE-AA49E659F809}" Directory_="fr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_15"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_16" ComponentId="{BAADF147-2019-4783-A1BC-055AE7B53616}" Directory_="it_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_16"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_17" ComponentId="{F6869DA1-17EC-481D-BC79-B93341DA7685}" Directory_="ja_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_17"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_18" ComponentId="{D58A1607-5204-44BC-85EB-B9F139E934CE}" Directory_="ko_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_18"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_19" ComponentId="{E15AF757-10D9-4C94-85EB-2DF8867E2351}" Directory_="pl_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_19"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_20" ComponentId="{9AA3FBCC-8DEE-414C-A12D-B4F1C7E87966}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_20"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_21" ComponentId="{B47AC4B8-7E6A-4CBC-A64D-939CBF59A1BF}" Directory_="ru_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_21"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_22" ComponentId="{5612147D-4B3A-4135-AF07-ECD7437B890B}" Directory_="tr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_22"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_23" ComponentId="{5F5B3806-3571-4805-953B-68F134BEAE0E}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_23"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_24" ComponentId="{F2A4CD46-358F-449C-BECE-A2108B2D7BB2}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_24"/>
+    <ROW Component="Microsoft.Data.Sqlite.dll" ComponentId="{19F17AC5-567A-412D-9798-DB4E3B951DBC}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.Data.Sqlite.dll"/>
+    <ROW Component="Microsoft.DotNet.PlatformAbstractions.dll" ComponentId="{5678D5DA-4BDE-49CA-B1D8-6BF31688B07F}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.DotNet.PlatformAbstractions.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.Abstractions.dll" ComponentId="{05C13876-5171-4F2E-954E-5F9359013C6E}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.Abstractions.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.Relational.dll" ComponentId="{27B2201C-DFF6-4B76-A616-C859058203CA}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.Relational.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.Sqlite.dll" ComponentId="{9CC5645E-3F17-46CA-948F-97DD4CAF70E0}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.Sqlite.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.dll" ComponentId="{905D80AA-F036-4A6F-B618-9E4B457D35A4}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.dll"/>
+    <ROW Component="Microsoft.Extensions.DependencyInjection.Abstractions.dll" ComponentId="{09C53F34-D696-40EA-AB6D-6808992D0826}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.DependencyInjection.dll" ComponentId="{1B5B08BA-6921-4159-B62A-7B68691794DC}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.Extensions.DependencyInjection.dll"/>
+    <ROW Component="Microsoft.Extensions.DependencyModel.dll" ComponentId="{A82566CB-8F74-445C-BC0D-0303824AB036}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.Extensions.DependencyModel.dll"/>
+    <ROW Component="Microsoft.IdentityModel.JsonWebTokens.dll" ComponentId="{6BACCE4F-CE82-4C82-9317-81497D94C331}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.JsonWebTokens.dll"/>
+    <ROW Component="Microsoft.IdentityModel.JsonWebTokens.dll_1" ComponentId="{9902C70D-D2D8-4BDD-8C47-8FC0CC56BD8A}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.JsonWebTokens.dll_1"/>
+    <ROW Component="Microsoft.IdentityModel.Logging.dll" ComponentId="{3CEA0435-850B-4349-8047-843DD1562B27}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Logging.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Logging.dll_1" ComponentId="{8FD4756A-91D2-4903-96D8-F9B88F984D03}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Logging.dll_1"/>
+    <ROW Component="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" ComponentId="{8348DEB3-3A73-4C45-9E3A-A4BC6747ED8B}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll_1" ComponentId="{ACA7FF68-ED14-429D-98A9-70CF476C10FC}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll_1"/>
+    <ROW Component="Microsoft.IdentityModel.Protocols.dll" ComponentId="{E646321E-5578-4873-B6EE-43D0EC99C311}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Protocols.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Protocols.dll_1" ComponentId="{6E845730-B5EF-4807-BE96-E0FFC41E64DE}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Protocols.dll_1"/>
+    <ROW Component="Microsoft.IdentityModel.Tokens.dll" ComponentId="{AE54C247-37B4-4501-9359-895BBA4554C3}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Tokens.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Tokens.dll_1" ComponentId="{A283B30F-4865-4B00-80E8-9B701F9E0058}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Microsoft.IdentityModel.Tokens.dll_1"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll" ComponentId="{DC1F5ABA-8D25-4FC1-A1D3-309BE65293AE}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll" ComponentId="{F1EFCC35-0105-41F2-8FAC-69D29BD1F67D}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll" ComponentId="{169E1544-5C1D-4E08-8273-0DDDCCD28F10}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll" ComponentId="{0945DBF4-2A06-4597-B050-DCFD031CA9A5}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll" ComponentId="{E7193D63-8686-49D9-9BA6-4FC4D226A320}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.dll" ComponentId="{843459DC-82AE-4348-AB3F-FDDB783E3894}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.dll"/>
+    <ROW Component="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll" ComponentId="{31B29149-8BD5-49EA-A151-E8A93F29C861}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll"/>
+    <ROW Component="Microsoft.Win32.SystemEvents.dll" ComponentId="{55ADDF99-E063-4E85-94E8-ADA8BC18C3D2}" Directory_="Auth_Dir" Attributes="0" KeyPath="Microsoft.Win32.SystemEvents.dll"/>
+    <ROW Component="Microsoft.Win32.SystemEvents.dll_2" ComponentId="{EF03F498-5382-44A1-AA1E-891F56367788}" Directory_="netcoreapp3.1_2_Dir" Attributes="0" KeyPath="Microsoft.Win32.SystemEvents.dll_2"/>
+    <ROW Component="Newtonsoft.Json.dll" ComponentId="{F772F01E-1C5E-4AEE-9665-B72AE5789A2E}" Directory_="Auth_Dir" Attributes="0" KeyPath="Newtonsoft.Json.dll"/>
+    <ROW Component="Newtonsoft.Json.dll_1" ComponentId="{C04851EA-78D5-4110-A45B-4FCD5C66BA10}" Directory_="SignalR_Dir" Attributes="0" KeyPath="Newtonsoft.Json.dll_1"/>
+    <ROW Component="PrivateKey.json" ComponentId="{591DA3DD-CB4F-4B4F-A244-741225CE77A7}" Directory_="PrivateKey_Dir" Attributes="0" KeyPath="PrivateKey.json" Type="0"/>
+    <ROW Component="ProductInformation" ComponentId="{6927103B-DE4E-4435-B9D3-8E19F910A365}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="PublicKey.json" ComponentId="{C17B84A2-DD92-4A8D-B97F-D17F160FAE86}" Directory_="PublicKey_Dir" Attributes="0" KeyPath="PublicKey.json" Type="0"/>
+    <ROW Component="SQLitePCLRaw.batteries_v2.dll" ComponentId="{04316904-D988-45F5-829B-1A9B4EBF2D2D}" Directory_="Auth_Dir" Attributes="0" KeyPath="SQLitePCLRaw.batteries_v2.dll"/>
+    <ROW Component="SQLitePCLRaw.core.dll" ComponentId="{E7952F9F-1095-4890-837F-CE38A364A0C4}" Directory_="Auth_Dir" Attributes="0" KeyPath="SQLitePCLRaw.core.dll"/>
+    <ROW Component="SQLitePCLRaw.provider.e_sqlite3.dll" ComponentId="{75A724D7-66F1-4C0E-87BC-B849AF855350}" Directory_="Auth_Dir" Attributes="0" KeyPath="SQLitePCLRaw.provider.e_sqlite3.dll"/>
+    <ROW Component="ServerAuthorization.Views.dll" ComponentId="{C3ED9017-216D-46AC-A258-A45017FD1575}" Directory_="Auth_Dir" Attributes="0" KeyPath="ServerAuthorization.Views.dll"/>
+    <ROW Component="ServerAuthorization.dll" ComponentId="{F9201648-257D-45B8-9BF3-851FEA366CF3}" Directory_="Auth_Dir" Attributes="0" KeyPath="ServerAuthorization.dll"/>
+    <ROW Component="ServerAuthorization.exe" ComponentId="{A6BBADAA-254D-423D-9CFA-32FDE996C92D}" Directory_="Auth_Dir" Attributes="256" KeyPath="ServerAuthorization.exe"/>
+    <ROW Component="SignalRLibrary.dll" ComponentId="{A8A66B72-F1B7-4A86-9D05-30A45879AB6E}" Directory_="SignalR_Dir" Attributes="0" KeyPath="SignalRLibrary.dll"/>
+    <ROW Component="SignalRServ.Views.dll" ComponentId="{B218EEEF-4F13-482F-8953-75532FC573D7}" Directory_="SignalR_Dir" Attributes="0" KeyPath="SignalRServ.Views.dll"/>
+    <ROW Component="SignalRServ.dll" ComponentId="{C941E331-B040-4A06-A890-2290CC1CA1B9}" Directory_="SignalR_Dir" Attributes="0" KeyPath="SignalRServ.dll"/>
+    <ROW Component="SignalRServ.exe" ComponentId="{21873E2F-C1A5-4845-9B47-E71D8B533FE0}" Directory_="SignalR_Dir" Attributes="256" KeyPath="SignalRServ.exe"/>
+    <ROW Component="System.CodeDom.dll" ComponentId="{ACC1BB47-A80A-4671-87CE-AA8B17D6FF1B}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.CodeDom.dll"/>
+    <ROW Component="System.Composition.AttributedModel.dll" ComponentId="{4DF0816F-A983-4DF5-814F-52731F431E63}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Composition.AttributedModel.dll"/>
+    <ROW Component="System.Composition.Convention.dll" ComponentId="{A7B0A975-7621-40A7-B72C-882DB52BB05B}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Composition.Convention.dll"/>
+    <ROW Component="System.Composition.Hosting.dll" ComponentId="{C941972E-F3A1-44A7-BA3A-05165BD69DAF}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Composition.Hosting.dll"/>
+    <ROW Component="System.Composition.Runtime.dll" ComponentId="{B6A07BC0-FA9A-4E17-901B-66F347895C6E}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Composition.Runtime.dll"/>
+    <ROW Component="System.Composition.TypedParts.dll" ComponentId="{D34D7A8D-94FE-47E7-97BC-A58F05EBB2EA}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Composition.TypedParts.dll"/>
+    <ROW Component="System.Configuration.ConfigurationManager.dll" ComponentId="{7D8D06AC-F036-4C39-8E48-859CD43ED90B}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Configuration.ConfigurationManager.dll"/>
+    <ROW Component="System.Data.SqlClient.dll" ComponentId="{750DF4B4-C0A8-4652-AC0E-F25A0A7EFD98}" Directory_="netcoreapp2.1_Dir" Attributes="0" KeyPath="System.Data.SqlClient.dll"/>
+    <ROW Component="System.Data.SqlClient.dll_3" ComponentId="{DCBB4AF8-357C-4C8C-8C8F-40B6F866AD51}" Directory_="netcoreapp2.1_2_Dir" Attributes="0" KeyPath="System.Data.SqlClient.dll_3"/>
+    <ROW Component="System.Data.SqlClient.dll_4" ComponentId="{A8460E16-D6A4-4E66-849F-262BF80814FC}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Data.SqlClient.dll_4"/>
+    <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{AFBACD1E-638E-4AE2-B4C4-395F4090A39A}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Component="System.Drawing.Common.dll" ComponentId="{6AD0D21A-A150-42D8-B96E-482F5C41D9BD}" Directory_="netcoreapp3.1_Dir" Attributes="0" KeyPath="System.Drawing.Common.dll"/>
+    <ROW Component="System.Drawing.Common.dll_3" ComponentId="{FDEFDFE0-AB8B-49A7-9E7F-4A0FE1B28814}" Directory_="netcoreapp3.1_2_Dir" Attributes="0" KeyPath="System.Drawing.Common.dll_3"/>
+    <ROW Component="System.Drawing.Common.dll_4" ComponentId="{043960CC-66E3-4023-BB9D-FCB4F46DFCC4}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Drawing.Common.dll_4"/>
+    <ROW Component="System.IdentityModel.Tokens.Jwt.dll" ComponentId="{AB1E56C2-A252-4948-B77C-4CED20C5A41F}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.IdentityModel.Tokens.Jwt.dll"/>
+    <ROW Component="System.IdentityModel.Tokens.Jwt.dll_1" ComponentId="{A9081188-ADDF-4D62-BA36-07E31E4A577B}" Directory_="SignalR_Dir" Attributes="0" KeyPath="System.IdentityModel.Tokens.Jwt.dll_1"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{CD662EFA-3B21-4684-8399-A2DAE95DCB4D}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll_1" ComponentId="{11BDBE46-EEC1-4924-8D82-243A558D3EA1}" Directory_="SignalR_Dir" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll_1"/>
+    <ROW Component="System.Security.Cryptography.ProtectedData.dll" ComponentId="{B515EC46-D839-49AD-93D4-ACEC85F3D05F}" Directory_="netstandard2.0_Dir" Attributes="0" KeyPath="System.Security.Cryptography.ProtectedData.dll"/>
+    <ROW Component="System.Security.Cryptography.ProtectedData.dll_2" ComponentId="{1922D081-0949-4A8A-BB47-FE8A27D35362}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Security.Cryptography.ProtectedData.dll_2"/>
+    <ROW Component="System.Text.Encodings.Web.dll" ComponentId="{7DB5E5E7-1EF4-4904-A1CD-DAA45B580477}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Text.Encodings.Web.dll"/>
+    <ROW Component="System.Text.Encodings.Web.dll_1" ComponentId="{16EF97AF-B48F-4D25-B2CE-A08E28865FED}" Directory_="SignalR_Dir" Attributes="0" KeyPath="System.Text.Encodings.Web.dll_1"/>
+    <ROW Component="System.Text.Json.dll" ComponentId="{C39F0CA4-47CA-4D37-9B47-8E2A8FEC707F}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Text.Json.dll"/>
+    <ROW Component="System.Text.Json.dll_1" ComponentId="{7C069703-2598-4A18-9A7D-E84C21D86F01}" Directory_="SignalR_Dir" Attributes="0" KeyPath="System.Text.Json.dll_1"/>
+    <ROW Component="System.Windows.Extensions.dll" ComponentId="{1B23BD2D-5D28-457F-A3E6-56B7CC05B658}" Directory_="netcoreapp3.1_2_Dir" Attributes="0" KeyPath="System.Windows.Extensions.dll"/>
+    <ROW Component="System.Windows.Extensions.dll_2" ComponentId="{41DFC3B1-6B34-49FF-9562-C6388A9F321F}" Directory_="Auth_Dir" Attributes="0" KeyPath="System.Windows.Extensions.dll_2"/>
+    <ROW Component="additionalmethods.js" ComponentId="{FEA44334-7891-4EBD-802D-89F3C5C4D6D0}" Directory_="dist_4_Dir" Attributes="0" KeyPath="additionalmethods.js" Type="0"/>
+    <ROW Component="additionalmethods.js_1" ComponentId="{55CC9CE0-B8F9-42C0-AECC-74DB39F981D0}" Directory_="dist_7_Dir" Attributes="0" KeyPath="additionalmethods.js_1" Type="0"/>
+    <ROW Component="appsettings.Development.json" ComponentId="{E8CA7263-6C6D-446A-895B-075F524F5B3F}" Directory_="Auth_Dir" Attributes="0" KeyPath="appsettings.Development.json" Type="0"/>
+    <ROW Component="appsettings.Development.json_1" ComponentId="{FD3C5D6C-BBDC-4A62-847C-B76A4248638C}" Directory_="SignalR_Dir" Attributes="0" KeyPath="appsettings.Development.json_1" Type="0"/>
+    <ROW Component="bootstrap.bundle.js" ComponentId="{114248CD-1699-4AEE-97B5-FA3EB0512265}" Directory_="js_2_Dir" Attributes="0" KeyPath="bootstrap.bundle.js" Type="0"/>
+    <ROW Component="bootstrap.bundle.js_1" ComponentId="{45F1DE69-5740-42F0-9DAF-69D5F855C892}" Directory_="js_4_Dir" Attributes="0" KeyPath="bootstrap.bundle.js_1" Type="0"/>
+    <ROW Component="bootstrapgrid.css" ComponentId="{4685200D-1E86-4066-8B9B-7F88CDF14FE4}" Directory_="css_2_Dir" Attributes="0" KeyPath="bootstrapgrid.css" Type="0"/>
+    <ROW Component="bootstrapgrid.css_1" ComponentId="{99DC6A1A-95CD-40CE-97DA-315792453A7A}" Directory_="css_4_Dir" Attributes="0" KeyPath="bootstrapgrid.css_1" Type="0"/>
+    <ROW Component="dotnetaspnetcodegeneratordesign.dll" ComponentId="{30167A09-1340-46C4-A68C-109ABD40E49E}" Directory_="Auth_Dir" Attributes="0" KeyPath="dotnetaspnetcodegeneratordesign.dll"/>
+    <ROW Component="dotnetaspnetcodegeneratordesign.exe" ComponentId="{699CE069-4663-40AC-B34B-BAB44F50D6EC}" Directory_="net5.0_Dir" Attributes="0" KeyPath="dotnetaspnetcodegeneratordesign.exe"/>
+    <ROW Component="dotnetaspnetcodegeneratordesign.exe_1" ComponentId="{09FF0BB8-4999-4D38-B042-D7F590668B18}" Directory_="net5.0_1_Dir" Attributes="256" KeyPath="dotnetaspnetcodegeneratordesign.exe_1"/>
+    <ROW Component="e_sqlite3.dll" ComponentId="{1D9A50C1-D8AA-4736-8865-E0AB5C2FE609}" Directory_="native_23_Dir" Attributes="0" KeyPath="e_sqlite3.dll"/>
+    <ROW Component="e_sqlite3.dll_4" ComponentId="{8C36CD67-FB22-4302-8ED4-6265D10F45F7}" Directory_="native_24_Dir" Attributes="256" KeyPath="e_sqlite3.dll_4"/>
+    <ROW Component="e_sqlite3.dll_5" ComponentId="{3D7183E2-AF34-4323-BA9B-3F203E947C04}" Directory_="native_25_Dir" Attributes="256" KeyPath="e_sqlite3.dll_5"/>
+    <ROW Component="e_sqlite3.dll_6" ComponentId="{7E791099-45ED-4C49-A6AB-0A9C43D3F6AD}" Directory_="native_26_Dir" Attributes="0" KeyPath="e_sqlite3.dll_6"/>
+    <ROW Component="favicon.ico" ComponentId="{1A79433D-0086-427E-A281-A93C6D5D7026}" Directory_="wwwroot_Dir" Attributes="0" KeyPath="favicon.ico" Type="0"/>
+    <ROW Component="favicon.ico_1" ComponentId="{8EE044B8-3301-4E57-88ED-F00B1D1902BE}" Directory_="wwwroot_1_Dir" Attributes="0" KeyPath="favicon.ico_1" Type="0"/>
+    <ROW Component="jquery.js" ComponentId="{FC29784A-5A88-40FC-B1C5-54C699CB4B03}" Directory_="dist_3_Dir" Attributes="0" KeyPath="jquery.js" Type="0"/>
+    <ROW Component="jquery.js_1" ComponentId="{56DFB389-1641-4B5C-BCA3-470C6E4DAC8C}" Directory_="dist_6_Dir" Attributes="0" KeyPath="jquery.js_1" Type="0"/>
+    <ROW Component="jquery.validate.unobtrusive.js" ComponentId="{FA8ACBA6-C05E-4114-925E-9E5101F69B6F}" Directory_="jqueryvalidationunobtrusive_Dir" Attributes="0" KeyPath="jquery.validate.unobtrusive.js" Type="0"/>
+    <ROW Component="jquery.validate.unobtrusive.js_1" ComponentId="{EDCBEEBD-FF7A-46E8-982B-B2A5939FDCA3}" Directory_="jqueryvalidationunobtrusive_1_Dir" Attributes="0" KeyPath="jquery.validate.unobtrusive.js_1" Type="0"/>
+    <ROW Component="libe_sqlite3.dylib" ComponentId="{3BF1650D-15CC-4F24-BCD7-7E7C4D959A4A}" Directory_="native_21_Dir" Attributes="0" KeyPath="libe_sqlite3.dylib" Type="0"/>
+    <ROW Component="libe_sqlite3.dylib_1" ComponentId="{ECDFB460-4C9D-448D-B7CD-C004D6CB2611}" Directory_="native_22_Dir" Attributes="0" KeyPath="libe_sqlite3.dylib_1" Type="0"/>
+    <ROW Component="libe_sqlite3.so" ComponentId="{4413B500-7E92-46CF-9567-34029ECC3755}" Directory_="native_Dir" Attributes="0" KeyPath="libe_sqlite3.so" Type="0"/>
+    <ROW Component="libe_sqlite3.so_10" ComponentId="{A0064510-C4D1-47A7-BA8D-99AB840F739D}" Directory_="native_15_Dir" Attributes="0" KeyPath="libe_sqlite3.so_10" Type="0"/>
+    <ROW Component="libe_sqlite3.so_11" ComponentId="{495CEC81-6880-45DC-B628-AC1FCE585A70}" Directory_="native_16_Dir" Attributes="0" KeyPath="libe_sqlite3.so_11" Type="0"/>
+    <ROW Component="libe_sqlite3.so_12" ComponentId="{D9B06934-9353-434D-9889-F3620E7E9FE6}" Directory_="native_17_Dir" Attributes="0" KeyPath="libe_sqlite3.so_12" Type="0"/>
+    <ROW Component="libe_sqlite3.so_13" ComponentId="{BBA1FEA6-9108-48E3-9E70-DF0A80C52B9E}" Directory_="native_18_Dir" Attributes="0" KeyPath="libe_sqlite3.so_13" Type="0"/>
+    <ROW Component="libe_sqlite3.so_14" ComponentId="{EF9F5BD4-FDFF-43C1-A271-FF017595D8EC}" Directory_="native_19_Dir" Attributes="0" KeyPath="libe_sqlite3.so_14" Type="0"/>
+    <ROW Component="libe_sqlite3.so_15" ComponentId="{94034DF7-617C-467D-B90C-E30FF96822BD}" Directory_="native_20_Dir" Attributes="0" KeyPath="libe_sqlite3.so_15" Type="0"/>
+    <ROW Component="libe_sqlite3.so_8" ComponentId="{5B5D716D-C418-493A-96FE-AF663308C226}" Directory_="native_13_Dir" Attributes="0" KeyPath="libe_sqlite3.so_8" Type="0"/>
+    <ROW Component="libe_sqlite3.so_9" ComponentId="{4B8AEE51-F72E-4A16-91B6-75CB99D8E182}" Directory_="native_14_Dir" Attributes="0" KeyPath="libe_sqlite3.so_9" Type="0"/>
+    <ROW Component="site.css" ComponentId="{6D78AA04-D6A3-41AB-870E-6B18DA290CD2}" Directory_="css_Dir" Attributes="0" KeyPath="site.css" Type="0"/>
+    <ROW Component="site.css_1" ComponentId="{81C34196-44F6-40FD-AB36-05763DFD574D}" Directory_="css_3_Dir" Attributes="0" KeyPath="site.css_1" Type="0"/>
+    <ROW Component="site.js" ComponentId="{BC9F14A9-319C-4C36-AF7E-B09F97235D1D}" Directory_="js_Dir" Attributes="0" KeyPath="site.js" Type="0"/>
+    <ROW Component="site.js_1" ComponentId="{46F2FBC8-A766-4EE7-8A4C-5F72BCE9C05C}" Directory_="js_3_Dir" Attributes="0" KeyPath="site.js_1" Type="0"/>
+    <ROW Component="sni.dll" ComponentId="{CBC61796-1560-47AE-B9C7-67FB163822AC}" Directory_="native_24_Dir" Attributes="256" KeyPath="sni.dll"/>
+    <ROW Component="sni.dll_3" ComponentId="{62154885-D417-401B-8C5D-201F0CBA14E1}" Directory_="native_25_Dir" Attributes="256" KeyPath="sni.dll_3"/>
+    <ROW Component="sni.dll_4" ComponentId="{AA20C280-D81E-4872-974D-26069C49178F}" Directory_="native_26_Dir" Attributes="0" KeyPath="sni.dll_4"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="appsettings.Development.json" Component_="appsettings.Development.json" FileName="APPSET~1.JSO|appsettings.Development.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\appsettings.Development.json" SelfReg="false"/>
+    <ROW File="appsettings.json" Component_="appsettings.Development.json" FileName="APPSET~2.JSO|appsettings.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\appsettings.json" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\cs\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll" Component_="Microsoft.CodeAnalysis.resources.dll" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\cs\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_13" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_13" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\de\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_13" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_13" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_13" Component_="Microsoft.CodeAnalysis.resources.dll_13" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\de\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_13" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_13" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\de\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="dotnetaspnetcodegeneratordesign.dll" Component_="dotnetaspnetcodegeneratordesign.dll" FileName="DOTNET~1.DLL|dotnet-aspnet-codegenerator-design.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\dotnet-aspnet-codegenerator-design.dll" SelfReg="false"/>
+    <ROW File="EntityFramework.dll" Component_="EntityFramework.dll" FileName="ENTITY~1.DLL|EntityFramework.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\EntityFramework.dll" SelfReg="false"/>
+    <ROW File="EntityFramework.SqlServer.dll" Component_="EntityFramework.SqlServer.dll" FileName="ENTITY~2.DLL|EntityFramework.SqlServer.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\EntityFramework.SqlServer.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_14" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_14" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\es\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_14" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_14" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_14" Component_="Microsoft.CodeAnalysis.resources.dll_14" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\es\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_14" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_14" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\es\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_15" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_15" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\fr\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_15" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_15" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_15" Component_="Microsoft.CodeAnalysis.resources.dll_15" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\fr\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_15" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_15" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Humanizer.dll" Component_="Humanizer.dll" FileName="HUMANI~1.DLL|Humanizer.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Humanizer.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_16" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_16" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\it\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_16" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_16" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_16" Component_="Microsoft.CodeAnalysis.resources.dll_16" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\it\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_16" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_16" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\it\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_17" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_17" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ja\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_17" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_17" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_17" Component_="Microsoft.CodeAnalysis.resources.dll_17" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ja\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_17" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_17" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_18" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_18" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ko\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_18" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_18" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_18" Component_="Microsoft.CodeAnalysis.resources.dll_18" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ko\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_18" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_18" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="LTdb_sqlite.db" Component_="appsettings.Development.json" FileName="LTDB_S~1.DB|LTdb_sqlite.db" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\LTdb_sqlite.db" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Authentication.JwtBearer.dll" Component_="Microsoft.AspNetCore.Authentication.JwtBearer.dll" FileName="MICROS~1.DLL|Microsoft.AspNetCore.Authentication.JwtBearer.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.AspNetCore.Authentication.JwtBearer.dll" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Razor.Language.dll" Component_="Microsoft.AspNetCore.Razor.Language.dll" FileName="MICROS~2.DLL|Microsoft.AspNetCore.Razor.Language.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.AspNetCore.Razor.Language.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~3.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.dll" Component_="Microsoft.CodeAnalysis.CSharp.dll" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.CSharp.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.CodeAnalysis.CSharp.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.dll" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.dll" FileName="MICROS~5.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.CodeAnalysis.CSharp.Workspaces.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.dll" Component_="Microsoft.CodeAnalysis.dll" FileName="MICROS~6.DLL|Microsoft.CodeAnalysis.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.CodeAnalysis.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Razor.dll" Component_="Microsoft.CodeAnalysis.Razor.dll" FileName="MICROS~7.DLL|Microsoft.CodeAnalysis.Razor.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.CodeAnalysis.Razor.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.dll" Component_="Microsoft.CodeAnalysis.Workspaces.dll" FileName="MICROS~8.DLL|Microsoft.CodeAnalysis.Workspaces.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.CodeAnalysis.Workspaces.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.Sqlite.dll" Component_="Microsoft.Data.Sqlite.dll" FileName="MICROS~9.DLL|Microsoft.Data.Sqlite.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.Data.Sqlite.dll" SelfReg="false"/>
+    <ROW File="Microsoft.DotNet.PlatformAbstractions.dll" Component_="Microsoft.DotNet.PlatformAbstractions.dll" FileName="MICRO~10.DLL|Microsoft.DotNet.PlatformAbstractions.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.DotNet.PlatformAbstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.Abstractions.dll" Component_="Microsoft.EntityFrameworkCore.Abstractions.dll" FileName="MICRO~11.DLL|Microsoft.EntityFrameworkCore.Abstractions.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.EntityFrameworkCore.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.dll" Component_="Microsoft.EntityFrameworkCore.dll" FileName="MICRO~12.DLL|Microsoft.EntityFrameworkCore.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.EntityFrameworkCore.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.Relational.dll" Component_="Microsoft.EntityFrameworkCore.Relational.dll" FileName="MICRO~13.DLL|Microsoft.EntityFrameworkCore.Relational.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.EntityFrameworkCore.Relational.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.Sqlite.dll" Component_="Microsoft.EntityFrameworkCore.Sqlite.dll" FileName="MICRO~14.DLL|Microsoft.EntityFrameworkCore.Sqlite.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.EntityFrameworkCore.Sqlite.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Component_="Microsoft.Extensions.DependencyInjection.Abstractions.dll" FileName="MICRO~15.DLL|Microsoft.Extensions.DependencyInjection.Abstractions.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.Extensions.DependencyInjection.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.DependencyInjection.dll" Component_="Microsoft.Extensions.DependencyInjection.dll" FileName="MICRO~16.DLL|Microsoft.Extensions.DependencyInjection.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.Extensions.DependencyInjection.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.DependencyModel.dll" Component_="Microsoft.Extensions.DependencyModel.dll" FileName="MICRO~17.DLL|Microsoft.Extensions.DependencyModel.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.Extensions.DependencyModel.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.JsonWebTokens.dll" Component_="Microsoft.IdentityModel.JsonWebTokens.dll" FileName="MICRO~18.DLL|Microsoft.IdentityModel.JsonWebTokens.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.IdentityModel.JsonWebTokens.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Logging.dll" Component_="Microsoft.IdentityModel.Logging.dll" FileName="MICRO~19.DLL|Microsoft.IdentityModel.Logging.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.IdentityModel.Logging.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Protocols.dll" Component_="Microsoft.IdentityModel.Protocols.dll" FileName="MICRO~20.DLL|Microsoft.IdentityModel.Protocols.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.IdentityModel.Protocols.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" Component_="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" FileName="MICRO~21.DLL|Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Tokens.dll" Component_="Microsoft.IdentityModel.Tokens.dll" FileName="MICRO~22.DLL|Microsoft.IdentityModel.Tokens.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.IdentityModel.Tokens.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll" FileName="MICRO~23.DLL|Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll" FileName="MICRO~24.DLL|Microsoft.VisualStudio.Web.CodeGeneration.Core.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGeneration.dll" Component_="Microsoft.VisualStudio.Web.CodeGeneration.dll" FileName="MICRO~25.DLL|Microsoft.VisualStudio.Web.CodeGeneration.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGeneration.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll" Component_="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll" FileName="MICRO~26.DLL|Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll" FileName="MICRO~27.DLL|Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll" FileName="MICRO~28.DLL|Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll" SelfReg="false"/>
+    <ROW File="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll" Component_="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll" FileName="MICRO~29.DLL|Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Win32.SystemEvents.dll" Component_="Microsoft.Win32.SystemEvents.dll" FileName="MICRO~30.DLL|Microsoft.Win32.SystemEvents.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Microsoft.Win32.SystemEvents.dll" SelfReg="false"/>
+    <ROW File="Newtonsoft.Json.dll" Component_="Newtonsoft.Json.dll" FileName="NEWTON~1.DLL|Newtonsoft.Json.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\Newtonsoft.Json.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_19" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_19" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pl\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_19" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_19" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_19" Component_="Microsoft.CodeAnalysis.resources.dll_19" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pl\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_19" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_19" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="PrivateKey.json" Component_="PrivateKey.json" FileName="PRIVAT~1.JSO|PrivateKey.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\PrivateKey\PrivateKey.json" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_20" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_20" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_20" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_20" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_20" Component_="Microsoft.CodeAnalysis.resources.dll_20" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pt-BR\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_20" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_20" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_21" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_21" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ru\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_21" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_21" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_21" Component_="Microsoft.CodeAnalysis.resources.dll_21" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ru\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_21" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_21" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so" Component_="libe_sqlite3.so" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\alpine-x64\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_8" Component_="libe_sqlite3.so_8" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-arm\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_9" Component_="libe_sqlite3.so_9" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-arm64\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_10" Component_="libe_sqlite3.so_10" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-armel\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_11" Component_="libe_sqlite3.so_11" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-mips64\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_12" Component_="libe_sqlite3.so_12" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-musl-x64\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_13" Component_="libe_sqlite3.so_13" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-s390x\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_14" Component_="libe_sqlite3.so_14" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-x64\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.so_15" Component_="libe_sqlite3.so_15" FileName="LIBE_S~1.SO|libe_sqlite3.so" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\linux-x86\native\libe_sqlite3.so" SelfReg="false"/>
+    <ROW File="libe_sqlite3.dylib" Component_="libe_sqlite3.dylib" FileName="LIBE_S~1.DYL|libe_sqlite3.dylib" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\osx-arm64\native\libe_sqlite3.dylib" SelfReg="false"/>
+    <ROW File="libe_sqlite3.dylib_1" Component_="libe_sqlite3.dylib_1" FileName="LIBE_S~1.DYL|libe_sqlite3.dylib" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\osx-x64\native\libe_sqlite3.dylib" SelfReg="false"/>
+    <ROW File="System.Data.SqlClient.dll" Component_="System.Data.SqlClient.dll" FileName="SYSTEM~1.DLL|System.Data.SqlClient.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll" SelfReg="false"/>
+    <ROW File="System.Drawing.Common.dll" Component_="System.Drawing.Common.dll" FileName="SYSTEM~1.DLL|System.Drawing.Common.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\unix\lib\netcoreapp3.1\System.Drawing.Common.dll" SelfReg="false"/>
+    <ROW File="System.Data.SqlClient.dll_3" Component_="System.Data.SqlClient.dll_3" FileName="SYSTEM~1.DLL|System.Data.SqlClient.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Win32.SystemEvents.dll_2" Component_="Microsoft.Win32.SystemEvents.dll_2" FileName="MICROS~1.DLL|Microsoft.Win32.SystemEvents.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win\lib\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll" SelfReg="false"/>
+    <ROW File="System.Drawing.Common.dll_3" Component_="System.Drawing.Common.dll_3" FileName="SYSTEM~1.DLL|System.Drawing.Common.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win\lib\netcoreapp3.1\System.Drawing.Common.dll" SelfReg="false"/>
+    <ROW File="System.Windows.Extensions.dll" Component_="System.Windows.Extensions.dll" FileName="SYSTEM~2.DLL|System.Windows.Extensions.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win\lib\netcoreapp3.1\System.Windows.Extensions.dll" SelfReg="false"/>
+    <ROW File="System.Security.Cryptography.ProtectedData.dll" Component_="System.Security.Cryptography.ProtectedData.dll" FileName="SYSTEM~1.DLL|System.Security.Cryptography.ProtectedData.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll" SelfReg="false"/>
+    <ROW File="dotnetaspnetcodegeneratordesign.exe" Component_="dotnetaspnetcodegeneratordesign.exe" FileName="DOTNET~1.EXE|dotnet-aspnet-codegenerator-design.exe" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe" SelfReg="false"/>
+    <ROW File="e_sqlite3.dll" Component_="e_sqlite3.dll" FileName="E_SQLI~1.DLL|e_sqlite3.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-arm\native\e_sqlite3.dll" SelfReg="false"/>
+    <ROW File="dotnetaspnetcodegeneratordesign.exe_1" Component_="dotnetaspnetcodegeneratordesign.exe_1" FileName="DOTNET~1.EXE|dotnet-aspnet-codegenerator-design.exe" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe" SelfReg="false"/>
+    <ROW File="e_sqlite3.dll_4" Component_="e_sqlite3.dll_4" FileName="E_SQLI~1.DLL|e_sqlite3.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-arm64\native\e_sqlite3.dll" SelfReg="false"/>
+    <ROW File="sni.dll" Component_="sni.dll" FileName="sni.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-arm64\native\sni.dll" SelfReg="false"/>
+    <ROW File="e_sqlite3.dll_5" Component_="e_sqlite3.dll_5" FileName="E_SQLI~1.DLL|e_sqlite3.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-x64\native\e_sqlite3.dll" SelfReg="false"/>
+    <ROW File="sni.dll_3" Component_="sni.dll_3" FileName="sni.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-x64\native\sni.dll" SelfReg="false"/>
+    <ROW File="e_sqlite3.dll_6" Component_="e_sqlite3.dll_6" FileName="E_SQLI~1.DLL|e_sqlite3.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-x86\native\e_sqlite3.dll" SelfReg="false"/>
+    <ROW File="sni.dll_4" Component_="sni.dll_4" FileName="sni.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\runtimes\win-x86\native\sni.dll" SelfReg="false"/>
+    <ROW File="ServerAuthorization.deps.json" Component_="appsettings.Development.json" FileName="SERVER~1.JSO|ServerAuthorization.deps.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.deps.json" SelfReg="false"/>
+    <ROW File="ServerAuthorization.dll" Component_="ServerAuthorization.dll" FileName="SERVER~1.DLL|ServerAuthorization.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.dll" SelfReg="false"/>
+    <ROW File="ServerAuthorization.dll.config" Component_="appsettings.Development.json" FileName="SERVER~1.CON|ServerAuthorization.dll.config" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.dll.config" SelfReg="false"/>
+    <ROW File="ServerAuthorization.exe" Component_="ServerAuthorization.exe" FileName="SERVER~1.EXE|ServerAuthorization.exe" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="ServerAuthorization.json" Component_="appsettings.Development.json" FileName="SERVER~2.JSO|ServerAuthorization.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.json" SelfReg="false"/>
+    <ROW File="ServerAuthorization.pdb" Component_="ServerAuthorization.exe" FileName="SERVER~1.PDB|ServerAuthorization.pdb" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.pdb" SelfReg="false"/>
+    <ROW File="ServerAuthorization.runtimeconfig.json" Component_="appsettings.Development.json" FileName="SERVER~3.JSO|ServerAuthorization.runtimeconfig.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.runtimeconfig.json" SelfReg="false"/>
+    <ROW File="ServerAuthorization.Views.dll" Component_="ServerAuthorization.Views.dll" FileName="SERVER~2.DLL|ServerAuthorization.Views.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.Views.dll" SelfReg="false"/>
+    <ROW File="ServerAuthorization.Views.pdb" Component_="ServerAuthorization.Views.dll" FileName="SERVER~2.PDB|ServerAuthorization.Views.pdb" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\ServerAuthorization.Views.pdb" SelfReg="false"/>
+    <ROW File="SQLitePCLRaw.batteries_v2.dll" Component_="SQLitePCLRaw.batteries_v2.dll" FileName="SQLITE~1.DLL|SQLitePCLRaw.batteries_v2.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\SQLitePCLRaw.batteries_v2.dll" SelfReg="false"/>
+    <ROW File="SQLitePCLRaw.core.dll" Component_="SQLitePCLRaw.core.dll" FileName="SQLITE~2.DLL|SQLitePCLRaw.core.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\SQLitePCLRaw.core.dll" SelfReg="false"/>
+    <ROW File="SQLitePCLRaw.provider.e_sqlite3.dll" Component_="SQLitePCLRaw.provider.e_sqlite3.dll" FileName="SQLITE~3.DLL|SQLitePCLRaw.provider.e_sqlite3.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\SQLitePCLRaw.provider.e_sqlite3.dll" SelfReg="false"/>
+    <ROW File="System.CodeDom.dll" Component_="System.CodeDom.dll" FileName="SYSTEM~1.DLL|System.CodeDom.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.CodeDom.dll" SelfReg="false"/>
+    <ROW File="System.Composition.AttributedModel.dll" Component_="System.Composition.AttributedModel.dll" FileName="SYSTEM~2.DLL|System.Composition.AttributedModel.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Composition.AttributedModel.dll" SelfReg="false"/>
+    <ROW File="System.Composition.Convention.dll" Component_="System.Composition.Convention.dll" FileName="SYSTEM~3.DLL|System.Composition.Convention.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Composition.Convention.dll" SelfReg="false"/>
+    <ROW File="System.Composition.Hosting.dll" Component_="System.Composition.Hosting.dll" FileName="SYSTEM~4.DLL|System.Composition.Hosting.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Composition.Hosting.dll" SelfReg="false"/>
+    <ROW File="System.Composition.Runtime.dll" Component_="System.Composition.Runtime.dll" FileName="SYSTEM~5.DLL|System.Composition.Runtime.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Composition.Runtime.dll" SelfReg="false"/>
+    <ROW File="System.Composition.TypedParts.dll" Component_="System.Composition.TypedParts.dll" FileName="SYSTEM~6.DLL|System.Composition.TypedParts.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Composition.TypedParts.dll" SelfReg="false"/>
+    <ROW File="System.Configuration.ConfigurationManager.dll" Component_="System.Configuration.ConfigurationManager.dll" FileName="SYSTEM~7.DLL|System.Configuration.ConfigurationManager.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Configuration.ConfigurationManager.dll" SelfReg="false"/>
+    <ROW File="System.Data.SqlClient.dll_4" Component_="System.Data.SqlClient.dll_4" FileName="SYSTEM~8.DLL|System.Data.SqlClient.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Data.SqlClient.dll" SelfReg="false"/>
+    <ROW File="System.Diagnostics.DiagnosticSource.dll" Component_="System.Diagnostics.DiagnosticSource.dll" FileName="SYSTEM~9.DLL|System.Diagnostics.DiagnosticSource.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Diagnostics.DiagnosticSource.dll" SelfReg="false"/>
+    <ROW File="System.Drawing.Common.dll_4" Component_="System.Drawing.Common.dll_4" FileName="SYSTE~10.DLL|System.Drawing.Common.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Drawing.Common.dll" SelfReg="false"/>
+    <ROW File="System.IdentityModel.Tokens.Jwt.dll" Component_="System.IdentityModel.Tokens.Jwt.dll" FileName="SYSTE~11.DLL|System.IdentityModel.Tokens.Jwt.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.IdentityModel.Tokens.Jwt.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTE~12.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Security.Cryptography.ProtectedData.dll_2" Component_="System.Security.Cryptography.ProtectedData.dll_2" FileName="SYSTE~13.DLL|System.Security.Cryptography.ProtectedData.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Security.Cryptography.ProtectedData.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll" Component_="System.Text.Encodings.Web.dll" FileName="SYSTE~14.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll" Component_="System.Text.Json.dll" FileName="SYSTE~15.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="System.Windows.Extensions.dll_2" Component_="System.Windows.Extensions.dll_2" FileName="SYSTE~16.DLL|System.Windows.Extensions.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\System.Windows.Extensions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_22" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_22" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\tr\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_22" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_22" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_22" Component_="Microsoft.CodeAnalysis.resources.dll_22" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\tr\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_22" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_22" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="web.config" Component_="appsettings.Development.json" FileName="WEB~1.CON|web.config" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\web.config" SelfReg="false"/>
+    <ROW File="site.css" Component_="site.css" FileName="site.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\css\site.css" SelfReg="false"/>
+    <ROW File="favicon.ico" Component_="favicon.ico" FileName="favicon.ico" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\favicon.ico" SelfReg="false"/>
+    <ROW File="site.js" Component_="site.js" FileName="site.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\js\site.js" SelfReg="false"/>
+    <ROW File="bootstrapgrid.css" Component_="bootstrapgrid.css" FileName="BOOTST~1.CSS|bootstrap-grid.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" SelfReg="false"/>
+    <ROW File="bootstrapgrid.css.map" Component_="bootstrapgrid.css" FileName="BOOTST~1.MAP|bootstrap-grid.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" SelfReg="false"/>
+    <ROW File="bootstrapgrid.min.css" Component_="bootstrapgrid.css" FileName="BOOTST~2.CSS|bootstrap-grid.min.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" SelfReg="false"/>
+    <ROW File="bootstrapgrid.min.css.map" Component_="bootstrapgrid.css" FileName="BOOTST~2.MAP|bootstrap-grid.min.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" SelfReg="false"/>
+    <ROW File="bootstrapreboot.css" Component_="bootstrapgrid.css" FileName="BOOTST~3.CSS|bootstrap-reboot.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" SelfReg="false"/>
+    <ROW File="bootstrapreboot.css.map" Component_="bootstrapgrid.css" FileName="BOOTST~3.MAP|bootstrap-reboot.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" SelfReg="false"/>
+    <ROW File="bootstrapreboot.min.css" Component_="bootstrapgrid.css" FileName="BOOTST~4.CSS|bootstrap-reboot.min.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" SelfReg="false"/>
+    <ROW File="bootstrapreboot.min.css.map" Component_="bootstrapgrid.css" FileName="BOOTST~4.MAP|bootstrap-reboot.min.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" SelfReg="false"/>
+    <ROW File="bootstrap.css" Component_="bootstrapgrid.css" FileName="BOOTST~5.CSS|bootstrap.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap.css" SelfReg="false"/>
+    <ROW File="bootstrap.css.map" Component_="bootstrapgrid.css" FileName="BOOTST~5.MAP|bootstrap.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" SelfReg="false"/>
+    <ROW File="bootstrap.min.css" Component_="bootstrapgrid.css" FileName="BOOTST~6.CSS|bootstrap.min.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" SelfReg="false"/>
+    <ROW File="bootstrap.min.css.map" Component_="bootstrapgrid.css" FileName="BOOTST~6.MAP|bootstrap.min.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.js" Component_="bootstrap.bundle.js" FileName="BOOTST~1.JS|bootstrap.bundle.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.js.map" Component_="bootstrap.bundle.js" FileName="BOOTST~1.MAP|bootstrap.bundle.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.min.js" Component_="bootstrap.bundle.js" FileName="BOOTST~2.JS|bootstrap.bundle.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.min.js.map" Component_="bootstrap.bundle.js" FileName="BOOTST~2.MAP|bootstrap.bundle.min.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" SelfReg="false"/>
+    <ROW File="bootstrap.js" Component_="bootstrap.bundle.js" FileName="BOOTST~3.JS|bootstrap.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.js" SelfReg="false"/>
+    <ROW File="bootstrap.js.map" Component_="bootstrap.bundle.js" FileName="BOOTST~3.MAP|bootstrap.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" SelfReg="false"/>
+    <ROW File="bootstrap.min.js" Component_="bootstrap.bundle.js" FileName="BOOTST~4.JS|bootstrap.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" SelfReg="false"/>
+    <ROW File="bootstrap.min.js.map" Component_="bootstrap.bundle.js" FileName="BOOTST~4.MAP|bootstrap.min.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" SelfReg="false"/>
+    <ROW File="LICENSE" Component_="LICENSE" FileName="LICENSE" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\bootstrap\LICENSE" SelfReg="false"/>
+    <ROW File="jquery.js" Component_="jquery.js" FileName="jquery.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery\dist\jquery.js" SelfReg="false"/>
+    <ROW File="jquery.min.js" Component_="jquery.js" FileName="JQUERY~1.JS|jquery.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery\dist\jquery.min.js" SelfReg="false"/>
+    <ROW File="jquery.min.map" Component_="jquery.js" FileName="JQUERY~1.MAP|jquery.min.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery\dist\jquery.min.map" SelfReg="false"/>
+    <ROW File="LICENSE.txt" Component_="LICENSE.txt" FileName="LICENSE.txt" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery\LICENSE.txt" SelfReg="false"/>
+    <ROW File="additionalmethods.js" Component_="additionalmethods.js" FileName="ADDITI~1.JS|additional-methods.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation\dist\additional-methods.js" SelfReg="false"/>
+    <ROW File="additionalmethods.min.js" Component_="additionalmethods.js" FileName="ADDITI~2.JS|additional-methods.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation\dist\additional-methods.min.js" SelfReg="false"/>
+    <ROW File="jquery.validate.js" Component_="additionalmethods.js" FileName="JQUERY~1.JS|jquery.validate.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation\dist\jquery.validate.js" SelfReg="false"/>
+    <ROW File="jquery.validate.min.js" Component_="additionalmethods.js" FileName="JQUERY~2.JS|jquery.validate.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" SelfReg="false"/>
+    <ROW File="LICENSE.md" Component_="LICENSE.md" FileName="LICENSE.md" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation\LICENSE.md" SelfReg="false"/>
+    <ROW File="jquery.validate.unobtrusive.js" Component_="jquery.validate.unobtrusive.js" FileName="JQUERY~1.JS|jquery.validate.unobtrusive.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" SelfReg="false"/>
+    <ROW File="jquery.validate.unobtrusive.min.js" Component_="jquery.validate.unobtrusive.js" FileName="JQUERY~2.JS|jquery.validate.unobtrusive.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" SelfReg="false"/>
+    <ROW File="LICENSE.txt_2" Component_="jquery.validate.unobtrusive.js" FileName="LICENSE.txt" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_23" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_23" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_23" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_23" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_23" Component_="Microsoft.CodeAnalysis.resources.dll_23" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hans\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_23" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_23" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll_24" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_24" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_24" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_24" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_24" Component_="Microsoft.CodeAnalysis.resources.dll_24" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hant\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_24" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_24" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\Auth\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="appsettings.Development.json_1" Component_="appsettings.Development.json_1" FileName="APPSET~1.JSO|appsettings.Development.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\appsettings.Development.json" SelfReg="false"/>
+    <ROW File="appsettings.json_1" Component_="appsettings.Development.json_1" FileName="APPSET~2.JSO|appsettings.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\appsettings.json" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Authentication.JwtBearer.dll_1" Component_="Microsoft.AspNetCore.Authentication.JwtBearer.dll_1" FileName="MICROS~1.DLL|Microsoft.AspNetCore.Authentication.JwtBearer.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Microsoft.AspNetCore.Authentication.JwtBearer.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.JsonWebTokens.dll_1" Component_="Microsoft.IdentityModel.JsonWebTokens.dll_1" FileName="MICROS~2.DLL|Microsoft.IdentityModel.JsonWebTokens.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Microsoft.IdentityModel.JsonWebTokens.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Logging.dll_1" Component_="Microsoft.IdentityModel.Logging.dll_1" FileName="MICROS~3.DLL|Microsoft.IdentityModel.Logging.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Microsoft.IdentityModel.Logging.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Protocols.dll_1" Component_="Microsoft.IdentityModel.Protocols.dll_1" FileName="MICROS~4.DLL|Microsoft.IdentityModel.Protocols.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Microsoft.IdentityModel.Protocols.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll_1" Component_="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll_1" FileName="MICROS~5.DLL|Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Tokens.dll_1" Component_="Microsoft.IdentityModel.Tokens.dll_1" FileName="MICROS~6.DLL|Microsoft.IdentityModel.Tokens.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Microsoft.IdentityModel.Tokens.dll" SelfReg="false"/>
+    <ROW File="Newtonsoft.Json.dll_1" Component_="Newtonsoft.Json.dll_1" FileName="NEWTON~1.DLL|Newtonsoft.Json.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\Newtonsoft.Json.dll" SelfReg="false"/>
+    <ROW File="PublicKey.json" Component_="PublicKey.json" FileName="PUBLIC~1.JSO|PublicKey.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\PublicKey\PublicKey.json" SelfReg="false"/>
+    <ROW File="ServerChat.json" Component_="appsettings.Development.json_1" FileName="SERVER~1.JSO|ServerChat.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\ServerChat.json" SelfReg="false"/>
+    <ROW File="SignalRLibrary.dll" Component_="SignalRLibrary.dll" FileName="SIGNAL~1.DLL|SignalRLibrary.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRLibrary.dll" SelfReg="false"/>
+    <ROW File="SignalRLibrary.pdb" Component_="SignalRLibrary.dll" FileName="SIGNAL~1.PDB|SignalRLibrary.pdb" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRLibrary.pdb" SelfReg="false"/>
+    <ROW File="SignalRServ.deps.json" Component_="appsettings.Development.json_1" FileName="SIGNAL~1.JSO|SignalRServ.deps.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.deps.json" SelfReg="false"/>
+    <ROW File="SignalRServ.dll" Component_="SignalRServ.dll" FileName="SIGNAL~2.DLL|SignalRServ.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.dll" SelfReg="false"/>
+    <ROW File="SignalRServ.exe" Component_="SignalRServ.exe" FileName="SIGNAL~1.EXE|SignalRServ.exe" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="SignalRServ.pdb" Component_="SignalRServ.exe" FileName="SIGNAL~2.PDB|SignalRServ.pdb" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.pdb" SelfReg="false"/>
+    <ROW File="SignalRServ.runtimeconfig.json" Component_="appsettings.Development.json_1" FileName="SIGNAL~2.JSO|SignalRServ.runtimeconfig.json" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.runtimeconfig.json" SelfReg="false"/>
+    <ROW File="SignalRServ.Views.dll" Component_="SignalRServ.Views.dll" FileName="SIGNAL~3.DLL|SignalRServ.Views.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.Views.dll" SelfReg="false"/>
+    <ROW File="SignalRServ.Views.pdb" Component_="SignalRServ.Views.dll" FileName="SIGNAL~3.PDB|SignalRServ.Views.pdb" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\SignalRServ.Views.pdb" SelfReg="false"/>
+    <ROW File="System.IdentityModel.Tokens.Jwt.dll_1" Component_="System.IdentityModel.Tokens.Jwt.dll_1" FileName="SYSTEM~1.DLL|System.IdentityModel.Tokens.Jwt.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\System.IdentityModel.Tokens.Jwt.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.CompilerServices.Unsafe.dll_1" Component_="System.Runtime.CompilerServices.Unsafe.dll_1" FileName="SYSTEM~2.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
+    <ROW File="System.Text.Encodings.Web.dll_1" Component_="System.Text.Encodings.Web.dll_1" FileName="SYSTEM~3.DLL|System.Text.Encodings.Web.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\System.Text.Encodings.Web.dll" SelfReg="false"/>
+    <ROW File="System.Text.Json.dll_1" Component_="System.Text.Json.dll_1" FileName="SYSTEM~4.DLL|System.Text.Json.dll" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\System.Text.Json.dll" SelfReg="false"/>
+    <ROW File="web.config_1" Component_="appsettings.Development.json_1" FileName="WEB~1.CON|web.config" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\web.config" SelfReg="false"/>
+    <ROW File="site.css_1" Component_="site.css_1" FileName="site.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\css\site.css" SelfReg="false"/>
+    <ROW File="favicon.ico_1" Component_="favicon.ico_1" FileName="favicon.ico" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\favicon.ico" SelfReg="false"/>
+    <ROW File="site.js_1" Component_="site.js_1" FileName="site.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\js\site.js" SelfReg="false"/>
+    <ROW File="bootstrapgrid.css_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~1.CSS|bootstrap-grid.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" SelfReg="false"/>
+    <ROW File="bootstrapgrid.css.map_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~1.MAP|bootstrap-grid.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" SelfReg="false"/>
+    <ROW File="bootstrapgrid.min.css_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~2.CSS|bootstrap-grid.min.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" SelfReg="false"/>
+    <ROW File="bootstrapgrid.min.css.map_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~2.MAP|bootstrap-grid.min.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" SelfReg="false"/>
+    <ROW File="bootstrapreboot.css_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~3.CSS|bootstrap-reboot.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" SelfReg="false"/>
+    <ROW File="bootstrapreboot.css.map_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~3.MAP|bootstrap-reboot.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" SelfReg="false"/>
+    <ROW File="bootstrapreboot.min.css_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~4.CSS|bootstrap-reboot.min.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" SelfReg="false"/>
+    <ROW File="bootstrapreboot.min.css.map_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~4.MAP|bootstrap-reboot.min.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" SelfReg="false"/>
+    <ROW File="bootstrap.css_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~5.CSS|bootstrap.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap.css" SelfReg="false"/>
+    <ROW File="bootstrap.css.map_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~5.MAP|bootstrap.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" SelfReg="false"/>
+    <ROW File="bootstrap.min.css_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~6.CSS|bootstrap.min.css" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" SelfReg="false"/>
+    <ROW File="bootstrap.min.css.map_1" Component_="bootstrapgrid.css_1" FileName="BOOTST~6.MAP|bootstrap.min.css.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.js_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~1.JS|bootstrap.bundle.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.js.map_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~1.MAP|bootstrap.bundle.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.min.js_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~2.JS|bootstrap.bundle.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" SelfReg="false"/>
+    <ROW File="bootstrap.bundle.min.js.map_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~2.MAP|bootstrap.bundle.min.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" SelfReg="false"/>
+    <ROW File="bootstrap.js_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~3.JS|bootstrap.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.js" SelfReg="false"/>
+    <ROW File="bootstrap.js.map_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~3.MAP|bootstrap.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" SelfReg="false"/>
+    <ROW File="bootstrap.min.js_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~4.JS|bootstrap.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" SelfReg="false"/>
+    <ROW File="bootstrap.min.js.map_1" Component_="bootstrap.bundle.js_1" FileName="BOOTST~4.MAP|bootstrap.min.js.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" SelfReg="false"/>
+    <ROW File="LICENSE_1" Component_="LICENSE_1" FileName="LICENSE" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\bootstrap\LICENSE" SelfReg="false"/>
+    <ROW File="jquery.js_1" Component_="jquery.js_1" FileName="jquery.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery\dist\jquery.js" SelfReg="false"/>
+    <ROW File="jquery.min.js_1" Component_="jquery.js_1" FileName="JQUERY~1.JS|jquery.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery\dist\jquery.min.js" SelfReg="false"/>
+    <ROW File="jquery.min.map_1" Component_="jquery.js_1" FileName="JQUERY~1.MAP|jquery.min.map" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery\dist\jquery.min.map" SelfReg="false"/>
+    <ROW File="LICENSE.txt_3" Component_="LICENSE.txt_1" FileName="LICENSE.txt" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery\LICENSE.txt" SelfReg="false"/>
+    <ROW File="additionalmethods.js_1" Component_="additionalmethods.js_1" FileName="ADDITI~1.JS|additional-methods.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation\dist\additional-methods.js" SelfReg="false"/>
+    <ROW File="additionalmethods.min.js_1" Component_="additionalmethods.js_1" FileName="ADDITI~2.JS|additional-methods.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation\dist\additional-methods.min.js" SelfReg="false"/>
+    <ROW File="jquery.validate.js_1" Component_="additionalmethods.js_1" FileName="JQUERY~1.JS|jquery.validate.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation\dist\jquery.validate.js" SelfReg="false"/>
+    <ROW File="jquery.validate.min.js_1" Component_="additionalmethods.js_1" FileName="JQUERY~2.JS|jquery.validate.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" SelfReg="false"/>
+    <ROW File="LICENSE.md_1" Component_="LICENSE.md_1" FileName="LICENSE.md" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation\LICENSE.md" SelfReg="false"/>
+    <ROW File="jquery.validate.unobtrusive.js_1" Component_="jquery.validate.unobtrusive.js_1" FileName="JQUERY~1.JS|jquery.validate.unobtrusive.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" SelfReg="false"/>
+    <ROW File="jquery.validate.unobtrusive.min.js_1" Component_="jquery.validate.unobtrusive.js_1" FileName="JQUERY~2.JS|jquery.validate.unobtrusive.min.js" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" SelfReg="false"/>
+    <ROW File="LICENSE.txt_4" Component_="jquery.validate.unobtrusive.js_1" FileName="LICENSE.txt" Attributes="0" SourcePath="..\..\..\..\Desktop\Новая папка (2)\SignalR\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" Languages="ru" InstallationType="4" UseLargeSchema="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_ru.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
+    <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
+    <ROW Feature_="MainFeature" Component_="appsettings.Development.json"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_13"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_13"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_13"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_13"/>
+    <ROW Feature_="MainFeature" Component_="dotnetaspnetcodegeneratordesign.dll"/>
+    <ROW Feature_="MainFeature" Component_="EntityFramework.dll"/>
+    <ROW Feature_="MainFeature" Component_="EntityFramework.SqlServer.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_14"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_14"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_14"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_14"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_15"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_15"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_15"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_15"/>
+    <ROW Feature_="MainFeature" Component_="Humanizer.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_16"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_16"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_16"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_16"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_17"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_17"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_17"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_17"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_18"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_18"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_18"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_18"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Authentication.JwtBearer.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Razor.Language.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Razor.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.Sqlite.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.DotNet.PlatformAbstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.Relational.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.Sqlite.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.DependencyInjection.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.DependencyModel.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.JsonWebTokens.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Logging.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Protocols.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Tokens.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGeneration.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Win32.SystemEvents.dll"/>
+    <ROW Feature_="MainFeature" Component_="Newtonsoft.Json.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_19"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_19"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_19"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_19"/>
+    <ROW Feature_="MainFeature" Component_="PrivateKey.json"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_20"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_20"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_20"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_20"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_21"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_21"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_21"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_21"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_8"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_9"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_10"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_11"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_12"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_13"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_14"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.so_15"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.dylib"/>
+    <ROW Feature_="MainFeature" Component_="libe_sqlite3.dylib_1"/>
+    <ROW Feature_="MainFeature" Component_="System.Data.SqlClient.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Drawing.Common.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Data.SqlClient.dll_3"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Win32.SystemEvents.dll_2"/>
+    <ROW Feature_="MainFeature" Component_="System.Drawing.Common.dll_3"/>
+    <ROW Feature_="MainFeature" Component_="System.Windows.Extensions.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Cryptography.ProtectedData.dll"/>
+    <ROW Feature_="MainFeature" Component_="dotnetaspnetcodegeneratordesign.exe"/>
+    <ROW Feature_="MainFeature" Component_="e_sqlite3.dll"/>
+    <ROW Feature_="MainFeature" Component_="dotnetaspnetcodegeneratordesign.exe_1"/>
+    <ROW Feature_="MainFeature" Component_="e_sqlite3.dll_4"/>
+    <ROW Feature_="MainFeature" Component_="sni.dll"/>
+    <ROW Feature_="MainFeature" Component_="e_sqlite3.dll_5"/>
+    <ROW Feature_="MainFeature" Component_="sni.dll_3"/>
+    <ROW Feature_="MainFeature" Component_="e_sqlite3.dll_6"/>
+    <ROW Feature_="MainFeature" Component_="sni.dll_4"/>
+    <ROW Feature_="MainFeature" Component_="ServerAuthorization.dll"/>
+    <ROW Feature_="MainFeature" Component_="ServerAuthorization.exe"/>
+    <ROW Feature_="MainFeature" Component_="ServerAuthorization.Views.dll"/>
+    <ROW Feature_="MainFeature" Component_="SQLitePCLRaw.batteries_v2.dll"/>
+    <ROW Feature_="MainFeature" Component_="SQLitePCLRaw.core.dll"/>
+    <ROW Feature_="MainFeature" Component_="SQLitePCLRaw.provider.e_sqlite3.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.CodeDom.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Composition.AttributedModel.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Composition.Convention.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Composition.Hosting.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Composition.Runtime.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Composition.TypedParts.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Configuration.ConfigurationManager.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Data.SqlClient.dll_4"/>
+    <ROW Feature_="MainFeature" Component_="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Drawing.Common.dll_4"/>
+    <ROW Feature_="MainFeature" Component_="System.IdentityModel.Tokens.Jwt.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Runtime.CompilerServices.Unsafe.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Cryptography.ProtectedData.dll_2"/>
+    <ROW Feature_="MainFeature" Component_="System.Text.Encodings.Web.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Text.Json.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Windows.Extensions.dll_2"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_22"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_22"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_22"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_22"/>
+    <ROW Feature_="MainFeature" Component_="site.css"/>
+    <ROW Feature_="MainFeature" Component_="favicon.ico"/>
+    <ROW Feature_="MainFeature" Component_="site.js"/>
+    <ROW Feature_="MainFeature" Component_="bootstrapgrid.css"/>
+    <ROW Feature_="MainFeature" Component_="bootstrap.bundle.js"/>
+    <ROW Feature_="MainFeature" Component_="LICENSE"/>
+    <ROW Feature_="MainFeature" Component_="jquery.js"/>
+    <ROW Feature_="MainFeature" Component_="LICENSE.txt"/>
+    <ROW Feature_="MainFeature" Component_="additionalmethods.js"/>
+    <ROW Feature_="MainFeature" Component_="LICENSE.md"/>
+    <ROW Feature_="MainFeature" Component_="jquery.validate.unobtrusive.js"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_23"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_23"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_23"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_23"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll_24"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_24"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_24"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_24"/>
+    <ROW Feature_="MainFeature" Component_="appsettings.Development.json_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Authentication.JwtBearer.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.JsonWebTokens.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Logging.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Protocols.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Tokens.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Newtonsoft.Json.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="PublicKey.json"/>
+    <ROW Feature_="MainFeature" Component_="SignalRLibrary.dll"/>
+    <ROW Feature_="MainFeature" Component_="SignalRServ.dll"/>
+    <ROW Feature_="MainFeature" Component_="SignalRServ.exe"/>
+    <ROW Feature_="MainFeature" Component_="SignalRServ.Views.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.IdentityModel.Tokens.Jwt.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="System.Runtime.CompilerServices.Unsafe.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="System.Text.Encodings.Web.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="System.Text.Json.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="site.css_1"/>
+    <ROW Feature_="MainFeature" Component_="favicon.ico_1"/>
+    <ROW Feature_="MainFeature" Component_="site.js_1"/>
+    <ROW Feature_="MainFeature" Component_="bootstrapgrid.css_1"/>
+    <ROW Feature_="MainFeature" Component_="bootstrap.bundle.js_1"/>
+    <ROW Feature_="MainFeature" Component_="LICENSE_1"/>
+    <ROW Feature_="MainFeature" Component_="jquery.js_1"/>
+    <ROW Feature_="MainFeature" Component_="LICENSE.txt_1"/>
+    <ROW Feature_="MainFeature" Component_="additionalmethods.js_1"/>
+    <ROW Feature_="MainFeature" Component_="LICENSE.md_1"/>
+    <ROW Feature_="MainFeature" Component_="jquery.validate.unobtrusive.js_1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_DpiContentScale" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="Нельзя установить [ProductName] на [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="Нельзя установить [ProductName] на [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="Нельзя установить [ProductName] на [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] не может быть установлен на [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+</DOCUMENT>
