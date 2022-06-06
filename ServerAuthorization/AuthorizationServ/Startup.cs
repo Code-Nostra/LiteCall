@@ -40,7 +40,6 @@ namespace AuthorizationServ
             //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
             try
             {
-
                 var key = JsonNode.Parse(File.ReadAllText(@"PrivateKey\PrivateKey.json"));
                 AuthOptions.SetKey((string)key["Private"]);
             }

@@ -90,8 +90,6 @@ namespace AuthorizationServ.Token
         }
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
-
-            
             //JsonObject key = JsonNode.Parse(new { F=""});
             try
             {
@@ -104,7 +102,6 @@ namespace AuthorizationServ.Token
                 };
                 return claims;
             }
-            
             catch 
             {
                 var claims = new List<Claim>
@@ -116,8 +113,6 @@ namespace AuthorizationServ.Token
                 return claims;
             }
             //AuthOptions.SetKey((string)key["IPchat"]);
-
-            
         }
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] JsonElement guid)

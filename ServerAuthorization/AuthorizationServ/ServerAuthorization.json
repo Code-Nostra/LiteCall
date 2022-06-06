@@ -1,5 +1,4 @@
 {
-  "urls": "https://localhost:4999;",
-  "IPchat":"localhost:4444",
-  "ApiKey": "ACbaAS324hnaASD324bzZwq41"
+  "urls": "https://0.0.0.0:4999;",
+  "IPchat":"https://localhost:4444;"
 }

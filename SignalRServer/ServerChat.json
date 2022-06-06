@@ -1,5 +1,4 @@
 {
-  "urls": "https://localhost:5003;https://localhost:5004;",
-  "IPAuth":"localhost:4999",
-  "ApiKey": "ACbaAS324hnaASD324bzZwq41"
+  "urls": "https://0.0.0.0:5003;https://0.0.0.0:5004;",
+  "IPAuth":"https://localhost:4999;"
 }

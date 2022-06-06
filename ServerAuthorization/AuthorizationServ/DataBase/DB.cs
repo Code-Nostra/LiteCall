@@ -26,7 +26,7 @@ namespace AuthorizationServ
             modelBuilder.Entity<UserDB>().HasData(new UserDB { id=1,Login="admin",Password="asd",Role="admin"});
             modelBuilder.Entity<ServerDB>().HasData(new ServerDB { Id=1,Title= "LiteCall", Description= "Community LiteCall Server" });
         }
-
+       
 
     }
 }

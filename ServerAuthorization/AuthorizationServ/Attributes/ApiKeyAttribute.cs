@@ -24,11 +24,12 @@ namespace ServerAuthorization.Attributes
                 };
                 return;
             }
+            
+            //var appSettings = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
 
-            var appSettings = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-
-            var apiKey = appSettings.GetValue<string>(APIKEYNAME);
-
+            //var apiKey = appSettings.GetValue<string>(APIKEYNAME);
+            
+            string apiKey ="ACbaAS324hnaASD324bzZwq41";
 
             if (!apiKey.Equals(extractedApiKey))
             {
