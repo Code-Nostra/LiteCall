@@ -4,6 +4,7 @@ using ServerAuthorization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace AuthorizationServ.DataBase
@@ -35,9 +36,19 @@ namespace AuthorizationServ.DataBase
             DB db = new DB();
 
             var Server = db.Servers.First();
-
+           
             if (Server != null)
             {
+                try
+                {
+                    var key = JsonNode.Parse(System.IO.File.ReadAllText("ServerAuthorization.json"));
+                    Server.Ip = (string)key["IPchat"];
+                }
+                catch
+                {
+                    Console.WriteLine("Specify chat IP in ServerAuthorization.json");
+                    Server.Ip = "Set the IP of the chat server using IPchat";
+                }
                 return Ok(Server);
             }
             else return Ok(new Server { Title = "LiteCall" });

@@ -32,7 +32,7 @@ namespace AuthorizationServ.Token
             DB db = new DB();
 
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-            if(user==null && (authModel.Password==null|| authModel.Password == string.Empty)) 
+            if(authModel.Password==null|| authModel.Password == string.Empty)
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
 
             if (user != null && user.Password != authModel.Password)
@@ -104,6 +104,7 @@ namespace AuthorizationServ.Token
             }
             catch 
             {
+                Console.WriteLine("Specify chat IP in ServerAuthorization.json");
                 var claims = new List<Claim>
                 {
                 new Claim("Name", User.Login),
@@ -115,17 +116,18 @@ namespace AuthorizationServ.Token
             //AuthOptions.SetKey((string)key["IPchat"]);
         }
         [HttpPost("CaptchaGenerator")]
-        public ActionResult Captcha([FromBody] JsonElement guid)
+        public ActionResult Captcha([FromBody] string guid)
         {
+            if (guid.ToString() == "null" || guid.ToString()==string.Empty) return BadRequest();
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
-            SessionClass.Session.TryAdd(guid.GetProperty("guid").GetString(), code);
-            //SessionClass.Session[guid.ToString()] = code;
+            
+            SessionClass.Session[guid.ToString()] = code;
             #region Сессия
             // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
             // HttpContext.Session.SetString(guid.ToString(), code);
             #endregion
-
+            
             CaptchaImage captcha = new CaptchaImage(code, 60, 30);
             this.Response.Clear();
             Image image = captcha.Image;
