@@ -7,14 +7,13 @@ namespace AuthorizationServ.Token
         [Required]
         [StringLength(maximumLength: 20, MinimumLength = 4)]
         public string Login { get; set; }
-        [Required]
-        [StringLength(maximumLength: 50, MinimumLength = 1)]
+        [StringLength(maximumLength: 50, MinimumLength = 0)]
         public string Password { get; set; }
 
-        [StringLength(maximumLength: 100, MinimumLength = 1)]
+        [StringLength(maximumLength: 100, MinimumLength = 10)]
         public string Guid { get; set; }
 
-        [StringLength(maximumLength: 10, MinimumLength = 1)]
+        [StringLength(maximumLength: 6, MinimumLength = 4)]
         public string Captcha { get; set; }
     }
 }

@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace AuthorizationServ
 {
@@ -33,18 +34,23 @@ namespace AuthorizationServ
             services.AddOptions();
 
             services.AddControllers();
-
             services.AddCors();
 
             //Управление секретами пользователей
             //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
             try
             {
-                var key = JsonNode.Parse(File.ReadAllText(@"PrivateKey\PrivateKey.json"));
+                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"..\files\Key\PrivateKey.json")));
                 AuthOptions.SetKey((string)key["Private"]);
             }
-            catch { Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()); }
-
+            catch 
+            { 
+                Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()+ @"\files\Key\PrivateKey.json");
+                Console.WriteLine("Closing after 10 seconds");
+                Thread.Sleep(10000);
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
+            
             //Для капчи
             services.AddDistributedMemoryCache();
             

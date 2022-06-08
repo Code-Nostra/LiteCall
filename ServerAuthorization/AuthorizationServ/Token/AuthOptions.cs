@@ -14,7 +14,7 @@ namespace AuthorizationServ.Token
     {
         internal const int Lifetime = 10; // время жизни токена - 10 минут
         internal const string Issuer = "LiteCall"; //издатель токена
-        internal const string Audience = "ClientLiteCall"; //потребитель токена
+        internal const string Audience = "LiteCallChat"; //потребитель токена
 
         //public static SecurityKey PublicKey=GetPublicKey();    
         public static SecurityKey PrivateKey;//= GetPrivateKey();

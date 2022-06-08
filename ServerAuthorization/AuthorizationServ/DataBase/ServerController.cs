@@ -53,7 +53,21 @@ namespace AuthorizationServ.DataBase
             }
             else return Ok(new Server { Title = "LiteCall" });
         }
-        
+        [HttpPost("ServerGetIP")]
+        public IActionResult ServerGetIP()
+        {
+            DB db = new DB();
+
+            var Server = db.Servers.First();
+
+            if (Server != null)
+            {
+                return Ok(Server.Ip);
+            }
+            else return BadRequest();
+        }
+
+
         // [HttpGet("ServerAll")]
         //public IActionResult ServerAll()//Вернуть информацию по всем серверам
         //{

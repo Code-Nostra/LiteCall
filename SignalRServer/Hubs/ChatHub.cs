@@ -53,19 +53,14 @@ namespace SignalRServ
         [Authorize(Roles = "User,Admin,Anonymous")]
         public string SetName(string name)
         {
-            if (string.IsNullOrEmpty(name.Trim())) return "Error";
+            if (string.IsNullOrEmpty(name)) return "Error";
             name = name.Trim();
             dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.
                 Base64UrlDecode(Startup.lastToken.Split('.')[1])));
             bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] 
                 == "Anonymous" ? false : true;
-            
-            if (!IsAuthorize)
-            {
-                int temp = db.Users.ToList().Where(a => a.UserName != null && a.UserName.SafeSubstring(0, 
-                    a.UserName.IndexOf('(')).ToLower() == name.ToLower()).Count();
-                name += $"({temp + 1})";
-            }
+            int temp = 0;
+            if (!IsAuthorize) temp = db.Users.ToList().FindAll(x => x.CName?.ToLower() == name.ToLower()).Count+1;
             #region legacy
             //if (IsAuthorize==false &&_auth==true)
             //{
@@ -92,11 +87,15 @@ namespace SignalRServ
             ////if(!IsAuthorize)
             ////    Context.Items["user_name"] = ServerCheckMethods.CheckName(name, IsAuthorize).Result;
             #endregion
-            Context.Items["user_name"] = name;
             var userid = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
-            if (userid != null) userid.UserName = name;
-            Console.WriteLine($"++ {name} logged in {DateTime.Now}");
-            return name;
+            if (userid != null)
+            {
+                userid.UserName = name;
+                userid.Count = temp;
+            }
+            Context.Items["user_name"] = userid.UserName;
+            Console.WriteLine($"++ {userid.UserName}  logged in {DateTime.Now}");
+            return userid.UserName;
         }
         /// <summary>
         /// Подключение к круппе
@@ -104,13 +103,13 @@ namespace SignalRServ
         /// <param name="group"></param>
         /// <returns>true удчаное подключение к группе</returns>
         [Authorize(Roles = "User,Admin,Anonymous")]
-        public bool GroupConnect(string group,string password= null)
+        public bool GroupConnect(string group,string password= "")
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
 
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
-            if (room == null) return false;
-            if(room.Password!=password) return false;
+            if (room == null || room.Password != password ) return false;
+
             var user = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
             room.Users.Add(user);
             user._Room = room;
@@ -142,10 +141,9 @@ namespace SignalRServ
             return Task.CompletedTask;
         }
         [Authorize(Roles = "User,Admin,Anonymous")]
-        public bool GroupCreate(string group,string password=null)
+        public bool GroupCreate(string group,string password="")
         {
-
-            var room = db.Rooms.Find(a => a.RoomName.ToLower().Trim() == group);
+            var room = db.Rooms.Find(a => a.RoomName.ToLower().Trim() == group.ToLower().Trim());
             if (room == null)
             {
                 if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
@@ -159,7 +157,7 @@ namespace SignalRServ
                 db.Rooms.Add(cr);
                 GroupConnect(group,password);
                 Context.Items["user_group"] = group;
-                Console.WriteLine($"++ group {group} сreated {DateTime.Now}");
+                Console.WriteLine($"++ group {group} created {DateTime.Now}");
                 return true;
             }
             return false;
@@ -241,17 +239,8 @@ namespace SignalRServ
             var user = db.Users.ToList().FirstOrDefault(u => u.UserId == Context.ConnectionId);
             if (user != null)
             {
-                //    try
-                //    {
-                //        if (user._Room != null)
-                //            RemoveFromRoom(user._Room.RoomName);
-                db.Users.Remove(user);
+                db.Users.ToList().Remove(user);
             }
-            //    catch (Exception e)
-            //    {
-            //        Console.WriteLine(e);
-            //    }
-            //}
             Clients.All.UpdateRooms();
             return base.OnDisconnectedAsync(exception);
         }
@@ -267,7 +256,6 @@ namespace SignalRServ
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
             if (room != null)
             {
-                //room.Guard
                 return room.Users.ToList().Select(a => new ServerUser(a.UserName)).ToList();
             }
             return new List<ServerUser>() { null };
@@ -289,10 +277,6 @@ namespace SignalRServ
             base.Dispose(disposing);
         }
         #endregion
-
-        public Server GetServerRInfo()
-        {
-            return new Server { Ip = "localhost", City = "Moscow", Country = "Russian", Title="LiteCall main",Description="Тестовый сервер"};
-        }
+        
     }
 }

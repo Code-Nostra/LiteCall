@@ -14,7 +14,6 @@ namespace SignalRLibrary
             Connections = new List<Connection>();
             Rooms = new List<ConversationRoom>();
         }
-
         /// <summary>
         /// Коллекция пользователей
         /// </summary>
@@ -39,7 +38,23 @@ namespace SignalRLibrary
         [Key]
         public string UserId { get; set; }
 
-        public string UserName { get; set; }
+        private string _username;
+        public string UserName
+        {
+            get
+            {
+                return Count != 0?(_username + "(" + Count + ")"):_username;
+            }
+            set { _username = value; }
+        }
+
+        public string CName
+        {
+            get { return _username; }
+            
+        }
+
+
         /// <summary>
         /// Подключённые пользователи
         /// </summary>
@@ -58,6 +73,7 @@ namespace SignalRLibrary
         //}
         #endregion
         
+        public int Count { get; set; }
         ///Чтобы один пользоватль состоял в одной комнате
         public Connection _Connection { get; set; }
 
@@ -105,7 +121,6 @@ namespace SignalRLibrary
 
         public string Password { get; set; }
 
-        private bool _guard;
         public bool Guard
         {
             get
@@ -113,7 +128,6 @@ namespace SignalRLibrary
                 return Password == string.Empty || Password == null ? false : true;
             }
         }
-
         /// <summary>
         /// Список пользователей в комнатах
         /// </summary>

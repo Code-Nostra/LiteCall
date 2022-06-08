@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SignalRServ
 {
@@ -48,11 +49,16 @@ namespace SignalRServ
             #endregion
             try
             {
-                var key = JsonNode.Parse(File.ReadAllText(@"PublicKey\PublicKey.json"));
+                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"..\files\Key\PublicKey.json")));
                 AuthOptions.SetKey((string)key["Public"]);
             }
-            catch { Console.WriteLine("Public key not found "+Directory.GetCurrentDirectory()); }
-            //AuthOptions.SetCertificate();
+            catch 
+            { 
+                Console.WriteLine("Public key not found "+ Path.Combine(Directory.GetCurrentDirectory(), @"..\files\Key\PublicKey.json"));
+                Console.WriteLine("Closing after 10 seconds");
+                Thread.Sleep(10000);
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -119,18 +125,12 @@ namespace SignalRServ
                     };
                 });
 
-            //services.AddHttpsRedirection(options =>
-            //{
-            //    options.HttpsPort = 5001;
-            //});
-
             services.AddAuthorization(options =>
             {
                 options.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
                     .Build();
-               
             });
 
             services.AddSignalR(hubOptions =>
@@ -166,8 +166,8 @@ namespace SignalRServ
             
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
                 endpoints.MapHub<ChatHub>("/LiteCall");
+                endpoints.MapRazorPages();
             });
         }
     }

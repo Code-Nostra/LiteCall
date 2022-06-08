@@ -20,16 +20,31 @@ namespace AuthorizationServ
             {
                 db.Database.Migrate();
             }
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("ServerAuthorization.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),@"..\files\ServerAuthorization.json"), optional: true, reloadOnChange: true)
                             .Build();
-            
+            if (!string.IsNullOrEmpty(config["urls"]))
+            {
+                if (!config["urls"].Contains("https"))
+                {
+                    config["urls"] = ("https://" + config["urls"]);
+                }
+            }
+
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

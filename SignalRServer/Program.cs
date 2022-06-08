@@ -22,8 +22,15 @@ namespace SignalRServ
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("ServerChat.json", optional: true, reloadOnChange: true)
+                .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),@"..\files\ServerChat.json"), optional: true, reloadOnChange: true)
                 .Build();
+            if (!string.IsNullOrEmpty(config["urls"]))
+                {
+                if (!config["urls"].Contains("https"))
+                {
+                    config["urls"] = ("https://" + config["urls"]);
+                }
+            }
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

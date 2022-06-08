@@ -25,14 +25,10 @@ namespace AuthorizationServ.Token
         [HttpPost("Authorization")]
         public IActionResult Authorization([FromBody] AuthModel authModel)//Авторизация
         {
-            //if (authModel.Captcha != SessionClass.Session[authModel.Guid])
-            //{
-            //    return BadRequest("Капча неверна ");
-            //}g
             DB db = new DB();
 
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-            if(authModel.Password==null|| authModel.Password == string.Empty)
+            if(authModel.Password==null || authModel.Password == string.Empty || authModel.Password?.ToString()=="null")
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
 
             if (user != null && user.Password != authModel.Password)
@@ -48,24 +44,25 @@ namespace AuthorizationServ.Token
         public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
         {
             if (authModel.Guid == null) return NoContent();
+            if(authModel.Password.Length<6) return BadRequest("Password length is too short");
             string ServerCaptcha;
             SessionClass.Session.TryGetValue(authModel.Guid, out ServerCaptcha);
-            
-                try
-                {
-                    if (authModel.Captcha != ServerCaptcha)
-                    {
-                        return BadRequest("Captcha was not correct");
-                    }
-                }
-                catch
+            try
+            {
+                if (authModel.Captcha != ServerCaptcha)
                 {
                     return BadRequest("Captcha was not correct");
                 }
+            }
+            catch
+            {
+                return BadRequest("Captcha was not correct");
+            }
+
             SessionClass.Session.Remove(authModel.Guid);
             DB db = new DB();
             var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == authModel.Login.Trim().ToLower());
-            if (user != null) return Conflict(($"User name {0} is already taken",authModel.Login));
+            if (user != null) return Conflict(($"User name"+ authModel.Login+" is already taken"));
             //!!!
             var NewUser = db.Users.Add(new UserDB { Login = authModel.Login.Trim(), 
                 Password = authModel.Password, Role = "User" }).Entity;
@@ -90,30 +87,23 @@ namespace AuthorizationServ.Token
         }
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
-            //JsonObject key = JsonNode.Parse(new { F=""});
+            string IP;
             try
             {
-                var key= JsonNode.Parse(System.IO.File.ReadAllText("ServerAuthorization.json"));
-                var claims = new List<Claim>
-                {
-                new Claim("Name", User.Login),
-                new Claim(ClaimTypes.Role,User.Role),
-                new Claim("IP",(string)((key["IPchat"]==null|| (string)key["IPchat"]==string.Empty)?"Set the IP of the chat server using IPchat":(string)key["IPchat"]))
-                };
-                return claims;
+                var key = JsonNode.Parse(System.IO.File.ReadAllText(@"files\ServerAuthorization.json"));
+                IP = (key["IPchat"]==null? throw new Exception():(string)key["IPchat"]);
             }
-            catch 
+            catch
             {
-                Console.WriteLine("Specify chat IP in ServerAuthorization.json");
-                var claims = new List<Claim>
-                {
-                new Claim("Name", User.Login),
-                new Claim(ClaimTypes.Role,User.Role),
-                new Claim("IP","Set the IP of the chat server using IPchat")
-                };
-                return claims;
+                IP = "Set the IP of the chat server using IPchat";
             }
-            //AuthOptions.SetKey((string)key["IPchat"]);
+            var claims = new List<Claim>
+            {
+            new Claim("Name", User.Login),
+            new Claim(ClaimTypes.Role,User.Role),
+            new Claim("IP",IP)
+            };
+            return claims;
         }
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] string guid)
@@ -121,7 +111,6 @@ namespace AuthorizationServ.Token
             if (guid.ToString() == "null" || guid.ToString()==string.Empty) return BadRequest();
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
-            
             SessionClass.Session[guid.ToString()] = code;
             #region Сессия
             // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);

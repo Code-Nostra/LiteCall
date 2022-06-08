@@ -36,7 +36,9 @@ namespace LTPanel
             {
             try
             {
-                Directory.Delete("Keys", true);
+                File.Delete(Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerAuthorization\files\Key\PrivateKey.json"));
+
+                File.Delete(Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerAuthorization\files\Key\PublicKey.json"));
             }
             catch{ }
 
@@ -54,13 +56,18 @@ namespace LTPanel
                 Public = publicKey
             }, new JsonSerializerOptions { WriteIndented = true });
 
-            Directory.CreateDirectory("Keys");
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(),@"..\ServerAuthorization\files\Key"));
+            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(),@"..\ServerChat\files\Key"));
+            try
+            {
+                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerAuthorization\files\Key\PrivateKey.json"), privateKeyJson );
+                File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerChat\files\Key\PublicKey.json"), publicKeyJson);
+            }
+            catch { }
 
-            File.WriteAllText(@"Keys\PublicKey.json", publicKeyJson);
-            File.WriteAllText(@"Keys\PrivateKey.json", privateKeyJson);
 
         restart:
-            Console.WriteLine("Зашифровать приватный ключ?");
+            Console.WriteLine("Зашифровать приватный ключ для переноса на удалённый сервер?");
             Console.Write("Yes/No? [Y/n] ");
             switch (Console.ReadLine().ToUpper())
             {
@@ -79,7 +86,7 @@ namespace LTPanel
                             }
                         }
                     }
-                    File.Delete("Keys/PrivateKey.json");
+                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerAuthorization\files\Key\PublicKey.json"));
                     Console.WriteLine("Ключи созданы");
                     break;
                 case "N":
