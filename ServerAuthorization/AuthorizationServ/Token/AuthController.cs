@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using AuthorizationServ.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -28,7 +29,7 @@ namespace AuthorizationServ.Token
             DB db = new DB();
 
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-            if(authModel.Password==null || authModel.Password == string.Empty || authModel.Password?.ToString()=="null")
+            if(string.IsNullOrEmpty(authModel.Password) || authModel.Password?.ToString()=="null")
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
 
             if (user != null && user.Password != authModel.Password)
@@ -37,39 +38,56 @@ namespace AuthorizationServ.Token
             if (user != null && user.Password == authModel.Password)
                 return Ok(GetJwt(user));
 
-            return Unauthorized("Invalid login or password");
+            return BadRequest("Account not found");
         }
         //return new StatusCodeResult(1);//(int)response.StatusCode==1
         [HttpPost("Registration")]
-        public IActionResult Registration([FromBody] AuthModel authModel)//Регистрация
+        public IActionResult Registration([FromBody] RegModel RegModel)
         {
-            if (authModel.Guid == null) return NoContent();
-            if(authModel.Password.Length<6) return BadRequest("Password length is too short");
             string ServerCaptcha;
-            SessionClass.Session.TryGetValue(authModel.Guid, out ServerCaptcha);
-            try
-            {
-                if (authModel.Captcha != ServerCaptcha)
-                {
-                    return BadRequest("Captcha was not correct");
-                }
-            }
-            catch
-            {
+            SessionClass.Session.TryGetValue(RegModel.Guid, out ServerCaptcha);
+            
+            if (RegModel.Captcha != ServerCaptcha) 
                 return BadRequest("Captcha was not correct");
-            }
 
-            SessionClass.Session.Remove(authModel.Guid);
+            SessionClass.Session.Remove(RegModel.Guid);
             DB db = new DB();
-            var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == authModel.Login.Trim().ToLower());
-            if (user != null) return Conflict(($"User name"+ authModel.Login+" is already taken"));
-            //!!!
-            var NewUser = db.Users.Add(new UserDB { Login = authModel.Login.Trim(), 
-                Password = authModel.Password, Role = "User" }).Entity;
+
+            var user = db.Users.FirstOrDefault(a => a.Login.ToLower() == RegModel.Login.Trim().ToLower());
+
+            if (user != null) return Conflict(($"User name "+ RegModel.Login+" is already taken"));
+            var NewUser = db.Users.Add(new UserDB { Login = RegModel.Login.Trim(), 
+                Password = RegModel.Password, Role = "User" }).Entity;
+
             db.SaveChanges();
+
             return Ok(GetJwt(NewUser));
         }
+        [HttpPost("СhangePasswordbySecurityQuestions")]
+        public IActionResult СhangePasswordbySecurityQuestions([FromBody] ChangPassModel ChangModel)
+        {
+            using (DB db = new DB())
+            {
+                var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == ChangModel.Login.Trim().ToLower());
+                if (user == null) return BadRequest("Account not found"); ;
 
+                if (user._SecurityQuestion.Questions.ToLower() == ChangModel.Questions.ToLower() && user.AnswerSecurityQ.ToLower() == ChangModel.AnswersecurityQ.ToLower())
+                {
+                    user.Password = ChangModel.newPassword;
+                    db.SaveChanges();
+                    return Ok();
+                }
+                return Unauthorized("Wrong answer");
+            }
+        }
+        [HttpGet("SecurityQuestions")]
+        public IActionResult SecurityQuestions()
+        {
+            using (DB db = new DB())
+            {
+                return Ok(db.SecurityQuestions.Select(x => x.Questions).ToList());
+            }
+        }
         private string GetJwt(UserDB User)
         {
             var now = DateTime.UtcNow;
@@ -93,10 +111,7 @@ namespace AuthorizationServ.Token
                 var key = JsonNode.Parse(System.IO.File.ReadAllText(@"files\ServerAuthorization.json"));
                 IP = (key["IPchat"]==null? throw new Exception():(string)key["IPchat"]);
             }
-            catch
-            {
-                IP = "Set the IP of the chat server using IPchat";
-            }
+            catch{ IP = "Set the IP of the chat server using IPchat";}
             var claims = new List<Claim>
             {
             new Claim("Name", User.Login),
@@ -105,30 +120,26 @@ namespace AuthorizationServ.Token
             };
             return claims;
         }
+        #region Сессия
+        // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
+        // HttpContext.Session.SetString(guid.ToString(), code);
+        #endregion
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] string guid)
         {
-            if (guid.ToString() == "null" || guid.ToString()==string.Empty) return BadRequest();
+            if (string.IsNullOrEmpty(guid) ||guid?.ToString() == "null") return BadRequest();
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
             SessionClass.Session[guid.ToString()] = code;
-            #region Сессия
-            // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
-            // HttpContext.Session.SetString(guid.ToString(), code);
-            #endregion
-            
+
             CaptchaImage captcha = new CaptchaImage(code, 60, 30);
             this.Response.Clear();
             Image image = captcha.Image;
-            // conver image to bytes
             byte[] img_byte_arr = ImageMethod.ImageToBytes(image);
-            // creat packet
             ImagePacket packet = new ImagePacket(img_byte_arr);
             var json = JsonSerializer.Serialize<ImagePacket>(packet);
-            image.Dispose();
             return Ok(json);
         }
-
     }
 }
 

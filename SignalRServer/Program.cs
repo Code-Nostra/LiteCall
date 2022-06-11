@@ -42,9 +42,9 @@ namespace SignalRServ
                             httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
                         });
                     })
-                    .UseContentRoot(Directory.GetCurrentDirectory())
-                    .UseStartup<Startup>();
-                    //webBuilder.UseStartup<Startup>();
+                    .UseContentRoot(Directory.GetCurrentDirectory());
+                    //.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
         }
     }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Nodes;
+using System.Security.Claims;
 
 namespace SignalRServ
 {
@@ -115,6 +116,13 @@ namespace SignalRServ
             user._Room = room;
             Context.Items["user_group"] = group;
             Groups.AddToGroupAsync(Context.ConnectionId, group);
+            var message = new Message
+            {
+                Text = $"{Context.Items["user_name"]} connected from {Context.Items["user_group"]} room",
+                Sender = "Server",
+                DateSend = DateTime.Now
+            };
+            Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
             Clients.All.UpdateRooms();
 
             return true;

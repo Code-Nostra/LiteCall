@@ -14,27 +14,11 @@ namespace AuthorizationServ.DataBase
     [ApiKey]
     public class ServerController : ControllerBase
     {
-        //[HttpPost("RoomAdd")]
-        //public IActionResult RoomAdd([FromBody] StandingRoomModel Info)//Добавление сервера
-        //{
-        //    DB db = new DB();
-
-        //    var Server = db.Rooms.FirstOrDefault(x => x.Title.Trim().ToLower() == Info.Title.Trim().ToLower());
-
-        //    if (Server == null)
-        //    {
-        //        db.Rooms.Add(new StandingRoomDB { Title = Info.Title, Password = Info.Password });
-        //        db.SaveChanges();
-        //        return Ok();
-        //    }
-        //    return BadRequest();
-        //}
-        
         [HttpGet("ServerGetInfo")]
-        public IActionResult ServerGetInfo()//Вернуть информацию по конкретному серверу
+        public IActionResult ServerGetInfo()//Вернуть информацию
         {
             DB db = new DB();
-
+            
             var Server = db.Servers.First();
            
             if (Server != null)
@@ -53,6 +37,7 @@ namespace AuthorizationServ.DataBase
             }
             else return Ok(new Server { Title = "LiteCall" });
         }
+        
         [HttpGet("ServerGetIP")]
         public IActionResult ServerGetIP()
         {
