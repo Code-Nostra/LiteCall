@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -112,8 +113,38 @@ namespace KeyGenerator
     }
     class Program
     {
+        readonly static byte[] entropy = { 1, 2, 3, 4, 5, 6 };
+        private static string Encrypt(string text)
+        {
+            // first, convert the text to byte array 
+            byte[] originalText = Encoding.Unicode.GetBytes(text);
+
+            // then use Protect() to encrypt your data 
+            byte[] encryptedText = ProtectedData.Protect(originalText, entropy, DataProtectionScope.CurrentUser);
+
+            //and return the encrypted message 
+            return Convert.ToBase64String(encryptedText);
+        }
+        private static string Decrypt(string text)
+        {
+            // the encrypted text, converted to byte array 
+            byte[] encryptedText = Convert.FromBase64String(text);
+
+            // calling Unprotect() that returns the original text 
+            byte[] originalText = ProtectedData.Unprotect(encryptedText, entropy, DataProtectionScope.CurrentUser);
+
+            // finally, returning the result 
+            return Encoding.Unicode.GetString(originalText);
+        }
         static void Main(string[] args)
         {
+            //string a = "Привет";
+            //string encrypted = Encrypt(a);
+            //Console.WriteLine(encrypted);
+            string decrypted = Decrypt("AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAvpf/bTQm1EWSdSDJ3Fjt+QAAAAACAAAAAAAQZgAAAAEAACAAAAAN5Ad7ag7JqyMkvml7NvfVyO2wcNI7/q91Hnoac2m0ZgAAAAAOgAAAAAIAACAAAACD75/URVrI9AEqCcvlXcYplDIgNW61ElfDoDGDQNPsdBAAAACqKmSEW8CqnE0Xmtpf/DfpQAAAAK9GEPK7gs6LFAwew553+Ou5Q87XqbW1vVvlyCBKwvTDT9rM53/1l1vzmhuNFtR4yFSCLTQP0joSXBly6X62vY8=");
+            Console.WriteLine(decrypted);
+
+
             string server = Console.ReadLine();
             int port = Convert.ToInt32(Console.ReadLine());
             Server srv = new Server(server);

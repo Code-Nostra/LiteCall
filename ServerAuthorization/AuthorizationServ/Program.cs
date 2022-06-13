@@ -28,6 +28,7 @@ namespace AuthorizationServ
             {
                 Console.WriteLine(e.Message);
                 Console.ReadLine();
+                return;
             }
         }
 

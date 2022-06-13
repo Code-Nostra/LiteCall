@@ -12,7 +12,7 @@ namespace AuthorizationServ
         internal static string GetSha1(this string content)
         {
             byte[] hash;
-
+            if (string.IsNullOrEmpty(content)) return string.Empty;
             using var sha1 = new SHA1Managed();
 
             hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(content));

@@ -7,8 +7,20 @@ namespace AuthorizationServ.Token
         [Required]
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
-        [StringLength(maximumLength: 15, MinimumLength = 0)]
-        public string Password { get; set; }
+        [StringLength(int.MaxValue, MinimumLength = 0)]
+        private string _password;
+        public string Password 
+        {
+            get
+            {
+                return _password.GetSha1();
+            }
+            set
+            {
+                _password = value;
+            }
+        }
+
     }
 
     public class RegModel
@@ -16,8 +28,8 @@ namespace AuthorizationServ.Token
         [Required]
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
-        
-        [StringLength(maximumLength: 15, MinimumLength = 6)]
+
+        [StringLength(int.MaxValue,MinimumLength = 6 )]
         [Required]
         public string Password { get; set; }
         
@@ -36,7 +48,7 @@ namespace AuthorizationServ.Token
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
 
-        [StringLength(maximumLength: 15, MinimumLength = 6)]
+        [StringLength(int.MaxValue, MinimumLength = 6)]
         [Required]
         public string newPassword { get; set; }
 

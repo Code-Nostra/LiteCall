@@ -57,7 +57,7 @@ namespace AuthorizationServ.Token
 
             if (user != null) return Conflict(($"User name "+ RegModel.Login+" is already taken"));
             var NewUser = db.Users.Add(new UserDB { Login = RegModel.Login.Trim(), 
-                Password = RegModel.Password, Role = "User" }).Entity;
+                Password = RegModel.Password.GetSha1(), Role = "User" }).Entity;
 
             db.SaveChanges();
 
@@ -108,7 +108,7 @@ namespace AuthorizationServ.Token
             string IP;
             try
             {
-                var key = JsonNode.Parse(System.IO.File.ReadAllText(@"files\ServerAuthorization.json"));
+                var key = JsonNode.Parse(System.IO.File.ReadAllText(@"..\files\ServerAuthorization.json"));
                 IP = (key["IPchat"]==null? throw new Exception():(string)key["IPchat"]);
             }
             catch{ IP = "Set the IP of the chat server using IPchat";}
