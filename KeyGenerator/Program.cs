@@ -47,7 +47,7 @@ namespace KeyGenerator
             string requestBody = string.Empty;
             try
             {
-                path = Path.Combine(Directory.GetCurrentDirectory(), $@"..\{serverName}\files\{serverName}.json");
+                path = Path.Combine(AppContext.BaseDirectory, $@"..\{serverName}\files\{serverName}.json");
                 requestBody = File.ReadAllText(path);
                 data = JsonSerializer.Deserialize<Settings>(requestBody);
                 data.IPchat=data.IPchat?.Replace(";", "");

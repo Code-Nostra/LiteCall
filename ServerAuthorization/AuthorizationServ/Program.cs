@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ServerAuthorization.Logger;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,9 +36,13 @@ namespace AuthorizationServ
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
-                            .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),@"..\files\ServerAuthorization.json"), optional: true, reloadOnChange: true)
+                            .SetBasePath(AppContext.BaseDirectory)
+                            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                            .AddJsonFile(Path.Combine(AppContext.BaseDirectory, @"..\files\ServerAuthorization.json"), optional: true, reloadOnChange: true)
+
                             .Build();
+            
+            
             if (!string.IsNullOrEmpty(config["urls"]))
             {
                 if (!config["urls"].Contains("https"))
@@ -47,6 +52,13 @@ namespace AuthorizationServ
             }
 
             return Host.CreateDefaultBuilder(args)
+
+                .ConfigureLogging(logging =>
+                {
+                    //logging.ClearProviders();
+                    var filepath = Path.Combine(AppContext.BaseDirectory, "logger.txt");
+                    logging.AddFile(filepath);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(config)
@@ -57,7 +69,7 @@ namespace AuthorizationServ
                             httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
                         });
                     })
-                    .UseContentRoot(Directory.GetCurrentDirectory());
+                    .UseContentRoot(AppContext.BaseDirectory);
                     //.UseStartup<Startup>();
                     webBuilder.UseStartup<Startup>();
                 });

@@ -16,6 +16,9 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.Extensions.Logging;
+using ServerAuthorization.Logger;
+using Microsoft.AspNetCore.Http;
 
 namespace AuthorizationServ
 {
@@ -40,12 +43,12 @@ namespace AuthorizationServ
             //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
             try
             {
-                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"..\files\Key\PrivateKey.json")));
+                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PrivateKey.json")));
                 AuthOptions.SetKey((string)key["Private"]);
             }
             catch 
             { 
-                Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()+ @"\files\Key\PrivateKey.json");
+                Console.WriteLine("Private key not found "+ (Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PrivateKey.json")));
                 Console.WriteLine("Closing after 10 seconds");
                 Thread.Sleep(10000);
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -92,7 +95,7 @@ namespace AuthorizationServ
             #endregion
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -102,6 +105,7 @@ namespace AuthorizationServ
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();
+            
             app.UseCors(policy=> 
             {
                 policy

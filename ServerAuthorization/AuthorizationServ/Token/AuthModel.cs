@@ -61,4 +61,27 @@ namespace AuthorizationServ.Token
         public string AnswersecurityQ { get; set; }
     }
 
+    public class AddRole
+    {
+        [Required]
+        [StringLength(maximumLength: 15, MinimumLength = 4)]
+        public string Login { get; set; }
+        [StringLength(int.MaxValue, MinimumLength = 0)]
+        private string _password;
+        public string Password
+        {
+            get
+            {
+                return _password.GetSha1();
+            }
+            set
+            {
+                _password = value;
+            }
+        }
+
+        public string Role { get; set; }
+        public string OpLogin { get; set; }
+
+    }
 }

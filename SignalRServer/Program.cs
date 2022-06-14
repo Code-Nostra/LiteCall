@@ -21,8 +21,8 @@ namespace SignalRServ
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),@"..\files\ServerChat.json"), optional: true, reloadOnChange: true)
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile(Path.Combine(AppContext.BaseDirectory,@"..\files\ServerChat.json"), optional: true, reloadOnChange: true)
                 .Build();
             if (!string.IsNullOrEmpty(config["urls"]))
                 {
@@ -42,7 +42,7 @@ namespace SignalRServ
                             httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
                         });
                     })
-                    .UseContentRoot(Directory.GetCurrentDirectory());
+                    .UseContentRoot(AppContext.BaseDirectory);
                     //.UseStartup<Startup>();
                     webBuilder.UseStartup<Startup>();
                 });

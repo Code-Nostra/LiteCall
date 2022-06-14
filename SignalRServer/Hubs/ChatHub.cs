@@ -28,9 +28,10 @@ namespace SignalRServ
             if (!string.IsNullOrWhiteSpace(Context.Items["user_name"].ToString())
                 && !string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString()))
             {
+                Context.Items["user_group"] = "AAAA";
                 message.Sender = Context.Items["user_name"].ToString();
                 message.DateSend = DateTime.Now;
-                return Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
+                return  Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
             }
             return Task.CompletedTask;
         }
@@ -60,8 +61,19 @@ namespace SignalRServ
                 Base64UrlDecode(Startup.lastToken.Split('.')[1])));
             bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] 
                 == "Anonymous" ? false : true;
+            if (IsAuthorize)
+            {
+                var us = db.Users.Find(x => x.CName == name);
+                if (us != null) return "non";
+            }
             int temp = 0;
-            if (!IsAuthorize) temp = db.Users.ToList().FindAll(x => x.CName?.ToLower() == name.ToLower()).Count+1;
+            if (!IsAuthorize)
+            {
+                var temp2 = db.Users.ToList().FindAll(x => x.CName?.ToLower() == name.ToLower());
+                if (temp2 != null && temp2.Count!=0) temp=temp2.Max(x => x.Count);
+                temp += 1;
+            }
+            
             #region legacy
             //if (IsAuthorize==false &&_auth==true)
             //{
@@ -109,7 +121,7 @@ namespace SignalRServ
             if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
 
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
-            if (room == null || room.Password != password ) return false;
+            if ((room == null || room.Password != password) && !string.IsNullOrEmpty(password)) return false;
 
             var user = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
             room.Users.Add(user);
@@ -146,6 +158,34 @@ namespace SignalRServ
             }
             Context.Items["user_group"] = string.Empty;
             Clients.All.UpdateRooms();
+            return Task.CompletedTask;
+        }
+
+        [Authorize(Roles = "Admin")]
+        public Task AdminKickUser(string _user)
+        {
+            var user = db.Users.ToList().FirstOrDefault(u => u.UserName == _user);
+            Message message = new Message
+            {
+                Text = $"{user.UserName} disconnected from {user._Room.RoomName} room",
+                Sender = "Server",
+                DateSend = DateTime.Now
+            };
+            if(string.IsNullOrEmpty(user._Room.RoomName)) return Task.CompletedTask;
+            Clients.OthersInGroup(user._Room.RoomName?.ToString()).Send(message);
+            bool kick = true;
+            Clients.Client(user.UserId).Notification(kick);
+
+            if (user != null && user._Room != null)
+            {
+                // удалить пользователя из комнаты
+                KickFromRoom(user._Room.RoomName, user.UserId);
+                user.UserContext.Items["user_group"] = string.Empty;
+            }
+            
+            Clients.All.UpdateRooms();
+            
+            //await Clients.Client(user.UserId).Send("ReceiveMessageToUser", user, targetConnectionId, message);
             return Task.CompletedTask;
         }
         [Authorize(Roles = "User,Admin,Anonymous")]
@@ -193,7 +233,7 @@ namespace SignalRServ
         //    }
         //    return false;
         //}
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "Admin")]
         public void RemoveFromRoom(string roomName)
         {
             //Узнать, существует ли комната
@@ -218,6 +258,57 @@ namespace SignalRServ
                 Clients.All.UpdateRooms();
             }
         }
+        [Authorize(Roles = "Admin")]
+        public void AdminDeleteRoom(string roomName)
+        {
+            //Узнать, существует ли комната
+            var room = db.Rooms.ToList().Find(a => a.RoomName == roomName);
+
+            if (room != null)
+            {
+                foreach(var us in room.Users)
+                {
+                    us.UserContext.Items["user_group"] = string.Empty;
+                    us._Connection = null;
+                    us._Room = null;
+                }
+                
+                db.Rooms.Remove(room);
+                Clients.OthersInGroup(roomName).Notification(true);
+                Clients.All.UpdateRooms();
+            }
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public void KickFromRoom(string roomName,string _userid)
+        {
+            //Узнать, существует ли комната
+            var room = db.Rooms.ToList().Find(a => a.RoomName == roomName);
+
+            if (room != null)
+            {
+                //Найдите пользователя для удаления
+                var user = room.Users.ToList().Where(a => a.UserId == _userid).FirstOrDefault();
+                //удалить этого пользователя из конкретной комнаты
+                room.Users.Remove(user);
+                user._Connection = null;
+                user._Room = null;
+                //Если количество людей в комнате равно 0, удалить комнату
+                if (room.Users.Count <= 0)
+                {
+                    db.Rooms.Remove(room);
+                    Console.WriteLine($"-- group {roomName} deleted {DateTime.Now}");
+                    Clients.All.UpdateRooms();
+                }
+                
+                Clients.All.UpdateRooms();
+            }
+        }
+
+        
+        
+
         #region Event
         //События которые вызываются сами при:подключении, отключении, очистки ресурсов
         [Authorize(Roles = "User,Admin,Anonymous")]
@@ -226,14 +317,15 @@ namespace SignalRServ
             Clients.All.UpdateRooms();
             Context.Items.TryAdd("user_name", string.Empty);
             Context.Items.TryAdd("user_group", string.Empty);
-
+           
             var user = db.Users.ToList().SingleOrDefault(u => u.UserId == Context.ConnectionId);
-
+            
             if (user == null)
             {
                 user = new User()
                 {
-                    UserId = Context.ConnectionId
+                    UserId = Context.ConnectionId,
+                    UserContext = Context
                 };
                 db.Users.Add(user);
             }
@@ -247,7 +339,7 @@ namespace SignalRServ
             var user = db.Users.ToList().FirstOrDefault(u => u.UserId == Context.ConnectionId);
             if (user != null)
             {
-                db.Users.ToList().Remove(user);
+                db.Users.Remove(user);
             }
             Clients.All.UpdateRooms();
             return base.OnDisconnectedAsync(exception);

@@ -14,5 +14,7 @@ namespace SignalRServ
         Task UpdateRooms();
 
         Task SendAudio(string name, byte[] message);
+
+        Task Notification(bool isKick);
     }
 }

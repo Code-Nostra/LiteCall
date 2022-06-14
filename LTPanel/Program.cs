@@ -23,9 +23,9 @@ namespace LTPanel
             Debugger.AttachIfDebugDirective(args);
             return new AppRunner<Program>(new AppSettings { Help = { TextStyle = HelpTextStyle.Basic } }).Run(args);
         }
-        string currentDirectory = Directory.GetCurrentDirectory();
-        string keysAuth = Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerAuthorization\files\Key");
-        string keyChat = Path.Combine(Directory.GetCurrentDirectory(), @"..\ServerChat\files\Key");
+        string currentDirectory = AppContext.BaseDirectory;
+        string keysAuth = Path.Combine(AppContext.BaseDirectory, @"..\ServerAuthorization\files\Key");
+        string keyChat = Path.Combine(AppContext.BaseDirectory, @"..\ServerChat\files\Key");
         const string privKey = @"\PrivateKey.json";
         const string pubKey = @"\PublicKey.json";
 
@@ -155,13 +155,15 @@ namespace LTPanel
             ExtendedHelpText = "")]
         public void DefaultSettings( [Operand(Description = "Имя сервера")] string? server)
         {
-
-            if(server== "ServerAuthorization" || string.IsNullOrEmpty(server))
+            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, @"..\ServerAuthorization\files"));
+            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, @"..\ServerChat\files"));
+            CreateKeys();
+            if (server== "ServerAuthorization" || string.IsNullOrEmpty(server))
             {
                 try
                 {
                     Settings temp = new Settings { urls = "0.0.0.0:43891", IPchat = "localhost:43893" };
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), $@"..\ServerAuthorization\files\ServerAuthorization.json");
+                    string path = Path.Combine(AppContext.BaseDirectory, $@"..\ServerAuthorization\files\ServerAuthorization.json");
                     File.WriteAllText(path, JsonSerializer.Serialize<Settings>(temp, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
                 }
                 catch (Exception e)
@@ -175,7 +177,7 @@ namespace LTPanel
                 try
                 {
                     Settings temp = new Settings { urls = "0.0.0.0:43893" };
-                    string path = Path.Combine(Directory.GetCurrentDirectory(), $@"..\ServerChat\files\ServerChat.json");
+                    string path = Path.Combine(AppContext.BaseDirectory, $@"..\ServerChat\files\ServerChat.json");
                     File.WriteAllText(path, JsonSerializer.Serialize<Settings>(temp, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
                 }
                 catch (Exception e)
@@ -256,7 +258,7 @@ namespace LTPanel
             string requestBody = string.Empty;
             try
             {
-                path = Path.Combine(Directory.GetCurrentDirectory(), $@"..\{serverName}\files\{serverName}.json");
+                path = Path.Combine(AppContext.BaseDirectory, $@"..\{serverName}\files\{serverName}.json");
                 requestBody = File.ReadAllText(path);
                 data = JsonSerializer.Deserialize<Settings>(requestBody);
                 data.urls = data.urls?.Replace(";", "");
@@ -366,7 +368,7 @@ namespace LTPanel
         }
         public bool CheckFile(string nameFile)
         {
-            return File.Exists(Path.Combine(Directory.GetCurrentDirectory(), $@"..\{nameFile}\files\{nameFile}.json"));
+            return File.Exists(Path.Combine(AppContext.BaseDirectory, $@"..\{nameFile}\files\{nameFile}.json"));
         }
 
         public override string ToString()

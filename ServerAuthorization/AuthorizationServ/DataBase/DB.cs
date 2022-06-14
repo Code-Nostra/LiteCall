@@ -8,6 +8,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 using AuthorizationServ.DataBase;
+using System.Text.Json.Nodes;
 
 namespace AuthorizationServ
 {
@@ -24,12 +25,15 @@ namespace AuthorizationServ
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=LTdb_sqlite.db");
+            optionsBuilder.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "LTdb_sqlite.db")}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (!File.Exists("LTdb_sqlite.db"))
+
+            
+            
+            if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "LTdb_sqlite.db")))
             {
                 const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                 StringBuilder res = new StringBuilder();
@@ -39,13 +43,9 @@ namespace AuthorizationServ
                 {
                     res.Append(valid[rnd.Next(valid.Length)]);
                 }
-                using var sha1 = new SHA1Managed();
 
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(res.ToString()));
-
-                string pass = string.Concat(hash.Select(b => b.ToString("x2")));
                 Console.WriteLine("Login:Admin\nPassword:" + res.ToString());
-                modelBuilder.Entity<UserDB>().HasData(new UserDB{ id = 1, Login = "Admin", Password = pass, Role = "Admin" });
+                modelBuilder.Entity<UserDB>().HasData(new UserDB{ id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
                 modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title= "LiteCall" });
                 modelBuilder.Entity<SecurityQuestions>().HasData( new SecurityQuestions { id = 1,Questions= "Какое прозвище было у вас в детстве?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 2, Questions = "Как звали вашего лучшего друга детства?" });

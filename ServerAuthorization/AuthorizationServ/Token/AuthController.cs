@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AuthorizationServ.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ServerAuthorization.Attributes;
@@ -23,9 +24,17 @@ namespace AuthorizationServ.Token
     [ApiKey]
     public class AuthController : ControllerBase
     {
+        private readonly ILogger<AuthController> _logger;
+        public AuthController(ILogger<AuthController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpPost("Authorization")]
         public IActionResult Authorization([FromBody] AuthModel authModel)//Авторизация
         {
+            //_logger.LogError("asd");
+
             DB db = new DB();
 
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
@@ -79,6 +88,29 @@ namespace AuthorizationServ.Token
                 }
                 return Unauthorized("Wrong answer");
             }
+        }
+
+        [HttpPost("AddRole")]
+        public IActionResult AddRole([FromBody] AddRole addRole)//Авторизация
+        {
+            DB db = new DB();
+            
+            var opUser = db.Users.FirstOrDefault(x => x.Login == addRole.OpLogin);
+            
+            if(opUser==null) return BadRequest("Пользователь с данным именем не найден");
+            
+            var admin = db.Users.FirstOrDefault(x => x.Login == addRole.Login);
+            
+            if (admin == null || admin.Password != addRole.Password)
+                return Unauthorized("Invalid login or password");
+            
+
+            if (admin.Role=="Admin" && (addRole.Role=="User"||addRole.Role=="Moderator"))
+            {
+                opUser.Role = addRole.Role;
+            }
+
+            return BadRequest("Account not found");
         }
         [HttpGet("SecurityQuestions")]
         public IActionResult SecurityQuestions()

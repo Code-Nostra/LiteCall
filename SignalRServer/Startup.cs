@@ -49,12 +49,12 @@ namespace SignalRServ
             #endregion
             try
             {
-                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), @"..\files\Key\PublicKey.json")));
+                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PublicKey.json")));
                 AuthOptions.SetKey((string)key["Public"]);
             }
             catch 
             { 
-                Console.WriteLine("Public key not found "+ Path.Combine(Directory.GetCurrentDirectory(), @"..\files\Key\PublicKey.json"));
+                Console.WriteLine("Public key not found "+ Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PublicKey.json"));
                 Console.WriteLine("Closing after 10 seconds");
                 Thread.Sleep(10000);
                 System.Diagnostics.Process.GetCurrentProcess().Kill();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ServerAuthorization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,12 @@ namespace AuthorizationServ.DataBase
     [ApiKey]
     public class ServerController : ControllerBase
     {
+        private IConfiguration _configuration;
+        public ServerController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         [HttpGet("ServerGetInfo")]
         public IActionResult ServerGetInfo()//Вернуть информацию
         {
@@ -25,8 +32,7 @@ namespace AuthorizationServ.DataBase
             {
                 try
                 {
-                    var key = JsonNode.Parse(System.IO.File.ReadAllText("ServerAuthorization.json"));
-                    Server.Ip = (string)key["IPchat"];
+                    Server.Ip = _configuration["IPchat"];
                 }
                 catch
                 {
@@ -41,15 +47,7 @@ namespace AuthorizationServ.DataBase
         [HttpGet("ServerGetIP")]
         public IActionResult ServerGetIP()
         {
-            DB db = new DB();
-
-            var Server = db.Servers.First();
-
-            if (Server != null)
-            {
-                return Ok(Server.Ip);
-            }
-            else return BadRequest();
+            return Ok(_configuration["IPchat"]);
         }
 
 
