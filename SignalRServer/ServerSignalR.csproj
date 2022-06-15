@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>SignalRServ</AssemblyName>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <AssemblyName>ServerChat</AssemblyName>
     <UserSecretsId>d5309eed-568c-4167-8076-c0b381cb556a</UserSecretsId>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>

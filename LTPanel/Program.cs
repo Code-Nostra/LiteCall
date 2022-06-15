@@ -21,15 +21,14 @@ namespace LTPanel
     Description = "Программа для настрок серверов")]
     public class Program
     {
-
         static int Main(string[] args)
         {
             Debugger.AttachIfDebugDirective(args);
             return new AppRunner<Program>(new AppSettings { Help = { TextStyle = HelpTextStyle.Basic } }).Run(args);
         }
         string currentDirectory = AppContext.BaseDirectory;
-        string keysAuth = Path.Combine(AppContext.BaseDirectory, @"..\ServerAuthorization\files\Key");
-        string keyChat = Path.Combine(AppContext.BaseDirectory, @"..\ServerChat\files\Key");
+        string keysAuth = Path.Combine(AppContext.BaseDirectory, @"ServerAuthorization\files\Key");
+        string keyChat = Path.Combine(AppContext.BaseDirectory, @"ServerChat\files\Key");
         const string privKey = @"\PrivateKey.json";
         const string pubKey = @"\PublicKey.json";
 
@@ -102,7 +101,7 @@ namespace LTPanel
             Description="Смена порта" ,
             UsageLines = new[]
             {
-            "-p 43891 ServerAuthorization",
+            "-port 43891 ServerAuthorization",
             "%AppName% %CmdPath% 43891 ServerAuthorization"
             },
             ExtendedHelpText = "")]
@@ -159,15 +158,15 @@ namespace LTPanel
             ExtendedHelpText = "")]
         public void DefaultSettings( [Operand(Description = "Имя сервера")] string? server)
         {
-            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, @"..\ServerAuthorization\files"));
-            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, @"..\ServerChat\files"));
+            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, @"ServerAuthorization\files"));
+            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, @"ServerChat\files"));
             CreateKeys();
             if (server== "ServerAuthorization" || string.IsNullOrEmpty(server))
             {
                 try
                 {
                     Settings temp = new Settings { urls = "0.0.0.0:43891", IPchat = "localhost:43893" };
-                    string path = Path.Combine(AppContext.BaseDirectory, $@"..\ServerAuthorization\files\ServerAuthorization.json");
+                    string path = Path.Combine(AppContext.BaseDirectory, $@"ServerAuthorization\files\ServerAuthorization.json");
                     File.WriteAllText(path, JsonSerializer.Serialize<Settings>(temp, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
                 }
                 catch (Exception e)
@@ -181,7 +180,7 @@ namespace LTPanel
                 try
                 {
                     Settings temp = new Settings { urls = "0.0.0.0:43893" };
-                    string path = Path.Combine(AppContext.BaseDirectory, $@"..\ServerChat\files\ServerChat.json");
+                    string path = Path.Combine(AppContext.BaseDirectory, $@"ServerChat\files\ServerChat.json");
                     File.WriteAllText(path, JsonSerializer.Serialize<Settings>(temp, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
                 }
                 catch (Exception e)
@@ -208,18 +207,16 @@ namespace LTPanel
 
             if (string.IsNullOrEmpty(server))
             {
-                Server server1 = new Server("ServerAuthorization");
-                server1.Show();
-                server1 = new Server("ServerChat");
+                Server tempServer = new Server("ServerAuthorization");
+                if(tempServer.Valid) tempServer.Show();
+                tempServer = new Server("ServerChat");
                 Console.WriteLine();
-                server1.Show();
+                if (tempServer.Valid) tempServer.Show();
                 return;
             }
             Server curren = new Server(server);
-            curren.Show();
+            if (curren.Valid) curren.Show();
             Console.WriteLine();
-
-
         }
 
         [Command("ResetAdminPassword",
@@ -233,7 +230,10 @@ namespace LTPanel
            ExtendedHelpText = "")]
         public void ResetAdminPassword([Operand(Description = "Имя сервера")] string password)
         {
-
+            DB db = new DB();
+            db.Users.FirstOrDefault(x=>x.Role=="Admin").Password = GetHashSha1(GetHashSha1(password));
+            db.SaveChanges();
+           
         }
 
         [Command("pex",
@@ -429,36 +429,56 @@ namespace LTPanel
 
     class Server
     {
-        public string ip;
-        public string port;
-        public string Cip;
-        public string Cport;
+        public string authIP;
+        public string authPort;
+        public string IP
+        { 
+            get
+            {
+                return !(string.IsNullOrEmpty(authIP)|| string.IsNullOrEmpty(authPort)) ? authIP + ":" + authPort:null;
+            }
+        }
+        public string chatIP;
+        public string chatPort;
+        public string CIP 
+        { 
+            get 
+            {
+                return !(string.IsNullOrEmpty(chatIP) || string.IsNullOrEmpty(chatPort)) ? chatIP + ":" + chatPort : null;
+            } 
+        }
         private Settings data;
         private string path;
         private const string ServerAuthorization = "ServerAuthorization";
         private const string ServerChat = "ServerChat";
         private string serverName;
+        public string anotherName;
         public bool Valid
         {
             get
             {
-                return !(string.IsNullOrEmpty(ip) && string.IsNullOrEmpty(port));
+                return !(string.IsNullOrEmpty(authIP) && string.IsNullOrEmpty(authPort));
             }
         }
 
-        public Server(string serverName)
+        public Server(string _serverName)
         {
+            serverName = _serverName;
+            anotherName = (serverName == ServerAuthorization ? ServerChat : ServerAuthorization);
+            
             if (serverName != ServerAuthorization && serverName != ServerChat)
             {
                 Console.WriteLine($"Сервер {serverName} не найден" +
-                    $"\n Доступные сервера:\n 1.ServerAuthorization \n 2.ServerChat");
+                    $"\n Доступные сервера:" +
+                    $"\n 1.ServerAuthorization " +
+                    $"\n 2.ServerChat");
                 return;
             }
-            this.serverName = serverName;
-            string requestBody = string.Empty;
+
+            string requestBody;
             try
             {
-                path = Path.Combine(AppContext.BaseDirectory, $@"..\{serverName}\files\{serverName}.json");
+                path = Path.Combine(AppContext.BaseDirectory, $@"{serverName}\files\{serverName}.json");
                 requestBody = File.ReadAllText(path);
                 data = JsonSerializer.Deserialize<Settings>(requestBody);
                 data.urls = data.urls?.Replace(";", "");
@@ -468,21 +488,19 @@ namespace LTPanel
                 Console.WriteLine(e.Message);
                 return;
             }
-            if (string.IsNullOrEmpty(data.urls)|| !data.urls.Contains(":") || data.urls.Length < 3)
+            if (string.IsNullOrEmpty(data.urls)|| !data.urls.Contains(":") || data.urls.Length < 9)
             {
-                Console.WriteLine("IP адресс не обнаружен");
+                Console.WriteLine("IP адресс сервера не обнаружен");
                 return;
             }
-            else if (serverName == ServerAuthorization)
+            if (serverName == ServerAuthorization)
             {
-                if (string.IsNullOrEmpty(data.IPchat) || !data.IPchat.Contains(":") && data.IPchat.Length < 3)
+                if (string.IsNullOrEmpty(data.IPchat) || !data.IPchat.Contains(":") && data.IPchat.Length < 9)
                 {
                     Console.WriteLine("IP адресс чата не обнаружен");
                     return;
                 }
             }
-
-
             string[] temp;
             //string IPPortPatter = @"\blocalhost:\d{1,5}\b|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{1,5}\b";
             //Regex check = new Regex(IPPortPatter);
@@ -493,67 +511,58 @@ namespace LTPanel
             //}
 
             temp = data.urls.Split(":");
-            ip = temp[0];
-            port = temp[1];
+            authIP = temp[0];
+            authPort = temp[1];
             if (serverName == ServerAuthorization)
             {
                 temp = data.IPchat?.Split(":");
-                Cip = temp[0];
-                Cport = temp[1];
-
-                //if (!check.IsMatch(data.IPchat, 0))
-                //{
-                //    Console.WriteLine($"IP адресс сервера {serverName}  не верен");
-                //    return;
-                //}
+                chatIP = temp[0];
+                chatPort = temp[1];
             }
-
         }
 
         public void SetPort(int _port)
         {
-            string anotherName = serverName == ServerAuthorization ? ServerChat : ServerAuthorization;
+            if (_port < 1024 || _port > 49151)
+            {
+                Console.WriteLine("Вводимый порт должен лежать в диапазоне от 1024 до 49151");
+                return;
+            }
             if (CheckFile(anotherName))
             {
                 Server anotherServer = new Server(anotherName);
-                if (anotherServer.ToString() == ip + ":" + _port)
+                if (anotherServer.IP == authIP + ":" + _port)
                 {
                     Console.WriteLine($"IP сервера {serverName} не может быть таким-же как и у {anotherName}");
                     return;
                 }
-                data.urls = ip + ":" + _port;
                 if (serverName == ServerChat)
                 {
-                    anotherServer.data.IPchat = (ip== "0.0.0.0"?"localhost:"+ _port : data.urls);
+                    anotherServer.chatPort= Convert.ToString(_port);
                     anotherServer.Save();
                 }
             }
-            data.urls = ip + ":" + _port;
-
+            authPort = Convert.ToString(_port);
         }
         public void SetIP(string _ip)
         {
-
             if (!CheckIP(_ip)) return;
-            string anotherName = serverName == ServerAuthorization ? ServerChat : ServerAuthorization;
+            
             if (CheckFile(anotherName))
             {
                 Server anotherServer = new Server(anotherName);
-                if (anotherServer.ToString() == _ip+":"+port)
+                if (anotherServer.IP == _ip + ":" + authPort)
                 {
                     Console.WriteLine($"IP сервера {serverName} не может быть таким-же как и у {anotherName}");
                     return;
                 }
-                //data.urls = _ip + ":" + port;
                 if (serverName == ServerChat)
                 {
-                    if (_ip == "0.0.0.0") _ip = "localhost";
-                    anotherServer.data.IPchat = _ip + ":" + port;
+                    anotherServer.chatIP = _ip;
                     anotherServer.Save();
                 }
             }
-            //data.urls = _ip + ":" + port;
-
+           // authIP = _ip;
         }
         public bool CheckIP(string ip)
         {
@@ -568,15 +577,17 @@ namespace LTPanel
         }
         public bool CheckFile(string nameFile)
         {
-            return File.Exists(Path.Combine(AppContext.BaseDirectory, $@"..\{nameFile}\files\{nameFile}.json"));
+            return File.Exists(Path.Combine(AppContext.BaseDirectory, $@"{nameFile}\files\{nameFile}.json"));
         }
 
         public override string ToString()
         {
-            return (ip + ":" + port);
+            return (authIP + ":" + authPort);
         }
         public void Save()
         {
+            data.urls = IP;
+            data.IPchat = CIP;
             File.WriteAllText(path, JsonSerializer.Serialize<Settings>(data, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
         }
         public void Show()
@@ -584,13 +595,13 @@ namespace LTPanel
             if (serverName == ServerAuthorization)
             {
                 Console.WriteLine(ServerAuthorization+":");
-                Console.WriteLine($"IP:{this}\n" +
-                    $"IPchat:{Cip}:{Cport}");
+                Console.WriteLine($"IP:{IP}\n" +
+                                  $"IPchat:{chatIP}");
             }
             if (serverName == ServerChat)
             {
                 Console.WriteLine(ServerChat+":");
-                Console.WriteLine($"IP:{this}\n");
+                Console.WriteLine($"IPchat:{IP}");
             }
         }
     }

@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LTPanel", "LTPanel\LTPanel.
 EndProject
 Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "LiteCall-Servers", "LiteCall-Servers\LiteCall-Servers.aiproj", "{26959D39-D916-4574-BE4C-87A26EC5E41C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LC-servers", "LC-servers\LC-servers.csproj", "{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -64,6 +66,12 @@ Global
 		{26959D39-D916-4574-BE4C-87A26EC5E41C}.Debug|Any CPU.Build.0 = DefaultBuild
 		{26959D39-D916-4574-BE4C-87A26EC5E41C}.Release|Any CPU.ActiveCfg = DefaultBuild
 		{26959D39-D916-4574-BE4C-87A26EC5E41C}.Release|Any CPU.Build.0 = DefaultBuild
+		{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}.All|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}.All|Any CPU.Build.0 = Debug|Any CPU
+		{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
