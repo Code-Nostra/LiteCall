@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerAuthorization", "ServerAuthorization\AuthorizationServ\ServerAuthorization.csproj", "{D2790163-DF4D-4773-B12C-D0D8B03F5F15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSignalR", "SignalRServer\ServerSignalR.csproj", "{25C381BA-E615-44BB-86A5-BBC73B16584D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerChat", "SignalRServer\ServerChat.csproj", "{25C381BA-E615-44BB-86A5-BBC73B16584D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AFE81EE-F11F-4B14-A20A-FF825772BBD6}"
 	ProjectSection(SolutionItems) = preProject

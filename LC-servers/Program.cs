@@ -7,12 +7,8 @@ namespace LC_servers
     {
         static void Main(string[] args)
         {
-            //System.Diagnostics.Process.Start("CMD.exe", strCmdText);
-
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo.FileName = "cmd";
-            p.Start();
-            Process.Start(@"C:\Users\PC\source\repos\ServerSignalR\LTPanel\bin\Debug\net5.0\LTPanel.exe");
+            Process.Start(@"ServerAuthorization\ServerAuthorization\ServerAuthorization.exe");
+            Process.Start(@"ServerChat\ServerChat\ServerChat.exe");
         }
     }
 }
