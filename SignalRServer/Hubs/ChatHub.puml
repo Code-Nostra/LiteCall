@@ -1,0 +1,22 @@
+@startuml
+class ChatHub {
+    + {static} db : UserContext
+    + SendMessage(message:Message) : Task
+    + SendAudio(message:byte[]) : Task
+    + SetName(name:string) : string
+    + GroupConnect(group:string, password:string) : bool
+    + GroupDisconnect() : Task
+    + AdminKickUser(_user:string) : Task
+    + GroupCreate(group:string, password:string) : bool
+    + RemoveFromRoom(roomName:string) : void
+    + AdminDeleteRoom(roomName:string) : void
+    + KickFromRoom(roomName:string, _userid:string) : void
+    + <<override>> OnConnectedAsync() : Task
+    + <<override>> OnDisconnectedAsync(exception:Exception) : Task
+    + GetRooms() : Dictionary<string, bool>
+    + GetUsersRoom(group:string) : List<ServerUser>
+    + GetRoomsAndUsers() : List<RoomsAndUsers>
+    # <<override>> Dispose(disposing:bool) : void
+}
+"Hub`1" "<IHubMethods>" <|-- ChatHub
+@enduml

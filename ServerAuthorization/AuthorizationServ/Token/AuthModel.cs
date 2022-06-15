@@ -82,6 +82,34 @@ namespace AuthorizationServ.Token
 
         public string Role { get; set; }
         public string OpLogin { get; set; }
+    }
 
+    public class ServerInfo
+    {
+        [Required]
+        [StringLength(maximumLength: 15, MinimumLength = 4)]
+        public string Login { get; set; }
+        [StringLength(int.MaxValue, MinimumLength = 0)]
+        private string _password;
+        public string Password
+        {
+            get
+            {
+                return _password.GetSha1();
+            }
+            set
+            {
+                _password = value;
+            }
+        }
+        [StringLength(maximumLength: 30, MinimumLength = 0)]
+        public string Title { get; set; }
+        [StringLength(maximumLength: 40, MinimumLength = 0)]
+        public string Country { get; set; }
+        [StringLength(maximumLength: 430, MinimumLength = 0)]
+        public string City { get; set; }
+        [StringLength(maximumLength: 16, MinimumLength = 0)]
+        public string Ip { get; set; }
+        public string Description { get; set; }
     }
 }

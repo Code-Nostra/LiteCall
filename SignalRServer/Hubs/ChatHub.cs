@@ -22,20 +22,19 @@ namespace SignalRServ
         /// <param name="message"></param>
         /// <returns></returns>
         public static UserContext db = new UserContext();
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public Task SendMessage(Message message)
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_name"].ToString())
                 && !string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString()))
             {
-                Context.Items["user_group"] = "AAAA";
                 message.Sender = Context.Items["user_name"].ToString();
                 message.DateSend = DateTime.Now;
                 return  Clients.OthersInGroup(Context.Items["user_group"].ToString()).Send(message);
             }
             return Task.CompletedTask;
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public Task SendAudio(byte[] message)
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_name"].ToString())
@@ -52,7 +51,7 @@ namespace SignalRServ
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public string SetName(string name)
         {
             if (string.IsNullOrEmpty(name)) return "Error";
@@ -115,7 +114,7 @@ namespace SignalRServ
         /// </summary>
         /// <param name="group"></param>
         /// <returns>true удчаное подключение к группе</returns>
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public bool GroupConnect(string group,string password= "")
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
@@ -139,7 +138,7 @@ namespace SignalRServ
 
             return true;
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public Task GroupDisconnect()
         {
             var message = new Message
@@ -161,10 +160,11 @@ namespace SignalRServ
             return Task.CompletedTask;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         public Task AdminKickUser(string _user)
         {
             var user = db.Users.ToList().FirstOrDefault(u => u.UserName == _user);
+            if(string.IsNullOrEmpty(user._Room.RoomName)) return Task.CompletedTask;
             Message message = new Message
             {
                 Text = $"{user.UserName} disconnected from {user._Room.RoomName} room",
@@ -188,7 +188,7 @@ namespace SignalRServ
             //await Clients.Client(user.UserId).Send("ReceiveMessageToUser", user, targetConnectionId, message);
             return Task.CompletedTask;
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public bool GroupCreate(string group,string password="")
         {
             var room = db.Rooms.Find(a => a.RoomName.ToLower().Trim() == group.ToLower().Trim());
@@ -233,7 +233,7 @@ namespace SignalRServ
         //    }
         //    return false;
         //}
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         public void RemoveFromRoom(string roomName)
         {
             //Узнать, существует ли комната
@@ -258,7 +258,7 @@ namespace SignalRServ
                 Clients.All.UpdateRooms();
             }
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         public void AdminDeleteRoom(string roomName)
         {
             //Узнать, существует ли комната
@@ -275,12 +275,13 @@ namespace SignalRServ
                 
                 db.Rooms.Remove(room);
                 Clients.OthersInGroup(roomName).Notification(true);
+                Console.WriteLine($"-- group {roomName} deleted {DateTime.Now}");
                 Clients.All.UpdateRooms();
             }
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         public void KickFromRoom(string roomName,string _userid)
         {
             //Узнать, существует ли комната
@@ -311,7 +312,7 @@ namespace SignalRServ
 
         #region Event
         //События которые вызываются сами при:подключении, отключении, очистки ресурсов
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public override Task OnConnectedAsync()
         {
             Clients.All.UpdateRooms();
@@ -344,13 +345,13 @@ namespace SignalRServ
             Clients.All.UpdateRooms();
             return base.OnDisconnectedAsync(exception);
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public Dictionary<string, bool> GetRooms()
         {
             Dictionary<string,bool> rooms = db.Rooms.ToList().ToDictionary(x=>x.RoomName,x=>x.Guard);
             return rooms;
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public List<ServerUser> GetUsersRoom(string group)
         {
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
@@ -360,7 +361,7 @@ namespace SignalRServ
             }
             return new List<ServerUser>() { null };
         }
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public List<RoomsAndUsers> GetRoomsAndUsers()
         {
             List<RoomsAndUsers> temp = new List<RoomsAndUsers>();
@@ -371,7 +372,7 @@ namespace SignalRServ
         }
 
         
-        [Authorize(Roles = "User,Admin,Anonymous")]
+        [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

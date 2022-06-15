@@ -108,6 +108,8 @@ namespace AuthorizationServ.Token
             if (admin.Role=="Admin" && (addRole.Role=="User"||addRole.Role=="Moderator"))
             {
                 opUser.Role = addRole.Role;
+                db.SaveChanges();
+                return Ok();
             }
 
             return BadRequest("Account not found");

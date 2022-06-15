@@ -5,8 +5,12 @@ using CommandDotNet.Diagnostics;
 using CommandDotNet.Help;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Mime;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -145,7 +149,7 @@ namespace LTPanel
             srv.Save();
         }
         [Command("DefaultSettings",
-            Description = "Применить стандартные настройки",
+            Description = "Применение стандартных настройки",
             UsageLines = new[]
             {
                     "DefaultSettings {имя сервера}",
@@ -216,6 +220,202 @@ namespace LTPanel
             Console.WriteLine();
 
 
+        }
+
+        [Command("ResetAdminPassword",
+           Description = "Сброс пароля администратора",
+           UsageLines = new[]
+           {
+                            "ResetAdminPassword {новый пароль}",
+                            "У вас должен быть доступ к локальной базе данных",
+                            "%AppName% %CmdPath% NewPassword"
+           },
+           ExtendedHelpText = "")]
+        public void ResetAdminPassword([Operand(Description = "Имя сервера")] string password)
+        {
+
+        }
+
+        [Command("pex",
+           Description = "Выдача привилегий",
+           UsageLines = new[]
+           {
+                            "pex {адресс сервера:порт} {имя зарегестрированного пользователя} {привилегия} ",
+                            "%AppName% %CmdPath% 192.156.32.12:43891 User Moderator"
+           },
+           ExtendedHelpText = "")]
+        public void pex([Operand(Description = "IP-адрес")] string IP, [Operand(Description = "Имя того, кому устанавливаем роль")]  string Login, [Operand(Description = "Роль (Moderator)")] string Role)
+        {
+            string ipPatter = @"\blocalhost:\d{1,5}\b|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{1,5}\b";
+            Regex check = new Regex(ipPatter);
+            if (!check.IsMatch(IP, 0))
+            {
+                Console.WriteLine($"IP адресс неккоректен");
+                return;
+            }
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using var httpClient = new HttpClient(clientHandler);
+            Console.Write("Введите логин администратора:");
+            string loginAdmin = Console.ReadLine();
+            if(string.IsNullOrEmpty(loginAdmin))
+            {
+                Console.WriteLine("Логин администратора не введен");
+                return;
+            }
+            Console.Write("Введите пароль администратора:");
+
+            var passwordAdmin = string.Empty;
+            ConsoleKey key;
+            do
+            {
+                var keyInfo = Console.ReadKey(intercept: true);
+                key = keyInfo.Key;
+
+                if (key == ConsoleKey.Backspace && passwordAdmin.Length > 0)
+                {
+                    Console.Write("\b \b");
+                    passwordAdmin = passwordAdmin[0..^1];
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    Console.Write("*");
+                    passwordAdmin += keyInfo.KeyChar;
+                }
+            } while (key != ConsoleKey.Enter);
+
+
+
+            var authModel = new { Login = loginAdmin, Password = GetHashSha1(passwordAdmin),Role=Role, OpLogin=Login };
+            var json = JsonSerializer.Serialize(authModel);
+            var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
+            httpClient.DefaultRequestHeaders.Add("ApiKey", "ACbaAS324hnaASD324bzZwq41");
+            try
+            {
+                var response = httpClient.PostAsync($"https://{IP}/api/auth/AddRole", content).Result;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    Console.WriteLine("\nРоль успешно установлена");
+                }
+                if(response.StatusCode== System.Net.HttpStatusCode.BadRequest)
+                {
+                    Console.WriteLine("\nПользователь с данным именем не найден");
+                }
+                else
+                {
+                    Console.WriteLine("\nОшибка установки роли");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Сервер недоступен");
+            }
+        }
+
+        [Command("ChangeInfo",
+           Description = "Выдача привилегий",
+           UsageLines = new[]
+           {
+                            "pex {адресс сервера:порт} ",
+                            "%AppName% %CmdPath%"
+           },
+           ExtendedHelpText = "")]
+        public void ChangeInfo([Operand(Description = "IP-адрес")] string IP)
+        {
+            string ipPatter = @"\blocalhost:\d{1,5}\b|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{1,5}\b";
+            Regex check = new Regex(ipPatter);
+
+            if (!check.IsMatch(IP, 0))
+            {
+                Console.WriteLine($"IP адресс сервера");
+                return;
+            }
+
+            Console.Write("Введите ip адрес сервера чата:");
+            string Ip= Console.ReadLine();
+           
+            
+            if (!check.IsMatch(Ip, 0))
+            {
+                Console.WriteLine($"Вводимые IP адресс сервера чата");
+                return;
+            }
+            Console.Write("Введите название сервера чата:");
+            string Title = Console.ReadLine();
+            Console.Write("Введите страну расположения сервера чата:");
+            string Country = Console.ReadLine();
+            Console.Write("Введите город расположения сервера чата:");
+            string City = Console.ReadLine();
+            Console.Write("Введите описание сервера чата:");
+            string Description = Console.ReadLine();
+            
+
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using var httpClient = new HttpClient(clientHandler);
+            Console.Write("Введите логин администратора:");
+            string loginAdmin = Console.ReadLine();
+            if (string.IsNullOrEmpty(loginAdmin))
+            {
+                Console.WriteLine("Логин администратора не введен");
+                return;
+            }
+            Console.Write("Введите пароль администратора:");
+
+            var passwordAdmin = string.Empty;
+            ConsoleKey key;
+            do
+            {
+                var keyInfo = Console.ReadKey(intercept: true);
+                key = keyInfo.Key;
+
+                if (key == ConsoleKey.Backspace && passwordAdmin.Length > 0)
+                {
+                    Console.Write("\b \b");
+                    passwordAdmin = passwordAdmin[0..^1];
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    Console.Write("*");
+                    passwordAdmin += keyInfo.KeyChar;
+                }
+            } while (key != ConsoleKey.Enter);
+
+
+
+            var authModel = new { Login = loginAdmin, Password = GetHashSha1(passwordAdmin), Title,Country,City,Ip,Description };
+            var json = JsonSerializer.Serialize(authModel, new JsonSerializerOptions { IgnoreNullValues = true });
+            var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
+            httpClient.DefaultRequestHeaders.Add("ApiKey", "ACbaAS324hnaASD324bzZwq41");
+            try
+            {
+                var response = httpClient.PostAsync($"https://{IP}/api/Server/ServerSetInfo", content).Result;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    Console.WriteLine("\nДанные усешно обновлены");
+                }
+                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    Console.WriteLine("\nОшибка");
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Сервер недоступен");
+            }
+        }
+        public static string GetHashSha1(string content)
+        {
+            if (string.IsNullOrEmpty(content)) return null;
+            using var sha1 = new SHA1Managed();
+
+            var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(content));
+
+            return string.Concat(hash.Select(b => b.ToString("x2")));
         }
 
     }

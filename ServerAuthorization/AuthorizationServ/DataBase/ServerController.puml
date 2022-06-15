@@ -1,0 +1,9 @@
+@startuml
+class ServerController {
+    - _configuration : IConfiguration
+    + ServerController(configuration:IConfiguration)
+    + ServerGetInfo() : IActionResult
+    + ServerGetIP() : IActionResult
+}
+ControllerBase <|-- ServerController
+@enduml

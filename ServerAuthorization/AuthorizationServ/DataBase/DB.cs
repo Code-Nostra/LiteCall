@@ -46,7 +46,7 @@ namespace AuthorizationServ
 
                 Console.WriteLine("Login:Admin\nPassword:" + res.ToString());
                 modelBuilder.Entity<UserDB>().HasData(new UserDB{ id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
-                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title= "LiteCall" });
+                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title= "LiteCall",Description= "Community Server" });
                 modelBuilder.Entity<SecurityQuestions>().HasData( new SecurityQuestions { id = 1,Questions= "Какое прозвище было у вас в детстве?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 3, Questions = "На какой улице вы жили в третьем классе?" });

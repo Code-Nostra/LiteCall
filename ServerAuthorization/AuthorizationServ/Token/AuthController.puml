@@ -1,0 +1,15 @@
+@startuml
+class AuthController {
+    - <<readonly>> _logger : ILogger<AuthController>
+    + AuthController(logger:ILogger<AuthController>)
+    + Authorization(authModel:AuthModel) : IActionResult
+    + Registration(RegModel:RegModel) : IActionResult
+    + СhangePasswordbySecurityQuestions(ChangModel:ChangPassModel) : IActionResult
+    + AddRole(addRole:AddRole) : IActionResult
+    + SecurityQuestions() : IActionResult
+    - GetJwt(User:UserDB) : string
+    - GetClaims(User:UserDB) : IEnumerable<Claim>
+    + Captcha(guid:string) : ActionResult
+}
+ControllerBase <|-- AuthController
+@enduml
