@@ -16,7 +16,6 @@ using System.Text.RegularExpressions;
 
 namespace LTPanel
 {
-
     [Command(
     Description = "Программа для настрок серверов")]
     public class Program
@@ -66,35 +65,6 @@ namespace LTPanel
                 File.WriteAllText(keyChat+pubKey, publicKeyJson);
             }
             catch { }
-        //restart:
-        //    Console.WriteLine("Зашифровать приватный ключ для переноса на удалённый сервер?");
-        //    Console.Write("Yes/No? [Y/n] ");
-        //    switch (Console.ReadLine().ToUpper())
-        //    {
-        //        case "Y":
-        //            Console.Write("Введите пароль:");
-
-        //            using (FileStream zipFile = File.Open(@"Keys\PasswordPrivateKey.zip", FileMode.Create))
-        //            {
-        //                using (FileStream source1 = File.Open(@"Keys\PrivateKey.json", FileMode.Open, FileAccess.Read))
-        //                {
-        //                    using (var archive = new Archive(new ArchiveEntrySettings(null, new AesEcryptionSettings(Console.ReadLine(), EncryptionMethod.AES256))))
-        //                    {
-        //                        archive.CreateEntry("PrivateKey.json", source1);
-        //                        archive.Save(zipFile);
-        //                    }
-        //                }
-        //            }
-        //            File.Delete(Path.Combine(currentDirectory, @"..\ServerAuthorization\files\Key\PublicKey.json"));
-        //            Console.WriteLine("Ключи созданы");
-        //            break;
-        //        case "N":
-        //            Console.WriteLine("Ключи созданы");
-        //            break;
-        //        default:
-        //            Console.WriteLine("Ввод неверный");
-        //            goto restart;
-        //    }
         }
 
         [Command("-port",
@@ -142,10 +112,10 @@ namespace LTPanel
             //        Console.WriteLine("Ввод неверный");
             //        break;
             //}
-            Server srv = new Server(server);
-            if (!srv.Valid) return;
+            Server srv = new Server(server,true);
+            //if (!srv.Valid |) return;
             srv.SetIP(ip);
-            srv.Save();
+            if (server != "ServerChat") srv.Save();
         }
         [Command("DefaultSettings",
             Description = "Применение стандартных настройки",
@@ -188,23 +158,19 @@ namespace LTPanel
                     Console.WriteLine(e.Message);
                 }
             }
-
-            
-
         }
 
         [Command("info",
            Description = "Вывод информации о серверах",
            UsageLines = new[]
            {
-                    "info {имя сервера}",
-                    "без указания имени сервера выводится информация для всех серверов",
-                    "%AppName% %CmdPath% ServerAuthorization"
+                "info {имя сервера}",
+                "без указания имени сервера выводится информация для всех серверов",
+                "%AppName% %CmdPath% ServerAuthorization"
            },
            ExtendedHelpText = "")]
         public void Info([Operand(Description = "Имя сервера")] string? server)
         {
-
             if (string.IsNullOrEmpty(server))
             {
                 Server tempServer = new Server("ServerAuthorization");
@@ -223,9 +189,9 @@ namespace LTPanel
            Description = "Сброс пароля администратора",
            UsageLines = new[]
            {
-                            "ResetAdminPassword {новый пароль}",
-                            "У вас должен быть доступ к локальной базе данных",
-                            "%AppName% %CmdPath% NewPassword"
+                "ResetAdminPassword {новый пароль}",
+                "У вас должен быть доступ к локальной базе данных",
+                "%AppName% %CmdPath% NewPassword"
            },
            ExtendedHelpText = "")]
         public void ResetAdminPassword([Operand(Description = "Имя сервера")] string password)
@@ -233,15 +199,14 @@ namespace LTPanel
             DB db = new DB();
             db.Users.FirstOrDefault(x=>x.Role=="Admin").Password = GetHashSha1(GetHashSha1(password));
             db.SaveChanges();
-           
         }
 
         [Command("pex",
            Description = "Выдача привилегий",
            UsageLines = new[]
            {
-                            "pex {адресс сервера:порт} {имя зарегестрированного пользователя} {привилегия} ",
-                            "%AppName% %CmdPath% 192.156.32.12:43891 User Moderator"
+                "pex {адресс сервера:порт} {имя зарегестрированного пользователя} {привилегия} ",
+                "%AppName% %CmdPath% 192.156.32.12:43891 User Moderator"
            },
            ExtendedHelpText = "")]
         public void pex([Operand(Description = "IP-адрес")] string IP, [Operand(Description = "Имя того, кому устанавливаем роль")]  string Login, [Operand(Description = "Роль (Moderator)")] string Role)
@@ -257,6 +222,7 @@ namespace LTPanel
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
             using var httpClient = new HttpClient(clientHandler);
+            httpClient.Timeout = TimeSpan.FromSeconds(250);
             Console.Write("Введите логин администратора:");
             string loginAdmin = Console.ReadLine();
             if(string.IsNullOrEmpty(loginAdmin))
@@ -285,12 +251,17 @@ namespace LTPanel
                 }
             } while (key != ConsoleKey.Enter);
 
-
+            if (string.IsNullOrEmpty(passwordAdmin))
+            {
+                Console.WriteLine("Пароль администратора не введен");
+                return;
+            }
 
             var authModel = new { Login = loginAdmin, Password = GetHashSha1(passwordAdmin),Role=Role, OpLogin=Login };
             var json = JsonSerializer.Serialize(authModel);
             var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
             httpClient.DefaultRequestHeaders.Add("ApiKey", "ACbaAS324hnaASD324bzZwq41");
+            httpClient.Timeout = TimeSpan.FromSeconds(250);
             try
             {
                 var response = httpClient.PostAsync($"https://{IP}/api/auth/AddRole", content).Result;
@@ -303,9 +274,9 @@ namespace LTPanel
                 {
                     Console.WriteLine("\nПользователь с данным именем не найден");
                 }
-                else
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    Console.WriteLine("\nОшибка установки роли");
+                    Console.WriteLine("\nНеверный логин или пароль");
                 }
             }
             catch
@@ -315,11 +286,11 @@ namespace LTPanel
         }
 
         [Command("ChangeInfo",
-           Description = "Выдача привилегий",
+           Description = "Изменение публичной информации",
            UsageLines = new[]
            {
-                            "pex {адресс сервера:порт} ",
-                            "%AppName% %CmdPath%"
+            "pex {адресс сервера:порт} ",
+            "%AppName% %CmdPath%"
            },
            ExtendedHelpText = "")]
         public void ChangeInfo([Operand(Description = "IP-адрес")] string IP)
@@ -329,18 +300,20 @@ namespace LTPanel
 
             if (!check.IsMatch(IP, 0))
             {
-                Console.WriteLine($"IP адресс сервера");
+                Console.WriteLine($"IP адресс сервера некорректен");
                 return;
             }
 
             Console.Write("Введите ip адрес сервера чата:");
             string Ip= Console.ReadLine();
-           
-            
-            if (!check.IsMatch(Ip, 0))
+
+            if (!string.IsNullOrEmpty(Ip))
             {
-                Console.WriteLine($"Вводимые IP адресс сервера чата");
-                return;
+                if (!check.IsMatch(Ip, 0))
+                {
+                    Console.WriteLine($"Вводимые IP адресс сервера чата неккоректен");
+                    return;
+                }
             }
             Console.Write("Введите название сервера чата:");
             string Title = Console.ReadLine();
@@ -350,8 +323,6 @@ namespace LTPanel
             string City = Console.ReadLine();
             Console.Write("Введите описание сервера чата:");
             string Description = Console.ReadLine();
-            
-
 
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
@@ -360,7 +331,7 @@ namespace LTPanel
             string loginAdmin = Console.ReadLine();
             if (string.IsNullOrEmpty(loginAdmin))
             {
-                Console.WriteLine("Логин администратора не введен");
+                Console.WriteLine("Логин администратора не введён");
                 return;
             }
             Console.Write("Введите пароль администратора:");
@@ -383,8 +354,11 @@ namespace LTPanel
                     passwordAdmin += keyInfo.KeyChar;
                 }
             } while (key != ConsoleKey.Enter);
-
-
+            if (string.IsNullOrEmpty(passwordAdmin))
+            {
+                Console.WriteLine("Пароль администратора не введён");
+                return;
+            }
 
             var authModel = new { Login = loginAdmin, Password = GetHashSha1(passwordAdmin), Title,Country,City,Ip,Description };
             var json = JsonSerializer.Serialize(authModel, new JsonSerializerOptions { IgnoreNullValues = true });
@@ -398,14 +372,14 @@ namespace LTPanel
                 {
                     Console.WriteLine("\nДанные усешно обновлены");
                 }
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
-                    Console.WriteLine("\nОшибка");
+                    Console.WriteLine("\nНеверный логин или пароль");
                 }
             }
             catch
             {
-                Console.WriteLine("Сервер недоступен");
+                Console.WriteLine("\nСервер недоступен");
             }
         }
         public static string GetHashSha1(string content)
@@ -461,7 +435,7 @@ namespace LTPanel
             }
         }
 
-        public Server(string _serverName)
+        public Server(string _serverName,bool flag=false)
         {
             serverName = _serverName;
             anotherName = (serverName == ServerAuthorization ? ServerChat : ServerAuthorization);
@@ -478,7 +452,8 @@ namespace LTPanel
             string requestBody;
             try
             {
-                path = Path.Combine(AppContext.BaseDirectory, $@"{serverName}\files\{serverName}.json");
+                if (flag && serverName == ServerChat) goto loop;
+                    path = Path.Combine(AppContext.BaseDirectory, $@"{serverName}\files\{serverName}.json");
                 requestBody = File.ReadAllText(path);
                 data = JsonSerializer.Deserialize<Settings>(requestBody);
                 data.urls = data.urls?.Replace(";", "");
@@ -488,6 +463,7 @@ namespace LTPanel
                 Console.WriteLine(e.Message);
                 return;
             }
+            
             if (string.IsNullOrEmpty(data.urls)|| !data.urls.Contains(":") || data.urls.Length < 9)
             {
                 Console.WriteLine("IP адресс сервера не обнаружен");
@@ -502,23 +478,17 @@ namespace LTPanel
                 }
             }
             string[] temp;
-            //string IPPortPatter = @"\blocalhost:\d{1,5}\b|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?):\d{1,5}\b";
-            //Regex check = new Regex(IPPortPatter);
-            //if (!check.IsMatch(data.urls, 0))
-            //{
-            //    Console.WriteLine($"IP адресс сервера {serverName}  не верен");
-            //    return;
-            //}
-
             temp = data.urls.Split(":");
             authIP = temp[0];
             authPort = temp[1];
+        loop:
             if (serverName == ServerAuthorization)
             {
                 temp = data.IPchat?.Split(":");
                 chatIP = temp[0];
                 chatPort = temp[1];
             }
+        
         }
 
         public void SetPort(int _port)
@@ -562,7 +532,6 @@ namespace LTPanel
                     anotherServer.Save();
                 }
             }
-           // authIP = _ip;
         }
         public bool CheckIP(string ip)
         {

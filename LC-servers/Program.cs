@@ -7,8 +7,24 @@ namespace LC_servers
     {
         static void Main(string[] args)
         {
-            Process.Start(@"ServerAuthorization\ServerAuthorization\ServerAuthorization.exe");
-            Process.Start(@"ServerChat\ServerChat\ServerChat.exe");
+
+            try
+            {
+                Process.Start(@"ServerAuthorization\ServerAuthorization\ServerAuthorization.exe");
+                Process.Start(@"ServerChat\ServerChat\ServerChat.exe");
+            }
+            catch
+            {
+                try
+                {
+                    Process.Start(@"ServerChat\ServerChat\ServerChat.exe");
+                    Process.Start(@"ServerAuthorization\ServerAuthorization\ServerAuthorization.exe");
+                }
+                catch
+                {
+
+                }
+            }
         }
     }
 }

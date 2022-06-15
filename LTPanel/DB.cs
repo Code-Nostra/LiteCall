@@ -17,7 +17,9 @@ namespace LTPanel
  
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@$"Data Source=C:\Users\PC\source\repos\ServerSignalR\ServerAuthorization\AuthorizationServ\bin\Debug\net5.0\LTdb_sqlite.db");
+            //optionsBuilder.UseSqlite(@$"Data Source=ServerAuthorization\ServerAuthorization\LTdb_sqlite.db");
+            
+                optionsBuilder.UseSqlite(@$"Data Source=C:\Users\PC\source\repos\ServerSignalR\ServerAuthorization\AuthorizationServ\bin\Debug\net5.0\LTdb_sqlite.db");
         }
 
         

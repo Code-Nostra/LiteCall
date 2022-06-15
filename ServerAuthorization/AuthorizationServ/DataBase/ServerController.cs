@@ -55,7 +55,6 @@ namespace AuthorizationServ.DataBase
             if (admin == null || admin.Password != server.Password)
                 return Unauthorized("Invalid login or password");
 
-
             if (admin.Role == "Admin")
             {
                 var Server = db.Servers.FirstOrDefault();
@@ -88,38 +87,5 @@ namespace AuthorizationServ.DataBase
         {
             return Ok(_configuration["IPchat"]);
         }
-
-
-        // [HttpGet("ServerAll")]
-        //public IActionResult ServerAll()//Вернуть информацию по всем серверам
-        //{
-        //DB db = new DB();
-
-        //List<ServerDB> Server = db.ServerDB.AsEnumerable().ToList();
-
-        //if (Server != null)
-        //{
-        //    return Ok(Server);
-        //}
-        //return BadRequest();
-        //}
-        //[HttpPost("CheckName")]
-        //public IActionResult CheckName([FromBody] string Name)//Проверка занятого имени, если имя есть то вернуть Name+Count(Name)
-        //{
-        //    UserAuth db = new UserAuth();
-
-        //    var user = db.UsersDB.FirstOrDefault(x => x.Name == Name);
-
-        //    if (user == null)
-        //        return Ok(false);
-
-        //    int temp = db.UsersDB.Where(a => a.Name == Name).Count();
-
-        //    if (temp >= 1) 
-        //        return Ok(true);
-        //    return Ok(false);
-        //}
-
-
     }
 }

@@ -5,6 +5,16 @@
     <TargetFramework>net5.0</TargetFramework>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <RootNamespace>LC_servers</RootNamespace>
+    <ApplicationIcon>Itzikgur-My-Seven-Backup-IBM-Server.ico</ApplicationIcon>
+    <PackageIcon>Itzikgur-My-Seven-Backup-IBM-Server.ico</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Itzikgur-My-Seven-Backup-IBM-Server.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
