@@ -58,6 +58,7 @@ namespace AuthorizationServ
                     //logging.ClearProviders();
                     var filepath = Path.Combine(AppContext.BaseDirectory, "logger.txt");
                     logging.AddFile(filepath);
+                    logging.AddFilter("Microsoft", LogLevel.Warning);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

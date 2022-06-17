@@ -25,16 +25,18 @@ namespace AuthorizationServ.Token
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        public AuthController(ILogger<AuthController> logger)
+        private readonly DB _myDbContext;
+        public AuthController(ILogger<AuthController> logger, DB db)
         {
             _logger = logger;
+            _myDbContext = db;
         }
 
         [HttpPost("Authorization")]
         public IActionResult Authorization([FromBody] AuthModel authModel)//Авторизация
         {
             //_logger.LogError("asd");
-
+            
             DB db = new DB();
 
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
