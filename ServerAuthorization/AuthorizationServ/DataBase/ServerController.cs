@@ -16,24 +16,24 @@ namespace AuthorizationServ.DataBase
     [ApiKey]
     public class ServerController : ControllerBase
     {
-        private IConfiguration _configuration;
-        public ServerController(IConfiguration configuration)
+        private readonly IConfiguration config;
+        private readonly DB db;
+        public ServerController(IConfiguration configuration, DB database)
         {
-            _configuration = configuration;
+            config = configuration;
+            db = database;
         }
 
         [HttpGet("ServerGetInfo")]
         public IActionResult ServerGetInfo()//Вернуть информацию
         {
-            DB db = new DB();
-
             var Server = db.Servers.FirstOrDefault();
            
             if (Server != null)
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(Server.Ip)) Server.Ip = _configuration["IPchat"];
+                    if (string.IsNullOrEmpty(Server.Ip)) Server.Ip = config["IPchat"];
                 }
                 catch
                 {
@@ -48,8 +48,6 @@ namespace AuthorizationServ.DataBase
         [HttpPost("ServerSetInfo")]
         public IActionResult ServerSetInfo([FromBody] ServerInfo server)//Вернуть информацию
         {
-            DB db = new DB();
-
             var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
 
             if (admin == null || admin.Password != server.Password)
@@ -61,21 +59,12 @@ namespace AuthorizationServ.DataBase
 
                 if (Server != null)
                 {
-                    try
-                    {
-                        Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title: server.Title;
-                        Server.Country = string.IsNullOrEmpty(server.Country) ? Server.Country : server.Country;
-                        Server.City = string.IsNullOrEmpty(server.City) ? Server.City : server.City;
-                        Server.Description = string.IsNullOrEmpty(server.Description) ? Server.Description : server.Description;
-                        Server.Ip = server.Ip;
-                        if (string.IsNullOrEmpty(Server.Ip)) Server.Ip = _configuration["IPchat"];
-                        db.SaveChanges();
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Specify chat IP in ServerAuthorization.json");
-                        Server.Ip = "Set the IP of the chat server using IPchat";
-                    }
+                    Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title: server.Title;
+                    Server.Country = string.IsNullOrEmpty(server.Country) ? Server.Country : server.Country;
+                    Server.City = string.IsNullOrEmpty(server.City) ? Server.City : server.City;
+                    Server.Description = string.IsNullOrEmpty(server.Description) ? Server.Description : server.Description;
+                    Server.Ip = string.IsNullOrEmpty(server.Ip) ? config["IPchat"] : server.Ip;
+                    db.SaveChanges();
                     return Ok(Server);
                 }
             }
@@ -85,7 +74,7 @@ namespace AuthorizationServ.DataBase
         [HttpGet("ServerGetIP")]
         public IActionResult ServerGetIP()
         {
-            return Ok(_configuration["IPchat"]);
+            return Ok(config["IPchat"]);
         }
     }
 }

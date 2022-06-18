@@ -48,7 +48,7 @@ namespace SignalRLibrary
             }
             set { _username = value; }
         }
-
+        public string Role { get; set; }
         public string CName
         {
             get { return _username; }

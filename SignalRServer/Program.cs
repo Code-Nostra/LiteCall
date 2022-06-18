@@ -24,6 +24,7 @@ namespace SignalRServ
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile(Path.Combine(AppContext.BaseDirectory,@"..\files\ServerChat.json"), optional: true, reloadOnChange: true)
                 .Build();
+            
             if (!string.IsNullOrEmpty(config["urls"]))
                 {
                 if (!config["urls"].Contains("https"))
@@ -32,6 +33,10 @@ namespace SignalRServ
                 }
             }
             return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, _config) =>
+                {
+                    _config.AddConfiguration(config);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(config);
@@ -46,6 +51,7 @@ namespace SignalRServ
                     //.UseStartup<Startup>();
                     webBuilder.UseStartup<Startup>();
                 });
+
         }
     }
 }

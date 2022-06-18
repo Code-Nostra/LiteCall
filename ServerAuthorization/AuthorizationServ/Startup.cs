@@ -19,6 +19,7 @@ using System.Threading;
 using Microsoft.Extensions.Logging;
 using ServerAuthorization.Logger;
 using Microsoft.AspNetCore.Http;
+using ServerAuthorization.Infrastructure;
 
 namespace AuthorizationServ
 {
@@ -35,9 +36,14 @@ namespace AuthorizationServ
         {
             IdentityModelEventSource.ShowPII = true;
            services.AddEntityFrameworkSqlite().AddDbContext<DB>();
-
-
-
+            //services.AddLogging(
+            //builder =>
+            //{
+            //    builder.AddFilter("Microsoft", LogLevel.Warning)
+            //           .AddFilter("System", LogLevel.Warning)
+            //           .AddFilter("NToastNotify", LogLevel.Warning)
+            //           .AddConsole();
+            //});
             services.AddOptions();
 
             services.AddControllers();
@@ -109,7 +115,7 @@ namespace AuthorizationServ
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();
-            
+            //app.UseMiddleware<PingMiddleware>();
             app.UseCors(policy=> 
             {
                 policy

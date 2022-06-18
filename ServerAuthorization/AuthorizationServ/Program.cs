@@ -25,9 +25,9 @@ namespace AuthorizationServ
             {
                 CreateHostBuilder(args).Build().Run();
             }
-            catch(Exception e)
+            catch
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"Используемые вами порты заняты") ;
                 Console.ReadLine();
                 return;
             }
@@ -39,10 +39,9 @@ namespace AuthorizationServ
                             .SetBasePath(AppContext.BaseDirectory)
                             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                             .AddJsonFile(Path.Combine(AppContext.BaseDirectory, @"..\files\ServerAuthorization.json"), optional: true, reloadOnChange: true)
-
                             .Build();
-            
-            
+
+
             if (!string.IsNullOrEmpty(config["urls"]))
             {
                 if (!config["urls"].Contains("https"))
@@ -55,11 +54,23 @@ namespace AuthorizationServ
 
                 .ConfigureLogging(logging =>
                 {
-                    //logging.ClearProviders();
+                    logging.ClearProviders();
                     var filepath = Path.Combine(AppContext.BaseDirectory, "logger.txt");
                     logging.AddFile(filepath);
-                    logging.AddFilter("Microsoft", LogLevel.Warning);
+                    //logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Warning);
+                    logging.AddSimpleConsole(configure =>
+                    {
+                        configure.IncludeScopes = true;
+                        configure.TimestampFormat = "yyyy.MM.dd HH:mm ";
+                        configure.SingleLine = true;
+                       
+                    });
+
                 })
+                //.ConfigureAppConfiguration((hostingContext, _config) =>
+                //{
+                //    _config.AddConfiguration(config);
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(config)

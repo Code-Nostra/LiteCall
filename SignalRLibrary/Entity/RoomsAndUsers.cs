@@ -20,9 +20,12 @@ namespace SignalRLibrary
     {
         public string Login { get; set; }
 
-        public ServerUser(string _Login)
+        public string Role { get; set; }
+
+        public ServerUser(string _Login,string _Role)
         {
             Login = _Login;
+            Role = _Role;
         }
     }
 }

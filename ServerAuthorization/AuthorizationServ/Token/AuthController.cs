@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AuthorizationServ.DataBase;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -25,11 +26,13 @@ namespace AuthorizationServ.Token
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly DB _myDbContext;
-        public AuthController(ILogger<AuthController> logger, DB db)
+        private readonly DB db;
+        private readonly IConfiguration config;
+        public AuthController(ILogger<AuthController> logger, IConfiguration configuration, DB database)
         {
             _logger = logger;
-            _myDbContext = db;
+            config = configuration;
+            db = database;
         }
 
         [HttpPost("Authorization")]
@@ -37,8 +40,6 @@ namespace AuthorizationServ.Token
         {
             //_logger.LogError("asd");
             
-            DB db = new DB();
-
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
             if(string.IsNullOrEmpty(authModel.Password) || authModel.Password?.ToString()=="null")
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
@@ -62,7 +63,6 @@ namespace AuthorizationServ.Token
                 return BadRequest("Captcha was not correct");
 
             SessionClass.Session.Remove(RegModel.Guid);
-            DB db = new DB();
 
             var user = db.Users.FirstOrDefault(a => a.Login.ToLower() == RegModel.Login.Trim().ToLower());
 
@@ -77,26 +77,23 @@ namespace AuthorizationServ.Token
         [HttpPost("СhangePasswordbySecurityQuestions")]
         public IActionResult СhangePasswordbySecurityQuestions([FromBody] ChangPassModel ChangModel)
         {
-            using (DB db = new DB())
-            {
-                var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == ChangModel.Login.Trim().ToLower());
-                if (user == null) return BadRequest("Account not found"); ;
 
-                if (user._SecurityQuestion.Questions.ToLower() == ChangModel.Questions.ToLower() && user.AnswerSecurityQ.ToLower() == ChangModel.AnswersecurityQ.ToLower())
-                {
-                    user.Password = ChangModel.newPassword;
-                    db.SaveChanges();
-                    return Ok();
-                }
-                return Unauthorized("Wrong answer");
+            var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == ChangModel.Login.Trim().ToLower());
+            if (user == null) return BadRequest("Account not found"); ;
+
+            if (user._SecurityQuestion.Questions.ToLower() == ChangModel.Questions.ToLower() && user.AnswerSecurityQ.ToLower() == ChangModel.AnswersecurityQ.ToLower())
+            {
+                user.Password = ChangModel.newPassword;
+                db.SaveChanges();
+                return Ok();
             }
+            return Unauthorized("Wrong answer");
         }
 
         [HttpPost("AddRole")]
         public IActionResult AddRole([FromBody] AddRole addRole)//Авторизация
         {
-            DB db = new DB();
-            
+
             var opUser = db.Users.FirstOrDefault(x => x.Login == addRole.OpLogin);
             
             if(opUser==null) return BadRequest("Пользователь с данным именем не найден");
@@ -105,7 +102,6 @@ namespace AuthorizationServ.Token
             
             if (admin == null || admin.Password != addRole.Password)
                 return Unauthorized("Invalid login or password");
-            
 
             if (admin.Role=="Admin" && (addRole.Role=="User"||addRole.Role=="Moderator"))
             {
@@ -119,10 +115,7 @@ namespace AuthorizationServ.Token
         [HttpGet("SecurityQuestions")]
         public IActionResult SecurityQuestions()
         {
-            using (DB db = new DB())
-            {
-                return Ok(db.SecurityQuestions.Select(x => x.Questions).ToList());
-            }
+            return Ok(db.SecurityQuestions.Select(x => x.Questions).ToList());
         }
         private string GetJwt(UserDB User)
         {
@@ -141,18 +134,11 @@ namespace AuthorizationServ.Token
         }
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
-            string IP;
-            try
-            {
-                var key = JsonNode.Parse(System.IO.File.ReadAllText(@"..\files\ServerAuthorization.json"));
-                IP = (key["IPchat"]==null? throw new Exception():(string)key["IPchat"]);
-            }
-            catch{ IP = "Set the IP of the chat server using IPchat";}
             var claims = new List<Claim>
             {
             new Claim("Name", User.Login),
             new Claim(ClaimTypes.Role,User.Role),
-            new Claim("IP",IP)
+            new Claim("IP",config["IPchat"])
             };
             return claims;
         }

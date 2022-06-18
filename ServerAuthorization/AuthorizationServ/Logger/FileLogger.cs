@@ -32,7 +32,7 @@ namespace ServerAuthorization.Logger
             {
                 lock (_lock)
                 {
-                    File.AppendAllText(filePath, formatter(state, exception) + Environment.NewLine);
+                    File.AppendAllText(filePath,DateTime.Now+" "+ formatter(state, exception) + Environment.NewLine);
                 }
             }
         }

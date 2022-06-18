@@ -58,7 +58,8 @@ namespace SignalRServ
             name = name.Trim();
             dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.
                 Base64UrlDecode(Startup.lastToken.Split('.')[1])));
-            bool IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] 
+            string role = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            bool IsAuthorize = role 
                 == "Anonymous" ? false : true;
             if (IsAuthorize)
             {
@@ -106,6 +107,7 @@ namespace SignalRServ
                 userid.Count = temp;
             }
             Context.Items["user_name"] = userid.UserName;
+            userid.Role = role;
             Console.WriteLine($"++ {userid.UserName}  logged in {DateTime.Now}");
             return userid.UserName;
         }
@@ -357,7 +359,7 @@ namespace SignalRServ
             var room = db.Rooms.ToList().Find(a => a.RoomName == group);
             if (room != null)
             {
-                return room.Users.ToList().Select(a => new ServerUser(a.UserName)).ToList();
+                return room.Users.ToList().Select(a => new ServerUser(a.UserName,a.Role)).ToList();
             }
             return new List<ServerUser>() { null };
         }
@@ -367,7 +369,7 @@ namespace SignalRServ
             List<RoomsAndUsers> temp = new List<RoomsAndUsers>();
             foreach (var a in db.Rooms)
                 temp.Add(new RoomsAndUsers(a.RoomName, a.Users.ToList().Select(a => 
-                new ServerUser(a.UserName)).ToList(),a.Guard));
+                new ServerUser(a.UserName,a.Role)).ToList(),a.Guard));
             return temp;
         }
 
