@@ -309,9 +309,6 @@ namespace SignalRServ
             }
         }
 
-        
-        
-
         #region Event
         //События которые вызываются сами при:подключении, отключении, очистки ресурсов
         [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
@@ -321,7 +318,7 @@ namespace SignalRServ
             Context.Items.TryAdd("user_name", string.Empty);
             Context.Items.TryAdd("user_group", string.Empty);
            
-            var user = db.Users.ToList().SingleOrDefault(u => u.UserId == Context.ConnectionId);
+            var user = db.Users.SingleOrDefault(u => u.UserId == Context.ConnectionId);
             
             if (user == null)
             {
@@ -331,6 +328,7 @@ namespace SignalRServ
                     UserContext = Context
                 };
                 db.Users.Add(user);
+                
             }
 
             return base.OnConnectedAsync();

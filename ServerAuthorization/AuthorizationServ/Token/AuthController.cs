@@ -39,7 +39,7 @@ namespace AuthorizationServ.Token
         public IActionResult Authorization([FromBody] AuthModel authModel)//Авторизация
         {
             //_logger.LogError("asd");
-            
+
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
             if(string.IsNullOrEmpty(authModel.Password) || authModel.Password?.ToString()=="null")
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
@@ -56,8 +56,8 @@ namespace AuthorizationServ.Token
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] RegModel RegModel)
         {
-            string ServerCaptcha;
-            SessionClass.Session.TryGetValue(RegModel.Guid, out ServerCaptcha);
+            string ServerCaptcha = HttpContext.Session.GetString("code"); 
+            //SessionClass.Session.TryGetValue(RegModel.Guid, out ServerCaptcha);
             
             if (RegModel.Captcha != ServerCaptcha) 
                 return BadRequest("Captcha was not correct");
@@ -101,13 +101,13 @@ namespace AuthorizationServ.Token
             var admin = db.Users.FirstOrDefault(x => x.Login == addRole.Login);
             
             if (admin == null || admin.Password != addRole.Password)
-                return Unauthorized("Invalid login or password");
+                return Unauthorized("Неверный логин или пароль");
 
-            if (admin.Role=="Admin" && (addRole.Role=="User"||addRole.Role=="Moderator"))
+            if (addRole.OpLogin!="Admin" && admin.Role=="Admin" && (addRole.Role=="User"||addRole.Role=="Moderator"))
             {
                 opUser.Role = addRole.Role;
                 db.SaveChanges();
-                return Ok();
+                return Ok("Роль успешно установлена");
             }
 
             return BadRequest("Account not found");
@@ -152,7 +152,9 @@ namespace AuthorizationServ.Token
             if (string.IsNullOrEmpty(guid) ||guid?.ToString() == "null") return BadRequest();
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
-            SessionClass.Session[guid.ToString()] = code;
+            HttpContext.Session.SetString("code", code);
+            
+            //SessionClass.Session[guid.ToString()] = code;
 
             CaptchaImage captcha = new CaptchaImage(code, 60, 30);
             this.Response.Clear();

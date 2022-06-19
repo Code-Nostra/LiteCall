@@ -51,7 +51,7 @@ namespace AuthorizationServ.DataBase
             var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
 
             if (admin == null || admin.Password != server.Password)
-                return Unauthorized("Invalid login or password");
+                return Unauthorized("Неверный логин или пароль");
 
             if (admin.Role == "Admin")
             {

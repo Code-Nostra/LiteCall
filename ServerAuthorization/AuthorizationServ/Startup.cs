@@ -48,7 +48,10 @@ namespace AuthorizationServ
 
             services.AddControllers();
             services.AddCors();
-
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
+            });
             //”правление секретами пользователей
             //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
             try
@@ -111,7 +114,7 @@ namespace AuthorizationServ
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();
@@ -127,8 +130,9 @@ namespace AuthorizationServ
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             
+            
+
 
             app.UseEndpoints(endpoints =>
             {

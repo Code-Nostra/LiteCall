@@ -197,7 +197,15 @@ namespace LTPanel
         public void ResetAdminPassword([Operand(Description = "Имя сервера")] string password)
         {
             DB db = new DB();
-            db.Users.FirstOrDefault(x=>x.Role=="Admin").Password = GetHashSha1(GetHashSha1(password));
+            try
+            {
+                db.Users.FirstOrDefault(x => x.Role == "Admin").Password = GetHashSha1(GetHashSha1(password));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("База данных не найдена");
+                
+            }
             db.SaveChanges();
         }
 
@@ -265,23 +273,12 @@ namespace LTPanel
             try
             {
                 var response = httpClient.PostAsync($"https://{IP}/api/auth/AddRole", content).Result;
-
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    Console.WriteLine("\nРоль успешно установлена");
-                }
-                if(response.StatusCode== System.Net.HttpStatusCode.BadRequest)
-                {
-                    Console.WriteLine("\nПользователь с данным именем не найден");
-                }
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                {
-                    Console.WriteLine("\nНеверный логин или пароль");
-                }
+                Console.WriteLine();
+                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             }
             catch
             {
-                Console.WriteLine("Сервер недоступен");
+                Console.WriteLine("\nСервер недоступен");
             }
         }
 
@@ -368,14 +365,7 @@ namespace LTPanel
             {
                 var response = httpClient.PostAsync($"https://{IP}/api/Server/ServerSetInfo", content).Result;
 
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    Console.WriteLine("\nДанные усешно обновлены");
-                }
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                {
-                    Console.WriteLine("\nНеверный логин или пароль");
-                }
+                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             }
             catch
             {
