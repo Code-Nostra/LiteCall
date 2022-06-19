@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace AuthorizationServ.DataBase
+namespace MainServer.DataBase
 {
     public class ServerDB
     {

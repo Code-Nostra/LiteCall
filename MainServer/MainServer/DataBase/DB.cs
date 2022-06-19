@@ -1,17 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MainServer.DataBase;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Text;
-using System.Security.Cryptography;
 using System.IO;
-using AuthorizationServ.DataBase;
-using System.Text.Json.Nodes;
-using System.Text.Json;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AuthorizationServ
+namespace MainServer
 {
     public class DB : DbContext
     {
@@ -25,15 +21,12 @@ namespace AuthorizationServ
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "LTdb_sqlite.db")}");
+            optionsBuilder.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "Servers.db")}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            
-            
-            if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "LTdb_sqlite.db")))
+            if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "Servers.db")))
             {
                 const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                 StringBuilder res = new StringBuilder();
@@ -81,18 +74,10 @@ namespace AuthorizationServ
                 //    File.WriteAllText(keyChat + pubKey, publicKeyJson);
                 //}
                 //catch { }
-                
 
-
-
-
-
-
-
-
-                modelBuilder.Entity<UserDB>().HasData(new UserDB{ id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
-                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title= "LiteCall",Description= "Community Server" });
-                modelBuilder.Entity<SecurityQuestions>().HasData( new SecurityQuestions { id = 1,Questions= "Какое прозвище было у вас в детстве?" });
+                modelBuilder.Entity<UserDB>().HasData(new UserDB { id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
+                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title = "LiteCall", Ip = "https://localhost:4999", Description = "Community LiteCall Server" });
+                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 1, Questions = "Какое прозвище было у вас в детстве?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 3, Questions = "На какой улице вы жили в третьем классе?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 4, Questions = "Какую школу вы посещали в шестом классе?" });
@@ -102,6 +87,8 @@ namespace AuthorizationServ
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 8, Questions = "Как звали вашего учителя в третьем классе?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 9, Questions = "В каком городе живет ваш ближайший родственник?" });
             }
+
+
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 
+
 namespace AuthorizationServ
 { 
     public class Program
@@ -52,18 +53,21 @@ namespace AuthorizationServ
 
             return Host.CreateDefaultBuilder(args)
 
-                .ConfigureLogging(logging =>
+                .ConfigureLogging((hostingContext, logging) =>
                 {
+                    //Console.WriteLine(hostingContext.Configuration.GetSection("Logging:LogLevel:Microsoft").Value);
                     logging.ClearProviders();
                     var filepath = Path.Combine(AppContext.BaseDirectory, "logger.txt");
                     logging.AddFile(filepath);
                     //logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Warning);
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddSimpleConsole(configure =>
                     {
-                        configure.IncludeScopes = true;
+                        
+                        config.GetSection("Logging");
+                        configure.IncludeScopes = false;
                         configure.TimestampFormat = "yyyy.MM.dd HH:mm ";
                         configure.SingleLine = true;
-                       
                     });
 
                 })

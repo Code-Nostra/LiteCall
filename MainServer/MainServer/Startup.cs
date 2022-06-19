@@ -1,4 +1,4 @@
-using AuthorizationServ.Token;
+using MainServer.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -15,13 +15,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.Extensions.Logging;
-using ServerAuthorization.Logger;
-using Microsoft.AspNetCore.Http;
-using ServerAuthorization.Infrastructure;
 
-namespace AuthorizationServ
+namespace MainServer
 {
     public class Startup
     {
@@ -35,15 +30,7 @@ namespace AuthorizationServ
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
-           services.AddEntityFrameworkSqlite().AddDbContext<DB>();
-            //services.AddLogging(
-            //builder =>
-            //{
-            //    builder.AddFilter("Microsoft", LogLevel.Warning)
-            //           .AddFilter("System", LogLevel.Warning)
-            //           .AddFilter("NToastNotify", LogLevel.Warning)
-            //           .AddConsole();
-            //});
+            services.AddEntityFrameworkSqlite().AddDbContext<DB>();
             services.AddOptions();
 
             services.AddControllers();
@@ -52,23 +39,19 @@ namespace AuthorizationServ
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
             });
-            //Управление секретами пользователей
-            //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
+
             try
             {
-                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PrivateKey.json")));
+                var key = JsonNode.Parse(File.ReadAllText(@"PrivateKey\PrivateKey.json"));
                 AuthOptions.SetKey((string)key["Private"]);
             }
-            catch 
-            { 
-                Console.WriteLine("Private key not found "+ (Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PrivateKey.json")));
-                Console.WriteLine("Closing after 10 seconds");
-                Thread.Sleep(10000);
-                System.Diagnostics.Process.GetCurrentProcess().Kill();
-            }
-            
+            catch { Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()); }
+
             //Для капчи
             services.AddDistributedMemoryCache();
+            
+
+
             #region
             //Added for session state
             //Added for session state
@@ -105,7 +88,7 @@ namespace AuthorizationServ
             #endregion
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -115,7 +98,6 @@ namespace AuthorizationServ
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();
-            //app.UseMiddleware<PingMiddleware>();
             app.UseCors(policy=> 
             {
                 policy

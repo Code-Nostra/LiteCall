@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthorizationServ.Token
+namespace MainServer.Token
 {
     public class AuthModel
     {
@@ -9,7 +9,7 @@ namespace AuthorizationServ.Token
         public string Login { get; set; }
         [StringLength(int.MaxValue, MinimumLength = 0)]
         private string _password;
-        public string Password 
+        public string Password
         {
             get
             {
@@ -29,24 +29,24 @@ namespace AuthorizationServ.Token
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
 
-        [StringLength(int.MaxValue,MinimumLength = 6 )]
+        [StringLength(int.MaxValue, MinimumLength = 6)]
         [Required]
         public string Password { get; set; }
-        
+
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 10)]
         public string Guid { get; set; }
-        
+
         [Required]
         [StringLength(maximumLength: 5, MinimumLength = 4)]
         public string Captcha { get; set; }
-        
+
         [Required(ErrorMessage = "Enter the answer to the security question")]
         [StringLength(maximumLength: 100, MinimumLength = 5)]
         public string AnswersecurityQ { get; set; }
 
         [Required(ErrorMessage = "Select security question")]
-        [Range(5,100)]
+        [Range(5, 100)]
         public int QuestionsId { get; set; }
     }
 
@@ -63,7 +63,7 @@ namespace AuthorizationServ.Token
         [Required(ErrorMessage = "Select security question")]
         [Range(5, 100)]
         public int QuestionsId { get; set; }
-        
+
         [Required(ErrorMessage = "Enter the answer to the security question")]
         [StringLength(maximumLength: 100, MinimumLength = 5)]
         public string AnswersecurityQ { get; set; }
