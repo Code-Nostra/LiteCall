@@ -78,6 +78,7 @@ namespace LTPanel
 
         public void ChangePort([Operand(Description = "Новый порт")] int port, [Operand(Description = "Имя сервера")] string server )
         {
+            Console.WriteLine("Лучше использовать порты между 1024—49151");
             Server srv = new Server(server);
             if (!srv.Valid) return;
             srv.SetPort(port);
@@ -160,8 +161,8 @@ namespace LTPanel
             }
         }
 
-        [Command("info",
-           Description = "Вывод информации о серверах",
+        [Command("InfoSettings",
+           Description = "Вывод локальной информации о серверах",
            UsageLines = new[]
            {
                 "info {имя сервера}",
@@ -169,7 +170,7 @@ namespace LTPanel
                 "%AppName% %CmdPath% ServerAuthorization"
            },
            ExtendedHelpText = "")]
-        public void Info([Operand(Description = "Имя сервера")] string? server)
+        public void InfoSettings([Operand(Description = "Имя сервера")] string? server)
         {
             if (string.IsNullOrEmpty(server))
             {
@@ -185,6 +186,60 @@ namespace LTPanel
             Console.WriteLine();
         }
 
+
+        public class ServerInfo
+        {
+            public int id { get; set; }
+            public string title { get; set; }
+            public string country { get; set; }
+            public string city { get; set; }
+            public string ip { get; set; }
+            public string description { get; set; }
+        }
+        [Command("Info",
+            Description = "Вывод информации о серверах",
+            UsageLines = new[]
+            {
+                        "info",
+                        "%AppName% %CmdPath% 165.123.12.2:43893"
+            },
+            ExtendedHelpText = "")]
+        public void Info([Operand(Description = "IP-адрес")] string IP)
+        {
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using var httpClient = new HttpClient(clientHandler);
+           
+            httpClient.DefaultRequestHeaders.Add("ApiKey", "ACbaAS324hnaASD324bzZwq41");
+            try
+            {
+                var response = httpClient.GetAsync($"https://{IP}/api/Server/ServerGetInfo").Result;
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    ServerInfo srv= JsonSerializer.Deserialize<ServerInfo>(response.Content.ReadAsStringAsync().Result);
+                    Console.Write("IP адрес сервера чата:"+srv.ip) ;
+
+                    Console.Write("Название сервера чата:" + srv.title);
+
+                    Console.Write("Страна расположения сервера чата:" + srv.country);
+                    
+                    Console.Write("Город расположения сервера чата:" + srv.city);
+;
+                    Console.Write("Описание сервера чата:" + srv.description);
+                }
+                else
+                    Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+
+
+            }
+            catch
+            {
+                Console.WriteLine("\nСервер недоступен");
+            }
+        }
+
+
         [Command("ResetAdminPassword",
            Description = "Сброс пароля администратора",
            UsageLines = new[]
@@ -196,6 +251,11 @@ namespace LTPanel
            ExtendedHelpText = "")]
         public void ResetAdminPassword([Operand(Description = "Имя сервера")] string password)
         {
+            if (password.Length < 6)
+            {
+                Console.WriteLine("Длина пароля не может быть меньше 6 символов");
+                return;
+            }
             DB db = new DB();
             try
             {
@@ -287,7 +347,7 @@ namespace LTPanel
            UsageLines = new[]
            {
             "pex {адресс сервера:порт} ",
-            "%AppName% %CmdPath%"
+            "%AppName% %CmdPath% 165.123.12.2:43893"
            },
            ExtendedHelpText = "")]
         public void ChangeInfo([Operand(Description = "IP-адрес")] string IP)
@@ -365,13 +425,17 @@ namespace LTPanel
             {
                 var response = httpClient.PostAsync($"https://{IP}/api/Server/ServerSetInfo", content).Result;
 
-                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+                Console.WriteLine("\n"+response.Content.ReadAsStringAsync().Result);
             }
             catch
             {
                 Console.WriteLine("\nСервер недоступен");
             }
         }
+
+
+
+
         public static string GetHashSha1(string content)
         {
             if (string.IsNullOrEmpty(content)) return null;

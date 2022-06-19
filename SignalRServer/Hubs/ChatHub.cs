@@ -121,10 +121,12 @@ namespace SignalRServ
         {
             if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
 
-            var room = db.Rooms.ToList().Find(a => a.RoomName == group);
-            if ((room == null || room.Password != password) && !string.IsNullOrEmpty(password)) return false;
-
+            var room = db.Rooms.ToList().FirstOrDefault(a => a.RoomName == group);
             var user = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
+            if (room == null) return false;
+            if (room.Password != password && user.Role!="Admin") return false;
+
+            
             room.Users.Add(user);
             user._Room = room;
             Context.Items["user_group"] = group;
@@ -268,15 +270,17 @@ namespace SignalRServ
 
             if (room != null)
             {
-                foreach(var us in room.Users)
+                Clients.Group(roomName).Notification(true);
+                foreach (var us in room.Users)
                 {
                     us.UserContext.Items["user_group"] = string.Empty;
                     us._Connection = null;
                     us._Room = null;
+                    Groups.RemoveFromGroupAsync(us.UserId, roomName);
                 }
                 
                 db.Rooms.Remove(room);
-                Clients.OthersInGroup(roomName).Notification(true);
+                
                 Console.WriteLine($"-- group {roomName} deleted {DateTime.Now}");
                 Clients.All.UpdateRooms();
             }
@@ -297,6 +301,7 @@ namespace SignalRServ
                 room.Users.Remove(user);
                 user._Connection = null;
                 user._Room = null;
+                Groups.RemoveFromGroupAsync(user.UserId, roomName);
                 //Если количество людей в комнате равно 0, удалить комнату
                 if (room.Users.Count <= 0)
                 {

@@ -12,6 +12,7 @@ namespace AuthorizationServ.DataBase
         public string City { get; set; }
         public string Ip { get; set; }
         public string Description { get; set; }
+        public string Ident { get; set; }
     }
 
     public class UserDB
@@ -24,7 +25,7 @@ namespace AuthorizationServ.DataBase
         public string Password { get; set; }
         [Required]
         public string Role { get; set; }
-        public SecurityQuestions _SecurityQuestion { get; set; }
+        public int SecurityQuestionId { get; set; }
         public string AnswerSecurityQ { get; set; }
     }
 

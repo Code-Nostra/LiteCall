@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace KeyGenerator
 {
     
-    class Program
+    class Programg
     {
         readonly static byte[] entropy = { 1, 2, 3, 4, 5, 6 };
         private static string Encrypt(string text)

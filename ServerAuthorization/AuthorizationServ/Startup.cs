@@ -20,6 +20,10 @@ using Microsoft.Extensions.Logging;
 using ServerAuthorization.Logger;
 using Microsoft.AspNetCore.Http;
 using ServerAuthorization.Infrastructure;
+using System.Text.Json;
+using System.Net.Http;
+using System.Net.Mime;
+using System.Text;
 
 namespace AuthorizationServ
 {
@@ -30,12 +34,46 @@ namespace AuthorizationServ
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
+
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using var httpClient = new HttpClient(clientHandler);
+          
+
+            string IP = configuration["IPmain"];
+            if (string.IsNullOrEmpty(IP)) IP = "localhost:5005";
+            
+            
+            
+
+            DB local = new DB();
+            var srv = local.Servers.FirstOrDefault();
+            srv.Ip = configuration["IPchat"];
+            local.SaveChanges();
+
+            string ip = configuration["urls"].Replace("https://", "");
+            var ServerMonitor = new { Title =srv.Title, Ip=ip, Ident=srv.Ident.GetSha1() };
+            var json = JsonSerializer.Serialize(ServerMonitor, new JsonSerializerOptions { IgnoreNullValues = true });
+            var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
+            httpClient.DefaultRequestHeaders.Add("ApiKey", "ACbaAS324hnaASD324bzZwq41");
+            
+            try
+            {
+                var response = httpClient.PostAsync($"https://{IP}/api/Server/ServerMonitoringAdd", content).Result;
+                Console.Write("*");
+            }
+            catch
+            {
+                
+            }
+
+
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
-           services.AddEntityFrameworkSqlite().AddDbContext<DB>();
+            services.AddEntityFrameworkSqlite().AddDbContext<DB>();
             //services.AddLogging(
             //builder =>
             //{
@@ -69,9 +107,6 @@ namespace AuthorizationServ
             
             //Для капчи
             services.AddDistributedMemoryCache();
-            
-
-
             #region
             //Added for session state
             //Added for session state
@@ -129,11 +164,6 @@ namespace AuthorizationServ
             });
             app.UseAuthentication();
             app.UseAuthorization();
-
-            
-            
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
