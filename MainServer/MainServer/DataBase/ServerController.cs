@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using MainServer.Token;
 
 namespace MainServer.DataBase
 {
@@ -14,80 +16,91 @@ namespace MainServer.DataBase
     [ApiKey]
     public class ServerController : ControllerBase
     {
-        //[HttpPost("RoomAdd")]
-        //public IActionResult RoomAdd([FromBody] StandingRoomModel Info)//Добавление сервера
-        //{
-        //    DB db = new DB();
-
-        //    var Server = db.Rooms.FirstOrDefault(x => x.Title.Trim().ToLower() == Info.Title.Trim().ToLower());
-
-        //    if (Server == null)
-        //    {
-        //        db.Rooms.Add(new StandingRoomDB { Title = Info.Title, Password = Info.Password });
-        //        db.SaveChanges();
-        //        return Ok();
-        //    }
-        //    return BadRequest();
-        //}
-        
-        [HttpPost("ServerGetInfo")]
-        public IActionResult ServerGetInfo([FromBody] string Title)//Вернуть информацию по конкретному серверу
+        private readonly IConfiguration config;
+        private readonly DB db;
+        public ServerController(IConfiguration configuration, DB database)
         {
-            DB db = new DB();
+            config = configuration;
+            db = database;
+        }
 
-            var Server = db.Servers.FirstOrDefault(x=>x.Title==Title);
+        [HttpGet("ServerGetInfo")]
+        public IActionResult ServerGetInfo()//Вернуть информацию
+        {
+            var Server = db.Servers.FirstOrDefault();
 
             if (Server != null)
             {
+                try
+                {
+                    if (string.IsNullOrEmpty(Server.Ip)) Server.Ip = config["IPchat"];
+                }
+                catch
+                {
+                    Console.WriteLine("Specify chat IP in ServerAuthorization.json");
+                    Server.Ip = "Set the IP of the chat server using IPchat";
+                }
                 return Ok(Server);
             }
-            else return BadRequest();
+            else return BadRequest(new Server { Title = "LiteCall" });
         }
 
-        [HttpPost("ServerGetIP")]
-        public IActionResult ServerGetIP([FromBody] string Title)
+        [HttpPost("ServerSetInfo")]
+        public IActionResult ServerSetInfo([FromBody] ServerInfo server)
         {
-            DB db = new DB();
+            var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
 
-            var Server = db.Servers.FirstOrDefault(x => x.Title == Title);
+            if (admin == null || admin.Role != "Admin" || admin.Password != server.Password)
+                return Unauthorized("Неверный логин или пароль");
+
+            var Server = db.Servers.FirstOrDefault();
 
             if (Server != null)
             {
-                return Ok(Server.Ip);
+                Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
+                Server.Country = string.IsNullOrEmpty(server.Country) ? Server.Country : server.Country;
+                Server.City = string.IsNullOrEmpty(server.City) ? Server.City : server.City;
+                Server.Description = string.IsNullOrEmpty(server.Description) ? Server.Description : server.Description;
+                Server.Ip = string.IsNullOrEmpty(server.Ip) ? config["IPchat"] : server.Ip;
+                db.SaveChanges();
+                return Ok(Server);
             }
-            else return BadRequest();
+
+            return BadRequest();
         }
 
-        // [HttpGet("ServerAll")]
-        //public IActionResult ServerAll()//Вернуть информацию по всем серверам
-        //{
-        //DB db = new DB();
+        [HttpPost("SaveServersUser")]
+        public IActionResult SaveServersUser([FromBody] SaveServer authModel)
+        {
+            var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
+            
+            if (user == null || user.Password != authModel.Password)
+                return Unauthorized("Invalid login or password");
 
-        //List<ServerDB> Server = db.ServerDB.AsEnumerable().ToList();
+            if (!string.IsNullOrEmpty(authModel.SaveServers))
+            {
+                user.SaveServers = authModel.SaveServers;
+                db.SaveChanges();
+                return Ok();
+            }
+            return BadRequest();
+        }
 
-        //if (Server != null)
-        //{
-        //    return Ok(Server);
-        //}
-        //return BadRequest();
-        //}
-        //[HttpPost("CheckName")]
-        //public IActionResult CheckName([FromBody] string Name)//Проверка занятого имени, если имя есть то вернуть Name+Count(Name)
-        //{
-        //    UserAuth db = new UserAuth();
+        [HttpPost("GetServersUser")]
+        public IActionResult GetServersUser([FromBody] SaveServer authModel)
+        {
+            var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
+           
+            if (user == null || user.Password != authModel.Password)
+                return Unauthorized("Invalid login or password");
+            
+            return Ok(user.SaveServers);
+        }
 
-        //    var user = db.UsersDB.FirstOrDefault(x => x.Name == Name);
-
-        //    if (user == null)
-        //        return Ok(false);
-
-        //    int temp = db.UsersDB.Where(a => a.Name == Name).Count();
-
-        //    if (temp >= 1) 
-        //        return Ok(true);
-        //    return Ok(false);
-        //}
-
-
+        [HttpGet("ServerGetIP")]
+        public IActionResult ServerGetIP()
+        {
+            return Ok(config["IPchat"]);
+        }
     }
 }

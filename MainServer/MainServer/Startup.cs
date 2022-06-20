@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MainServer
@@ -31,6 +33,14 @@ namespace MainServer
         {
             IdentityModelEventSource.ShowPII = true;
             services.AddEntityFrameworkSqlite().AddDbContext<DB>();
+            //services.AddLogging(
+            //builder =>
+            //{
+            //    builder.AddFilter("Microsoft", LogLevel.Warning)
+            //           .AddFilter("System", LogLevel.Warning)
+            //           .AddFilter("NToastNotify", LogLevel.Warning)
+            //           .AddConsole();
+            //});
             services.AddOptions();
 
             services.AddControllers();
@@ -39,19 +49,23 @@ namespace MainServer
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
             });
-
+            //Управление секретами пользователей
+            //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
             try
             {
-                var key = JsonNode.Parse(File.ReadAllText(@"PrivateKey\PrivateKey.json"));
+                var key = JsonNode.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"PrivateKey\PrivateKey.json")));
                 AuthOptions.SetKey((string)key["Private"]);
             }
-            catch { Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()); }
+            catch
+            {
+                Console.WriteLine("Private key not found " + (Path.Combine(AppContext.BaseDirectory, @"PrivateKey\PrivateKey.json")));
+                Console.WriteLine("Closing after 10 seconds");
+                Thread.Sleep(10000);
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+            }
 
             //Для капчи
             services.AddDistributedMemoryCache();
-            
-
-
             #region
             //Added for session state
             //Added for session state
@@ -88,7 +102,7 @@ namespace MainServer
             #endregion
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -98,7 +112,8 @@ namespace MainServer
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();
-            app.UseCors(policy=> 
+            //app.UseMiddleware<PingMiddleware>();
+            app.UseCors(policy =>
             {
                 policy
                 .SetIsOriginAllowed(origin => true)

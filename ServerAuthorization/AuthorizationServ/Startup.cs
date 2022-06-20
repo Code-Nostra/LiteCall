@@ -35,7 +35,7 @@ namespace AuthorizationServ
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
-           services.AddEntityFrameworkSqlite().AddDbContext<DB>();
+            services.AddEntityFrameworkSqlite().AddDbContext<DB>();
             //services.AddLogging(
             //builder =>
             //{

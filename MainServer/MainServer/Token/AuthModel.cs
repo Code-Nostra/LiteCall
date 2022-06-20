@@ -7,7 +7,8 @@ namespace MainServer.Token
         [Required]
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
-        [StringLength(int.MaxValue, MinimumLength = 0)]
+
+        [StringLength(200, MinimumLength = 0)]
         private string _password;
         public string Password
         {
@@ -29,9 +30,20 @@ namespace MainServer.Token
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
 
-        [StringLength(int.MaxValue, MinimumLength = 6)]
         [Required]
-        public string Password { get; set; }
+        [StringLength(200, MinimumLength = 6)]
+        private string _password;
+        public string Password
+        {
+            get
+            {
+                return _password.GetSha1();
+            }
+            set
+            {
+                _password = value;
+            }
+        }
 
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 10)]
@@ -46,7 +58,7 @@ namespace MainServer.Token
         public string AnswersecurityQ { get; set; }
 
         [Required(ErrorMessage = "Select security question")]
-        [Range(5, 100)]
+        [Range(0, 15)]
         public int QuestionsId { get; set; }
     }
 
@@ -56,12 +68,23 @@ namespace MainServer.Token
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
 
-        [StringLength(int.MaxValue, MinimumLength = 6)]
         [Required]
-        public string newPassword { get; set; }
+        [StringLength(200, MinimumLength = 6)]
+        private string _password;
+        public string newPassword
+        {
+            get
+            {
+                return _password.GetSha1();
+            }
+            set
+            {
+                _password = value;
+            }
+        }
 
         [Required(ErrorMessage = "Select security question")]
-        [Range(5, 100)]
+        [Range(1, 10)]
         public int QuestionsId { get; set; }
 
         [Required(ErrorMessage = "Enter the answer to the security question")]
@@ -74,7 +97,8 @@ namespace MainServer.Token
         [Required]
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
-        [StringLength(int.MaxValue, MinimumLength = 0)]
+        [Required]
+        [StringLength(200, MinimumLength = 6)]
         private string _password;
         public string Password
         {
@@ -97,7 +121,9 @@ namespace MainServer.Token
         [Required]
         [StringLength(maximumLength: 15, MinimumLength = 4)]
         public string Login { get; set; }
-        [StringLength(int.MaxValue, MinimumLength = 0)]
+
+        [Required]
+        [StringLength(200, MinimumLength = 6)]
         private string _password;
         public string Password
         {
@@ -119,5 +145,27 @@ namespace MainServer.Token
         [StringLength(maximumLength: 16, MinimumLength = 0)]
         public string Ip { get; set; }
         public string Description { get; set; }
+    }
+
+    public class SaveServer
+    {
+        [Required]
+        [StringLength(maximumLength: 15, MinimumLength = 4)]
+        public string Login { get; set; }
+        [Required]
+        [StringLength(int.MaxValue, MinimumLength = 6)]
+        private string _password;
+        public string Password
+        {
+            get
+            {
+                return _password.GetSha1();
+            }
+            set
+            {
+                _password = value;
+            }
+        }
+        public string SaveServers { get; set; }
     }
 }

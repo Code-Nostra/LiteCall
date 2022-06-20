@@ -18,6 +18,7 @@ using MainServer.DataBase;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Threading;
 
 namespace MainServer.Token
 {
@@ -39,13 +40,11 @@ namespace MainServer.Token
         [HttpPost("Authorization")]
         public IActionResult Authorization([FromBody] AuthModel authModel)//Авторизация
         {
-            _logger.LogInformation("asd");
-
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
             if (string.IsNullOrEmpty(authModel.Password) || authModel.Password?.ToString() == "null")
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
 
-            if (user != null && user.Password != authModel.Password)
+            if (user == null || user.Password != authModel.Password)
                 return Unauthorized("Invalid login or password");
 
             if (user != null && user.Password == authModel.Password)
@@ -60,21 +59,21 @@ namespace MainServer.Token
             string ServerCaptcha = HttpContext.Session.GetString("code");
             //SessionClass.Session.TryGetValue(RegModel.Guid, out ServerCaptcha);
 
-            //if (RegModel.Captcha != ServerCaptcha)
-            //    return BadRequest("Captcha was not correct");
+            if (RegModel.Captcha != ServerCaptcha)
+                return BadRequest("Captcha was not correct");
 
             //SessionClass.Session.Remove(RegModel.Guid);
 
-            var user = db.Users.FirstOrDefault(a => a.Login.ToLower() == RegModel.Login.Trim().ToLower());
-            
+            var user = db.Users.FirstOrDefault(a => a.Login.ToLower().ToLower() == RegModel.Login.Trim().ToLower());
+            if (user != null) return Conflict(($"User name " + RegModel.Login + " is already taken"));
+
             var questions = db.SecurityQuestions.ToList().FirstOrDefault(x => x.id == RegModel.QuestionsId);
             if (questions == null) return BadRequest("Secret question not found");
 
-            if (user != null) return Conflict(($"User name " + RegModel.Login + " is already taken"));
             var NewUser = db.Users.Add(new UserDB
             {
                 Login = RegModel.Login.Trim(),
-                Password = RegModel.Password.GetSha1(),
+                Password = RegModel.Password,
                 Role = "User",
                 SecurityQuestionId = questions.id,
                 AnswerSecurityQ = RegModel.AnswersecurityQ
@@ -88,11 +87,11 @@ namespace MainServer.Token
         public IActionResult СhangePasswordbySecurityQuestions([FromBody] ChangPassModel ChangModel)
         {
             var user = db.Users.SingleOrDefault(a => a.Login.ToLower() == ChangModel.Login.Trim().ToLower());
-            if (user == null) return BadRequest("Account not found");
+            if (user == null) return BadRequest("Account not found"); ;
 
             if (user.SecurityQuestionId == ChangModel.QuestionsId && user.AnswerSecurityQ.ToLower() == ChangModel.AnswersecurityQ.ToLower())
             {
-                user.Password = ChangModel.newPassword.GetSha1();
+                user.Password = ChangModel.newPassword;
                 db.SaveChanges();
                 return Ok("Your password has been successfully changed");
             }
@@ -108,44 +107,28 @@ namespace MainServer.Token
 
             var admin = db.Users.FirstOrDefault(x => x.Login == addRole.Login);
 
-            if (admin == null || admin.Password != addRole.Password)
+            if (admin == null || admin.Password != addRole.Password || admin.Role != "Admin")
                 return Unauthorized("Неверный логин или пароль");
 
-            if (addRole.OpLogin != "Admin" && admin.Role == "Admin" && (addRole.Role == "User" || addRole.Role == "Moderator"))
+            if (addRole.OpLogin != "Admin" && (addRole.Role == "User" || addRole.Role == "Moderator"))
             {
                 opUser.Role = addRole.Role;
                 db.SaveChanges();
                 return Ok("Роль успешно установлена");
             }
-
-            return BadRequest("Account not found");
+            return BadRequest("Роль может быть только User или Moderator");
         }
         [HttpGet("SecurityQuestions")]
         public IActionResult SecurityQuestions()
         {
             return Ok(db.SecurityQuestions.Select(x => new { id = x.id, Questions = x.Questions }).ToList());
         }
-        private string GetJwt(UserDB User)
-        {
-            var now = DateTime.UtcNow;
-            var jwt = new JwtSecurityToken(
-                issuer: AuthOptions.Issuer,
-                audience: AuthOptions.Audience,
-                notBefore: now,
-                claims: GetClaims(User),
-                expires: now.AddMinutes(AuthOptions.Lifetime),
-                signingCredentials: new SigningCredentials(AuthOptions.PrivateKey, SecurityAlgorithms.RsaSha256)
-                );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            return tokenString;
-        }
         private IEnumerable<Claim> GetClaims(UserDB User)
         {
             var claims = new List<Claim>
             {
             new Claim("Name", User.Login),
-            new Claim(ClaimTypes.Role,User.Role),
+            new Claim(ClaimTypes.Role,User.Role)
             };
             return claims;
         }
@@ -170,6 +153,21 @@ namespace MainServer.Token
             ImagePacket packet = new ImagePacket(img_byte_arr);
             var json = JsonSerializer.Serialize<ImagePacket>(packet);
             return Ok(json);
+        }
+        private string GetJwt(UserDB User)
+        {
+            var now = DateTime.UtcNow;
+            var jwt = new JwtSecurityToken(
+                issuer: AuthOptions.Issuer,
+                audience: AuthOptions.Audience,
+                notBefore: now,
+                claims: GetClaims(User),
+                expires: now.AddMinutes(AuthOptions.Lifetime),
+                signingCredentials: new SigningCredentials(AuthOptions.PrivateKey, SecurityAlgorithms.RsaSha256)
+                );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return tokenString;
         }
     }
 }

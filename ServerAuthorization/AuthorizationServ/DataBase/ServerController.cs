@@ -42,32 +42,30 @@ namespace AuthorizationServ.DataBase
                 }
                 return Ok(Server);
             }
-            else return Ok(new Server { Title = "LiteCall" });
+            else return BadRequest(new Server { Title = "LiteCall" });
         }
 
         [HttpPost("ServerSetInfo")]
-        public IActionResult ServerSetInfo([FromBody] ServerInfo server)//Вернуть информацию
+        public IActionResult ServerSetInfo([FromBody] ServerInfo server)
         {
             var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
 
-            if (admin == null || admin.Password != server.Password)
+            if (admin == null || admin.Role != "Admin"  || admin.Password != server.Password )
                 return Unauthorized("Неверный логин или пароль");
 
-            if (admin.Role == "Admin")
-            {
-                var Server = db.Servers.FirstOrDefault();
+            var Server = db.Servers.FirstOrDefault();
 
-                if (Server != null)
-                {
-                    Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title: server.Title;
-                    Server.Country = string.IsNullOrEmpty(server.Country) ? Server.Country : server.Country;
-                    Server.City = string.IsNullOrEmpty(server.City) ? Server.City : server.City;
-                    Server.Description = string.IsNullOrEmpty(server.Description) ? Server.Description : server.Description;
-                    Server.Ip = string.IsNullOrEmpty(server.Ip) ? config["IPchat"] : server.Ip;
-                    db.SaveChanges();
-                    return Ok(Server);
-                }
+            if (Server != null)
+            {
+                Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title: server.Title;
+                Server.Country = string.IsNullOrEmpty(server.Country) ? Server.Country : server.Country;
+                Server.City = string.IsNullOrEmpty(server.City) ? Server.City : server.City;
+                Server.Description = string.IsNullOrEmpty(server.Description) ? Server.Description : server.Description;
+                Server.Ip = string.IsNullOrEmpty(server.Ip) ? config["IPchat"] : server.Ip;
+                db.SaveChanges();
+                return Ok(Server);
             }
+           
             return BadRequest();
         }
 

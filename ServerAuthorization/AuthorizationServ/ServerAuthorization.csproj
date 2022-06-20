@@ -3,7 +3,7 @@
     <TargetFramework>net5.0</TargetFramework>
      <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
      <PublishSingleFile>true</PublishSingleFile>
-    <DebugType>None</DebugType>
+    <!--<DebugType>None</DebugType>-->
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <UserSecretsId>dfd504ca-65cc-44cd-8008-0de316144321</UserSecretsId>

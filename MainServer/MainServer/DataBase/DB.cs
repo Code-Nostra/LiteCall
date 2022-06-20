@@ -37,7 +37,7 @@ namespace MainServer
                     res.Append(valid[rnd.Next(valid.Length)]);
                 }
                 Console.WriteLine("Login:Admin\nPassword:" + res.ToString());
-
+                
                 //string currentDirectory = AppContext.BaseDirectory;
                 //string keysAuth = Path.Combine(AppContext.BaseDirectory, @"..\files\Key");
                 //string keyChat = Path.Combine(AppContext.BaseDirectory, @"..\..\ServerChat\files\Key");
@@ -81,14 +81,11 @@ namespace MainServer
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 3, Questions = "На какой улице вы жили в третьем классе?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 4, Questions = "Какую школу вы посещали в шестом классе?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 5, Questions = "Какое имя и фамилия у вашего старшего двоюродного брата/сестры?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 6, Questions = "Как звали вашу первую плюшевую игрушку?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 7, Questions = "В каком месте встретились ваши родители?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 8, Questions = "Как звали вашего учителя в третьем классе?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 9, Questions = "В каком городе живет ваш ближайший родственник?" });
+                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 5, Questions = "Как звали вашу первую плюшевую игрушку?" });
+                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 6, Questions = "В каком месте встретились ваши родители?" });
+                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 7, Questions = "Как звали вашего учителя в третьем классе?" });
+                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 8, Questions = "В каком городе живет ваш ближайший родственник?" });
             }
-
-
         }
     }
 }
