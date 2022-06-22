@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.WebUtilities;
-using ServerSignalR.ServerCheckMethods;
 using SignalRLibrary;
 using System;
 using System.Collections.Generic;
@@ -119,21 +118,23 @@ namespace SignalRServ
         [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
         public bool GroupConnect(string group,string password= "")
         {
-            if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
+            if (string.IsNullOrEmpty(password)) password = string.Empty;
 
             var room = db.Rooms.ToList().FirstOrDefault(a => a.RoomName == group);
             var user = db.Users.ToList().Where(a => a.UserId == Context.ConnectionId).FirstOrDefault();
             if (room == null) return false;
+            if (string.IsNullOrEmpty(room.Password)) room.Password = string.Empty;
             if (room.Password != password && user.Role!="Admin") return false;
 
-            
+            if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
+
             room.Users.Add(user);
             user._Room = room;
             Context.Items["user_group"] = group;
             Groups.AddToGroupAsync(Context.ConnectionId, group);
             var message = new Message
             {
-                Text = $"{Context.Items["user_name"]} connected from {Context.Items["user_group"]} room",
+                Text = $"{Context.Items["user_name"]} connected to {Context.Items["user_group"]} room",
                 Sender = "Server",
                 DateSend = DateTime.Now
             };
@@ -188,8 +189,6 @@ namespace SignalRServ
             }
             
             Clients.All.UpdateRooms();
-            
-            //await Clients.Client(user.UserId).Send("ReceiveMessageToUser", user, targetConnectionId, message);
             return Task.CompletedTask;
         }
         [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
@@ -215,28 +214,6 @@ namespace SignalRServ
             return false;
         }
 
-        //[Authorize(Roles = "Admin")]
-        //public bool StandingGroupCreate(string group, string password = null)
-        //{
-        //    var room = db.Rooms.Find(a => a.RoomName == group);
-        //    if (room == null)
-        //    {
-        //        if (!string.IsNullOrWhiteSpace(Context.Items["user_group"].ToString())) GroupDisconnect();
-
-        //        ConversationRoom cr = new ConversationRoom()
-        //        {
-        //            RoomName = group,
-        //            Password = password
-        //        };
-
-        //        db.Rooms.Add(cr);
-        //        GroupConnect(group);
-        //        Context.Items["user_group"] = group;
-        //        Console.WriteLine($"++ group {group} сreated {DateTime.Now}");
-        //        return true;
-        //    }
-        //    return false;
-        //}
         [Authorize(Roles = "Admin,Moderator")]
         public void RemoveFromRoom(string roomName)
         {
