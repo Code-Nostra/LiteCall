@@ -59,53 +59,48 @@ namespace AuthorizationServ
                 string _Ident = builder.ToString();
 
 
-                //string currentDirectory = AppContext.BaseDirectory;
-                //string keysAuth = Path.Combine(AppContext.BaseDirectory, @"..\files\Key");
-                //string keyChat = Path.Combine(AppContext.BaseDirectory, @"..\..\ServerChat\files\Key");
-                //const string privKey = @"\PrivateKey.json";
-                //const string pubKey = @"\PublicKey.json";
-                //Console.WriteLine("Ключи шифрования созданы");
+                string currentDirectory = AppContext.BaseDirectory;
+                string keysAuth = Path.Combine(AppContext.BaseDirectory, @"..\files\Key");
+                string keyChat = Path.Combine(AppContext.BaseDirectory, @"..\..\ServerChat\files\Key");
+                const string privKey = @"\PrivateKey.json";
+                const string pubKey = @"\PublicKey.json";
+                Console.WriteLine("Ключи шифрования созданы");
 
-                //try
-                //{
-                //    File.Delete(keysAuth);
-                //    File.Delete(keyChat);
-                //}
-                //catch { }
+                try
+                {
+                    File.Delete(keysAuth);
+                    File.Delete(keyChat);
+                }
+                catch { }
 
-                //using var key = RSA.Create();
-                //var privateKey = Convert.ToBase64String(key.ExportRSAPrivateKey());
-                //var publicKey = Convert.ToBase64String(key.ExportRSAPublicKey());
+                using var key = RSA.Create();
+                var privateKey = Convert.ToBase64String(key.ExportRSAPrivateKey());
+                var publicKey = Convert.ToBase64String(key.ExportRSAPublicKey());
 
-                //var privateKeyJson = JsonSerializer.Serialize(new
-                //{
-                //    Private = privateKey
-                //}, new JsonSerializerOptions { WriteIndented = true });
+                var privateKeyJson = JsonSerializer.Serialize(new
+                {
+                    Private = privateKey
+                }, new JsonSerializerOptions { WriteIndented = true });
 
-                //var publicKeyJson = JsonSerializer.Serialize(new
-                //{
-                //    Public = publicKey
-                //}, new JsonSerializerOptions { WriteIndented = true });
+                var publicKeyJson = JsonSerializer.Serialize(new
+                {
+                    Public = publicKey
+                }, new JsonSerializerOptions { WriteIndented = true });
 
-                //Directory.CreateDirectory(keysAuth);
-                //Directory.CreateDirectory(keyChat);
-                //try
-                //{
-                //    File.WriteAllText(keysAuth + privKey, privateKeyJson);
-                //    File.WriteAllText(keyChat + pubKey, publicKeyJson);
-                //}
-                //catch { }
+                Directory.CreateDirectory(keysAuth);
+                Directory.CreateDirectory(keyChat);
+                try
+                {
+                    File.WriteAllText(keysAuth + privKey, privateKeyJson);
+                    File.WriteAllText(keyChat + pubKey, publicKeyJson);
+                }
+                catch { }
 
-
-
-
-
-
-
-
+                File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "logger.txt"), $"Login:Admin\nPassword:{res.ToString()}\n");
+                File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "logger.txt"), "=============================\n ");
 
                 modelBuilder.Entity<UserDB>().HasData(new UserDB{ id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
-                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title= "LiteCall",Description= "Community Server" });
+                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title= "LiteCall",Description= "Community Server",Ident=_Ident });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 1,Questions= "Какое прозвище было у вас в детстве?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
                 modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 3, Questions = "На какой улице вы жили в третьем классе?" });

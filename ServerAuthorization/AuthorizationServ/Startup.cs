@@ -24,6 +24,7 @@ using System.Text.Json;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
+using ServerAuthorization.DataBase;
 
 namespace AuthorizationServ
 {
@@ -35,53 +36,13 @@ namespace AuthorizationServ
         {
             this.Configuration = configuration;
 
-            HttpClientHandler clientHandler = new HttpClientHandler();
-            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            using var httpClient = new HttpClient(clientHandler);
-          
-
-            string IP = configuration["IPmain"];
-            if (string.IsNullOrEmpty(IP)) IP = "localhost:5005";
-            
-            
-            
-
-            DB local = new DB();
-            var srv = local.Servers.FirstOrDefault();
-            srv.Ip = configuration["IPchat"];
-            local.SaveChanges();
-
-            string ip = configuration["urls"].Replace("https://", "");
-            var ServerMonitor = new { Title =srv.Title, Ip=ip, Ident=srv.Ident.GetSha1() };
-            var json = JsonSerializer.Serialize(ServerMonitor, new JsonSerializerOptions { IgnoreNullValues = true });
-            var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
-            httpClient.DefaultRequestHeaders.Add("ApiKey", "ACbaAS324hnaASD324bzZwq41");
-            
-            try
-            {
-                var response = httpClient.PostAsync($"https://{IP}/api/Server/ServerMonitoringAdd", content).Result;
-                Console.Write("*");
-            }
-            catch
-            {
-                
-            }
-
-
+            Sync.Synch(configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
             services.AddEntityFrameworkSqlite().AddDbContext<DB>();
-            //services.AddLogging(
-            //builder =>
-            //{
-            //    builder.AddFilter("Microsoft", LogLevel.Warning)
-            //           .AddFilter("System", LogLevel.Warning)
-            //           .AddFilter("NToastNotify", LogLevel.Warning)
-            //           .AddConsole();
-            //});
             services.AddOptions();
 
             services.AddControllers();
@@ -90,8 +51,6 @@ namespace AuthorizationServ
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
             });
-            //”правление секретами пользователей
-            //AuthOptions.SetKey(Configuration.GetSection("PrivateKey").Value);
             try
             {
                 var key = JsonNode.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PrivateKey.json")));

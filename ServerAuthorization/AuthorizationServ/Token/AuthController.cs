@@ -46,18 +46,14 @@ namespace AuthorizationServ.Token
 
             return BadRequest("Account not found");
         }
-        //return new StatusCodeResult(1);//(int)response.StatusCode==1
+
         [HttpPost("Registration")]
         public IActionResult Registration([FromBody] RegModel RegModel)
         {
             string ServerCaptcha = HttpContext.Session.GetString("code");
-            //SessionClass.Session.TryGetValue(RegModel.Guid, out ServerCaptcha);
 
             if (RegModel.Captcha != ServerCaptcha)
                 return BadRequest("Captcha was not correct");
-
-            //SessionClass.Session.Remove(RegModel.Guid);
-
             var user = db.Users.FirstOrDefault(a => a.Login.ToLower().ToLower() == RegModel.Login.Trim().ToLower());
             if (user != null) return Conflict(($"User name " + RegModel.Login + " is already taken"));
 
@@ -94,7 +90,7 @@ namespace AuthorizationServ.Token
         }
 
         [HttpPost("AddRole")]
-        public IActionResult AddRole([FromBody] AddRole addRole)//Авторизация
+        public IActionResult AddRole([FromBody] AddRole addRole)
         {
             var opUser = db.Users.FirstOrDefault(x => x.Login == addRole.OpLogin);
 
@@ -144,8 +140,6 @@ namespace AuthorizationServ.Token
             return claims;
         }
         #region Сессия
-        // HttpContext.Session.SetString(Guid.NewGuid().ToString(), code);
-        // HttpContext.Session.SetString(guid.ToString(), code);
         #endregion
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] string guid)
@@ -154,9 +148,6 @@ namespace AuthorizationServ.Token
             string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
 
             HttpContext.Session.SetString("code", code);
-
-            //SessionClass.Session[guid.ToString()] = code;
-
             CaptchaImage captcha = new CaptchaImage(code, 60, 30);
             this.Response.Clear();
             Image image = captcha.Image;

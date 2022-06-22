@@ -12,6 +12,7 @@ namespace ServerAuthorization.Attributes
     [AttributeUsage(validOn: AttributeTargets.Class)]
     public class ApiKeyAttribute : Attribute, IAsyncActionFilter
     {
+        string apiKey = "ACbaAS324hnaASD324bzZwq41";
         private const string APIKEYNAME = "ApiKey";
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -25,12 +26,6 @@ namespace ServerAuthorization.Attributes
                 return;
             }
             
-            //var appSettings = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-
-            //var apiKey = appSettings.GetValue<string>(APIKEYNAME);
-            
-            string apiKey ="ACbaAS324hnaASD324bzZwq41";
-
             if (!apiKey.Equals(extractedApiKey))
             {
                 context.Result = new ContentResult()

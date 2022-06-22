@@ -39,6 +39,9 @@ namespace AuthorizationServ
 
             if (!string.IsNullOrEmpty(config["urls"]))
             {
+                config["IPSync"] = config["urls"];
+                string[] temp = config["urls"].Split(":");
+                config["urls"] = "0.0.0.0:" + temp[1];
                 if (!config["urls"].Contains("https"))
                 {
                     config["urls"] = ("https://" + config["urls"]);

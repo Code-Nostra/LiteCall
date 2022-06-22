@@ -23,19 +23,7 @@ namespace ServerAuthorization.Infrastructure
 
         public async Task Invoke(HttpContext httpContext)
         {
-            //Ping x = new Ping();
-            //PingReply reply = x.Send("64.233.165.100", 100);
 
-            //if (reply.Status== IPStatus.Success)
-            //{
-            //    await nextDelegate.Invoke(httpContext);
-            //}
-            //else
-            //{
-            //    httpContext.Response.StatusCode = 400; //Bad Request                
-            //    await httpContext.Response.WriteAsync("Server is not available");
-            //    return;
-            //}
             var client = new TcpClient();
             string[] address = config["IPchat"].Split(":");
             try
@@ -48,9 +36,6 @@ namespace ServerAuthorization.Infrastructure
                 httpContext.Response.StatusCode = 503; //Bad Request                
                 await httpContext.Response.WriteAsync("Server is not available");
             }
-
-
-
         }
     }
 }
