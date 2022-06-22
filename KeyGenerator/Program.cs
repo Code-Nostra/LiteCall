@@ -15,34 +15,8 @@ namespace KeyGenerator
     
     class Programg
     {
-        readonly static byte[] entropy = { 1, 2, 3, 4, 5, 6 };
-        private static string Encrypt(string text)
-        {
-            // first, convert the text to byte array 
-            byte[] originalText = Encoding.Unicode.GetBytes(text);
-
-            // then use Protect() to encrypt your data 
-            byte[] encryptedText = ProtectedData.Protect(originalText, entropy, DataProtectionScope.CurrentUser);
-
-            //and return the encrypted message 
-            return Convert.ToBase64String(encryptedText);
-        }
-        private static string Decrypt(string text)
-        {
-            // the encrypted text, converted to byte array 
-            byte[] encryptedText = Convert.FromBase64String(text);
-
-            // calling Unprotect() that returns the original text 
-            byte[] originalText = ProtectedData.Unprotect(encryptedText, entropy, DataProtectionScope.CurrentUser);
-
-            // finally, returning the result 
-            return Encoding.Unicode.GetString(originalText);
-        }
         static void Main(string[] args)
         {
-            Process.Start(@"C:\Program Files\Google\Chrome\Application\chrome");
-
-
             try
             {
                 Directory.Delete("Keys", true);
