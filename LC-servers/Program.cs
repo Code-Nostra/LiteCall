@@ -10,7 +10,7 @@ namespace LC_servers
 
             try
             {
-                Process.Start(@"ServerAuthorization\ServerAuthorization\ServerAuthorization.exe");
+               
                 Process.Start(@"ServerChat\ServerChat\ServerChat.exe");
             }
             catch
