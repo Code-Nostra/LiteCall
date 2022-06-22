@@ -78,7 +78,7 @@ namespace LTPanel
 
         public void ChangePort([Operand(Description = "Новый порт")] int port, [Operand(Description = "Имя сервера")] string server )
         {
-            Console.WriteLine("Лучше использовать порты между 1024—49151");
+            //Console.WriteLine("Лучше использовать порты между 1024—49151");
             Server srv = new Server(server);
             if (!srv.Valid) return;
             srv.SetPort(port);
@@ -95,11 +95,11 @@ namespace LTPanel
             ExtendedHelpText = "")]
         public void ChangeIp([Operand(Description = "Новый ip")] string ip, [Operand(Description = "Имя сервера")] string server)
         {
-            if(server== "ServerAuthorization")
-            {
-                Console.WriteLine("Смена IP доступна только для ServerChat");
-                return;
-            }
+            //if(server== "ServerAuthorization")
+            //{
+            //    Console.WriteLine("Смена IP доступна только для ServerChat");
+            //    return;
+            //}
             //Console.WriteLine("ServerAutorization располагается на этом компьютере?");
             //switch (Console.ReadLine().ToUpper())
             //{
@@ -586,6 +586,7 @@ namespace LTPanel
                     anotherServer.Save();
                 }
             }
+            authIP = _ip;
         }
         public bool CheckIP(string ip)
         {
