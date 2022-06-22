@@ -63,6 +63,7 @@ namespace MainServer
                 Thread.Sleep(10000);
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
             }
+            catch { Console.WriteLine("Private key not found "+Directory.GetCurrentDirectory()); }
 
             //Для капчи
             services.AddDistributedMemoryCache();

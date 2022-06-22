@@ -45,12 +45,15 @@ namespace MainServer.DataBase
             else return BadRequest(new Server { Title = "LiteCall" });
         }
 
-        [HttpPost("ServerGetIP")]
-        public IActionResult ServerGetIP([FromBody] string Title)
+        [HttpPost("ServerSetInfo")]
+        public IActionResult ServerSetInfo([FromBody] ServerInfo server)
         {
-            DB db = new DB();
+            var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
 
-            var Server = db.Servers.FirstOrDefault(x => x.Title == Title);
+            if (admin == null || admin.Role != "Admin" || admin.Password != server.Password)
+                return Unauthorized("Неверный логин или пароль");
+
+            var Server = db.Servers.FirstOrDefault();
 
             if (Server != null)
             {

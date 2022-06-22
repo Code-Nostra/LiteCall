@@ -26,9 +26,6 @@ namespace MainServer.DataBase
         public string Role { get; set; }
         public int SecurityQuestionId { get; set; }
         public string AnswerSecurityQ { get; set; }
-        public string SaveServers { get; set; }
-
-        public DateTime DateSynch { get; set; }
     }
 
     public class SecurityQuestions
