@@ -75,7 +75,7 @@ namespace MainServer.DataBase
             {
                 if (Server.Ident == server.Ident)
                 {
-                    Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
+                Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
                     Server.Ip = string.IsNullOrEmpty(server.Ip) ? Server.Ip : server.Ip;
                     Server.Ident = string.IsNullOrEmpty(server.Ident) ? Server.Ident : server.Ident;
                     db.SaveChanges();
@@ -92,11 +92,11 @@ namespace MainServer.DataBase
                 db.SaveChanges();
                 return Ok("\nСервер успешно добавлен");
             }
-            db.SaveChanges();
+                db.SaveChanges();
             return BadRequest();
             
             
-        }
+            }
 
 
         [HttpPost("ServerChangeMonitor")]
@@ -118,7 +118,7 @@ namespace MainServer.DataBase
         public IActionResult SaveServersUser([FromBody] SaveServer authModel)
         {
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-
+            
 
             if (user.DateSynch > authModel.DateSynch)
                 return BadRequest();
@@ -141,13 +141,15 @@ namespace MainServer.DataBase
         public IActionResult GetServersUser([FromBody] SaveServer authModel)
         {
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-
+           
             if (user.DateSynch < authModel.DateSynch)
                 return BadRequest();
 
             if (user == null || user.Password != authModel.Password)
                 return Unauthorized("Invalid login or password");
-
+            
+            return Ok(user.SaveServers);
+        }
 
             return Ok( user.SaveServers);
         }
