@@ -45,15 +45,12 @@ namespace MainServer.DataBase
             else return BadRequest(new Server { Title = "LiteCall" });
         }
 
-        [HttpPost("ServerSetInfo")]
-        public IActionResult ServerSetInfo([FromBody] ServerInfo server)
+        [HttpPost("ServerGetIP")]
+        public IActionResult ServerGetIP([FromBody] string Title)
         {
-            var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
+            DB db = new DB();
 
-            if (admin == null || admin.Role != "Admin" || admin.Password != server.Password)
-                return Unauthorized("Неверный логин или пароль");
-
-            var Server = db.Servers.FirstOrDefault();
+            var Server = db.Servers.FirstOrDefault(x => x.Title == Title);
 
             if (Server != null)
             {
@@ -70,20 +67,26 @@ namespace MainServer.DataBase
         [HttpPost("ServerMonitoringAdd")]
         public IActionResult ServerMonitoringAdd([FromBody] ServerMonitor server)
         {
-            var Server = db.Servers.FirstOrDefault(x=>x.Title==server.Title);
+            var Server = db.Servers.FirstOrDefault(x => x.Title == server.Title);
+
             if (Server != null)
             {
                 if (Server.Ident == server.Ident)
                 {
-                Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
+                    var tempServ = db.Servers.FirstOrDefault(x => x.Title == server.Title);
+                    if (tempServ != null && tempServ.Title!=server.Title) return Conflict("Сервер с таким именем уже существует.\n" +
+                           "Смени имя сервера через LTPanel");
+                    Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
                     Server.Ip = string.IsNullOrEmpty(server.Ip) ? Server.Ip : server.Ip;
-                    Server.Ident = string.IsNullOrEmpty(server.Ident) ? Server.Ident : server.Ident;
                     db.SaveChanges();
                     return Ok("\nНастройки изменены");
                 }
             }
             else
             {
+                var tempServ2 = db.Servers.FirstOrDefault(x => x.Title == server.Title);
+                if (tempServ2 != null && tempServ2.Title != server.Title) return Conflict("Сервер с таким именем уже существует.\n" +
+                         "Смени имя сервера через LTPanel");
                 ServerDB newSer = new ServerDB();
                 newSer.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
                 newSer.Ip = string.IsNullOrEmpty(server.Ip) ? Server.Ip : server.Ip;
@@ -92,11 +95,10 @@ namespace MainServer.DataBase
                 db.SaveChanges();
                 return Ok("\nСервер успешно добавлен");
             }
-                db.SaveChanges();
             return BadRequest();
             
             
-            }
+        }
 
 
         [HttpPost("ServerChangeMonitor")]
@@ -118,7 +120,7 @@ namespace MainServer.DataBase
         public IActionResult SaveServersUser([FromBody] SaveServer authModel)
         {
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-            
+
 
             if (user.DateSynch > authModel.DateSynch)
                 return BadRequest();
@@ -141,15 +143,13 @@ namespace MainServer.DataBase
         public IActionResult GetServersUser([FromBody] SaveServer authModel)
         {
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
-           
+
             if (user.DateSynch < authModel.DateSynch)
                 return BadRequest();
 
             if (user == null || user.Password != authModel.Password)
                 return Unauthorized("Invalid login or password");
-            
-            return Ok(user.SaveServers);
-        }
+
 
             return Ok( user.SaveServers);
         }

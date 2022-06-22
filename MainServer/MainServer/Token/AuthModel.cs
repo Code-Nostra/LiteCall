@@ -188,26 +188,4 @@ namespace MainServer.Token
 
         public DateTime DateSynch { get; set; }
     }
-
-    public class SaveServer
-    {
-        [Required]
-        [StringLength(maximumLength: 15, MinimumLength = 4)]
-        public string Login { get; set; }
-        [Required]
-        [StringLength(int.MaxValue, MinimumLength = 6)]
-        private string _password;
-        public string Password
-        {
-            get
-            {
-                return _password.GetSha1();
-            }
-            set
-            {
-                _password = value;
-            }
-        }
-        public string SaveServers { get; set; }
-    }
 }
