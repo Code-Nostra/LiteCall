@@ -43,15 +43,15 @@
 
 ### __Окно авторизации__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Login.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Login.png)
 
 ### __Окно подключения к серверу__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Main.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Main.png)
 
 ### __Страница сервера__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/ServerRoom.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/ServerRoom.png)
 
 ### __Диаграмма классов клиента__
 
