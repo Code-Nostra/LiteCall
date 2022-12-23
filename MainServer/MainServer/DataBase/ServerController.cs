@@ -58,6 +58,7 @@ namespace MainServer.DataBase
                 {
                     string[] temp = Server.Ip.Split(":");
                     if (temp[0] == "0.0.0.0") return Ok("localhost:" + temp[1]);
+
                     return Ok(Server.Ip);
                 }
             }
