@@ -33,7 +33,7 @@ namespace MainServer
         {
             IdentityModelEventSource.ShowPII = true;
             services.AddEntityFrameworkSqlite().AddDbContext<DB>();
-            //
+            ////
             //services.AddLogging(
             //builder =>
             //{
