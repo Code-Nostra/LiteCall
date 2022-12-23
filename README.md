@@ -43,15 +43,15 @@
 
 ### __Окно авторизации__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Login.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Login.png)
 
 ### __Окно подключения к серверу__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Main.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/Main.png)
 
 ### __Страница сервера__
 
-![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/ServerRoom.png?raw=true)
+![Project Image](https://github.com/Code-Nostra/LiteCall-Servers/blob/master/ReadmeAssets/ServerRoom.png)
 
 ### __Диаграмма классов клиента__
 
@@ -149,7 +149,7 @@
 
 ---
 ## __Недобавленные возможности/баги:__
-- Невозможность подключения больше чем 2 человек в голосовой чат
+- Невозможность подключения больше чем 2 человек в голосовой чат __[03.06.22 исправлено]__
 - Отсутствие нормального отключения пользователя от сервера __[11.03.22 исправлено]__
 - Отсутствие нормальной валидации __[10.03.22 исправлено]__
 - Отсутствие нормального тестирования
