@@ -89,9 +89,9 @@ namespace MainServer.DataBase
                 if (tempServ2 != null && tempServ2.Title != server.Title) return Conflict("Сервер с таким именем уже существует.\n" +
                          "Смени имя сервера через LTPanel");
                 ServerDB newSer = new ServerDB();
-                newSer.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
-                newSer.Ip = string.IsNullOrEmpty(server.Ip) ? Server.Ip : server.Ip;
-                newSer.Ident = string.IsNullOrEmpty(server.Ident) ? Server.Ident : server.Ident;
+                newSer.Title = string.IsNullOrEmpty(server.Title) ? Server?.Title : server.Title;
+                newSer.Ip = string.IsNullOrEmpty(server.Ip) ? Server?.Ip : server.Ip;
+                newSer.Ident = string.IsNullOrEmpty(server.Ident) ? Server?.Ident : server.Ident;
                 db.Servers.Add(newSer);
                 db.SaveChanges();
                 return Ok("\nСервер успешно добавлен");

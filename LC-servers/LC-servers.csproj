@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <RootNamespace>LC_servers</RootNamespace>
     <ApplicationIcon>Itzikgur-My-Seven-Backup-IBM-Server.ico</ApplicationIcon>

@@ -44,7 +44,7 @@ namespace ServerAuthorization.DataBase
             srv.Ip = configuration["IPchat"];
             local.SaveChanges();
 
-            string ip = configuration["IPSync"].Replace("https://", "");
+            string ip = configuration["IPSync"]?.Replace("https://", "");
             var ServerMonitor = new { Title = srv.Title, Ip = ip, Ident = srv.Ident.GetSha1() };
             var json = JsonSerializer.Serialize(ServerMonitor, new JsonSerializerOptions { IgnoreNullValues = true });
             var content = new StringContent(json, Encoding.UTF8, MediaTypeNames.Application.Json);
