@@ -33,10 +33,8 @@ namespace MainServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 			services.AddAutoMapper(typeof(MappingProfilesServer));
-			services.AddAutoMapper(typeof(Startup));
-			services.AddAutoMapper(typeof(Program));
 
 			services.AddControllersWithViews();
 

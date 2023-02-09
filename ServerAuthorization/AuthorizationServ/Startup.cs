@@ -24,7 +24,7 @@ using System.Text.Json;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
-using ServerAuthorization.DataBase;
+using ServerAuthorization.Models;
 
 namespace AuthorizationServ
 {
@@ -42,7 +42,7 @@ namespace AuthorizationServ
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
-            services.AddEntityFrameworkSqlite().AddDbContext<DB>();
+            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
             services.AddOptions();
 
             services.AddControllers();

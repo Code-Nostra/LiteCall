@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ServerAuthorization.Logger;
+using ServerAuthorization.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace AuthorizationServ
     {
         public static void Main(string[] args)
         {
-            using (var db = new DB())
+            using (var db = new ApplicationDbContext())
             {
                 db.Database.Migrate();
             }
