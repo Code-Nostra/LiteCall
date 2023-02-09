@@ -6,8 +6,16 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <UserSecretsId>dfd504ca-65cc-44cd-8008-0de316144321</UserSecretsId>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="PrivateKey\**" />
+    <Content Remove="PrivateKey\**" />
+    <EmbeddedResource Remove="PrivateKey\**" />
+    <None Remove="PrivateKey\**" />
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.5" />

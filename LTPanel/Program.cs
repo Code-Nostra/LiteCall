@@ -95,26 +95,7 @@ namespace LTPanel
             ExtendedHelpText = "")]
         public void ChangeIp([Operand(Description = "Новый ip")] string ip, [Operand(Description = "Имя сервера")] string server)
         {
-            //if(server== "ServerAuthorization")
-            //{
-            //    Console.WriteLine("Смена IP доступна только для ServerChat");
-            //    return;
-            //}
-            //Console.WriteLine("ServerAutorization располагается на этом компьютере?");
-            //switch (Console.ReadLine().ToUpper())
-            //{
-            //    case "Y":
-            //        ip = "localhost";
-            //        break;
-            //    case "N":
-            //        Console.WriteLine("Ключи созданы");
-            //        break;
-            //    default:
-            //        Console.WriteLine("Ввод неверный");
-            //        break;
-            //}
             Server srv = new Server(server,true);
-            //if (!srv.Valid |) return;
             srv.SetIP(ip);
             if (server != "ServerChat") srv.Save();
         }
@@ -432,9 +413,6 @@ namespace LTPanel
                 Console.WriteLine("\nСервер недоступен");
             }
         }
-
-
-
 
         public static string GetHashSha1(string content)
         {

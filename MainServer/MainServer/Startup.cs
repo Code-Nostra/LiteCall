@@ -1,3 +1,5 @@
+using MainServer.Mappings;
+using MainServer.Models;
 using MainServer.Token;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -31,19 +33,18 @@ namespace MainServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            IdentityModelEventSource.ShowPII = true;
-            services.AddEntityFrameworkSqlite().AddDbContext<DB>();
-            //
-            //services.AddLogging(
-            //builder =>
-            //{
-            //    builder.AddFilter("Microsoft", LogLevel.Warning)
-            //           .AddFilter("System", LogLevel.Warning)
-            //           .AddFilter("NToastNotify", LogLevel.Warning)
-            //           .AddConsole();
-            //});
-            services.AddOptions();
+			services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+			services.AddAutoMapper(typeof(MappingProfilesServer));
+			services.AddAutoMapper(typeof(Startup));
+			services.AddAutoMapper(typeof(Program));
 
+			services.AddControllersWithViews();
+
+			IdentityModelEventSource.ShowPII = true;
+            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
+
+            services.AddOptions();
+            
             services.AddControllers();
             services.AddCors();
             services.AddSession(options =>
@@ -65,42 +66,9 @@ namespace MainServer
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
             }
 
-            //Для капчи
-            services.AddDistributedMemoryCache();
-            #region
-            //Added for session state
-            //Added for session state
-
-
-            //services.AddSession(options =>
-            //{
-            //    options.IdleTimeout = TimeSpan.FromMinutes(10);
-            //});
-
-
-            //var paramss = new TokenValidationParameters();
-            //AuthOptions auth = new AuthOptions(Configuration.GetSection("PrivateKey").Value);
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidIssuer = AuthOptions.Issuer,
-            //            RequireAudience = true,
-            //            ValidateAudience = true,
-            //            ValidAudience = AuthOptions.Audience,
-            //            RequireExpirationTime = true,
-            //            ValidateLifetime = true,
-            //            ValidateIssuerSigningKey = true,
-            //            RequireSignedTokens = true,
-            //            IssuerSigningKey = auth.PrivateKey
-            //        };
-
-            //    });   
-            #endregion
+			//Для капчи
+			services.AddDistributedMemoryCache();
+           
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -109,7 +77,9 @@ namespace MainServer
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSession();
+			
+
+			app.UseSession();
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();

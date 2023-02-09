@@ -39,14 +39,6 @@ namespace SignalRServ
             
             var paramss = new TokenValidationParameters();
 
-            //”правление секретами пользователей
-            //AuthOptions.SetKey(Configuration.GetSection("PublicKey").Value);
-
-            #region ƒл€ анонимных пользователей (без сервера авторизации)
-
-
-            //bool IsAuthorize = true;
-            #endregion
             try
             {
                 var key = JsonNode.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, @"..\files\Key\PublicKey.json")));
@@ -72,22 +64,6 @@ namespace SignalRServ
                             if (!string.IsNullOrWhiteSpace(accessToken) &&
                                 context.Request.Path.StartsWithSegments("/LiteCall"))
                             {
-                                #region ƒл€ анонимных пользователей (без сервера авторизации)
-                                //dynamic obj = JsonNode.Parse(Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(accessToken.ToString().Split('.')[1])));
-                                //IsAuthorize = (string)obj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] == "Anonymous" ? false : true;
-                                //if (!IsAuthorize)
-                                //{
-                                //    options.TokenValidationParameters.RequireExpirationTime =  false;
-                                //    options.TokenValidationParameters.ValidateLifetime = false;
-                                //    options.TokenValidationParameters.IssuerSigningKey = AuthOptions.Certificate;
-                                //}
-                                //else
-                                //{
-                                //    options.TokenValidationParameters.RequireExpirationTime = true;
-                                //    options.TokenValidationParameters.ValidateLifetime = true;
-                                //    options.TokenValidationParameters.IssuerSigningKey = AuthOptions.PublicKey;
-                                //}
-                                #endregion
                                 context.Token = accessToken;
                                 lastToken = accessToken;
                             }

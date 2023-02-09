@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Nodes;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
 
 namespace SignalRServ
 {
@@ -51,7 +52,7 @@ namespace SignalRServ
         /// <param name="name"></param>
         /// <returns></returns>
         [Authorize(Roles = "User,Admin,Anonymous,Moderator")]
-        public string SetName(string name)
+        public string SetName(string  name)
         {
             if (string.IsNullOrEmpty(name)) return "Error";
             name = name.Trim();

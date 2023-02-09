@@ -45,15 +45,12 @@ namespace SignalRServ
                     logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Information);
                     logging.AddFilter("Microsoft.AspNetCore.Server.Kestrel", LogLevel.Information);
                     logging.AddFilter("System", LogLevel.Warning);
-                    //logging.SetMinimumLevel(LogLevel.Information);
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddSimpleConsole(configure =>
                     {
-
                         config.GetSection("Logging");
                         configure.IncludeScopes = false;
                         configure.TimestampFormat = "yyyy.MM.dd HH:mm ";
-                        //configure.SingleLine = true;
                     });
 
                 })
@@ -72,7 +69,6 @@ namespace SignalRServ
                         });
                     })
                     .UseContentRoot(AppContext.BaseDirectory);
-                    //.UseStartup<Startup>();
                     webBuilder.UseStartup<Startup>();
                 });
 

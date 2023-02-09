@@ -46,10 +46,11 @@ namespace AuthorizationServ
             services.AddOptions();
 
             services.AddControllers();
-            services.AddCors();
+
+			services.AddCors();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(5);   
             });
             try
             {
@@ -66,40 +67,6 @@ namespace AuthorizationServ
             
             //Для капчи
             services.AddDistributedMemoryCache();
-            #region
-            //Added for session state
-            //Added for session state
-
-
-            //services.AddSession(options =>
-            //{
-            //    options.IdleTimeout = TimeSpan.FromMinutes(10);
-            //});
-
-
-            //var paramss = new TokenValidationParameters();
-            //AuthOptions auth = new AuthOptions(Configuration.GetSection("PrivateKey").Value);
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidIssuer = AuthOptions.Issuer,
-            //            RequireAudience = true,
-            //            ValidateAudience = true,
-            //            ValidAudience = AuthOptions.Audience,
-            //            RequireExpirationTime = true,
-            //            ValidateLifetime = true,
-            //            ValidateIssuerSigningKey = true,
-            //            RequireSignedTokens = true,
-            //            IssuerSigningKey = auth.PrivateKey
-            //        };
-
-            //    });   
-            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -112,7 +79,6 @@ namespace AuthorizationServ
             app.UseHttpsRedirection();
             app.UseHsts();
             app.UseRouting();
-            //app.UseMiddleware<PingMiddleware>();
             app.UseCors(policy=> 
             {
                 policy

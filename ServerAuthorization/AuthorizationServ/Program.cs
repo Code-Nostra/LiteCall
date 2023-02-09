@@ -24,8 +24,6 @@ namespace AuthorizationServ
             }
 
             CreateHostBuilder(args).Build().Run();
-            
-
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
@@ -52,7 +50,6 @@ namespace AuthorizationServ
 
                 .ConfigureLogging((hostingContext, logging) =>
                 {
-                    //Console.WriteLine(hostingContext.Configuration.GetSection("Logging:LogLevel:Microsoft").Value);
                     logging.ClearProviders();
                     var filepath = Path.Combine(AppContext.BaseDirectory, "logger.txt");
                     logging.AddFile(filepath);
@@ -62,24 +59,16 @@ namespace AuthorizationServ
                     logging.AddFilter("Microsoft.AspNetCore.Server.Kestrel", LogLevel.Information);
                     logging.AddFilter("System", LogLevel.Error);
                     logging.AddFilter("Microsoft.AspNetCore.Session.SessionMiddleware", LogLevel.None);
-                    //logging.SetMinimumLevel(LogLevel.Information);
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddSimpleConsole(configure =>
                     {
-                        
                         config.GetSection("Logging");
                         configure.IncludeScopes = false;
                         configure.TimestampFormat = "yyyy.MM.dd HH:mm ";
-                        //configure.SingleLine = true;
- 
-
                     });
 
                 })
-                //.ConfigureAppConfiguration((hostingContext, _config) =>
-                //{
-                //    _config.AddConfiguration(config);
-                //})
+
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(config)
@@ -91,7 +80,6 @@ namespace AuthorizationServ
                         });
                     })
                     .UseContentRoot(AppContext.BaseDirectory);
-                    //.UseStartup<Startup>();
                     webBuilder.UseStartup<Startup>();
                 });
         }

@@ -1,3 +1,4 @@
+using MainServer.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace MainServer
     {
         public static void Main(string[] args)
         {
-            using (var db = new DB())
+            using (var db = new ApplicationDbContext())
             {
                 db.Database.Migrate();
             }
@@ -33,7 +34,7 @@ namespace MainServer
             return Host.CreateDefaultBuilder(args)
                 .ConfigureLogging((hostingContext, logging) =>
                 {
-                    //Console.WriteLine(hostingContext.Configuration.GetSection("Logging:LogLevel:Microsoft").Value);
+                    
                     logging.ClearProviders();
                     var filepath = Path.Combine(AppContext.BaseDirectory, "logger.txt");
                     
@@ -67,7 +68,7 @@ namespace MainServer
                     })
                     .UseContentRoot(Directory.GetCurrentDirectory())
                     .UseStartup<Startup>();
-                    webBuilder.UseStartup<Startup>();
+					webBuilder.UseStartup<Startup>();
                 });
         }
     }
