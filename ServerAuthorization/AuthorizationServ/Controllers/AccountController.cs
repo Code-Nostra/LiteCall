@@ -121,18 +121,14 @@ namespace ServerAuthorization.Controllers
         [HttpPost("CaptchaGenerator")]
         public ActionResult Captcha([FromBody] string guid)
         {
-            if (string.IsNullOrEmpty(guid) || guid?.ToString() == "null") return BadRequest();
-            string code = new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString();
+			if (string.IsNullOrEmpty(guid)) return BadRequest();
+			string code = new Random(DateTime.Now.Millisecond).Next(1000, 9999).ToString();
 
-            HttpContext.Session.SetString("code", code);
-            CaptchaImage captcha = new CaptchaImage(code, 60, 30);
-            Response.Clear();
-            Image image = captcha.Image;
-            byte[] img_byte_arr = ImageMethod.ImageToBytes(image);
-            ImagePacket packet = new ImagePacket(img_byte_arr);
-            var json = JsonSerializer.Serialize(packet);
-            return Ok(json);
-        }
+			HttpContext.Session.SetString("code", code);
+
+			this.Response.Clear();
+			return Ok(ImagePacket.GetImage(code, 60, 30));
+		}
 
         private string GetJwt(UserDB User)
         {

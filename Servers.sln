@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32106.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerAuthorization", "ServerAuthorization\AuthorizationServ\ServerAuthorization.csproj", "{D2790163-DF4D-4773-B12C-D0D8B03F5F15}"
 EndProject
@@ -23,6 +23,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC-servers", "LC-servers\LC-servers.csproj", "{C18C8F8A-B95A-462A-9E9A-82D38E0DDF9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainServer", "MainServer\MainServer\MainServer.csproj", "{C53DFE3D-4E04-4A83-A6C7-2AD101E4CCD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainServer.DAL", "DAL\MainServer.DAL.csproj", "{44018F80-6531-45C9-9FB2-F3F941A175D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,12 @@ Global
 		{C53DFE3D-4E04-4A83-A6C7-2AD101E4CCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C53DFE3D-4E04-4A83-A6C7-2AD101E4CCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C53DFE3D-4E04-4A83-A6C7-2AD101E4CCD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44018F80-6531-45C9-9FB2-F3F941A175D2}.All|Any CPU.ActiveCfg = Debug|Any CPU
+		{44018F80-6531-45C9-9FB2-F3F941A175D2}.All|Any CPU.Build.0 = Debug|Any CPU
+		{44018F80-6531-45C9-9FB2-F3F941A175D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44018F80-6531-45C9-9FB2-F3F941A175D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44018F80-6531-45C9-9FB2-F3F941A175D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44018F80-6531-45C9-9FB2-F3F941A175D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
