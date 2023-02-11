@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace MainServer.DAL.Interfaces
 {
-    public interface IBaseRepository<T>
-    {
-        bool Create(T entity);
+    public interface IBaseRepository<T> where T : class
+	{
+        Task<bool> Create(T entity);
 
-        T GetValue(int id);
+        Task<T> GetValue(int id);
 
-        Task<IEnumerable<T>> Select();
+		Task<IEnumerable<T>> GetAll();
 
-        bool Delete(T entity);
+		Task<bool> Update(T entity);
+
+		Task<bool> Delete(T entity);
+
     }
 }

@@ -42,6 +42,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\MainServer.DAL.csproj" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

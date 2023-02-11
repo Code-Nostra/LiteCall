@@ -1,3 +1,4 @@
+using DAL.EF;
 using MainServer.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -44,8 +45,10 @@ namespace MainServer
                     logging.AddFilter("Microsoft.AspNetCore.Server.Kestrel", LogLevel.Information);
                     logging.AddFilter("System", LogLevel.Error);
                     logging.AddFilter("Microsoft.AspNetCore.Session.SessionMiddleware", LogLevel.None);
-                    //logging.SetMinimumLevel(LogLevel.Information);
-                   logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+					logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Information);
+					logging.AddFilter("Microsoft.EntityFrameworkCore.Sqlite", LogLevel.Information);
+					//logging.SetMinimumLevel(LogLevel.Information);
+					logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                     logging.AddSimpleConsole(configure =>
                     {
 

@@ -1,25 +1,19 @@
+using DAL.EF;
+using DAL.Entities;
+using MainServer.DAL.Interfaces;
+using MainServer.DAL.Repositories;
 using MainServer.Mappings;
-using MainServer.Models;
 using MainServer.Token;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.Json.Nodes;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MainServer
 {
@@ -40,9 +34,15 @@ namespace MainServer
 			services.AddControllersWithViews();
 
 			IdentityModelEventSource.ShowPII = true;
-            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>(options=>options.UseSqlite());
+            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
+            
+            
+            services.AddScoped<IUserRepository,UserRepository>();
+            //temo
+			services.AddScoped(typeof(IBaseRepository<>), typeof(GenericRepo<>));
 
-            services.AddOptions();
+
+			services.AddOptions();
             
             services.AddControllers();
             services.AddCors();

@@ -39,7 +39,7 @@ namespace ServerAuthorization.Controllers
             var user = db.Users.FirstOrDefault(x => x.Login == authModel.Login);
             if (string.IsNullOrEmpty(authModel.Password) || authModel.Password?.ToString() == "null")
                 return Ok(GetJwt(new UserDB { Login = authModel.Login, Role = "Anonymous" }));
-
+            
             if (user == null || user.Password != authModel.Password)
                 return Unauthorized("Invalid login or password");
 

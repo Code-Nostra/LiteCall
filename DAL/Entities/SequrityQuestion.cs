@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-	public class SecurityQuestion
+	public class SequrityQuestion
 	{
 		[Key]
 		public int id { get; set; }

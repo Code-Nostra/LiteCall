@@ -1,17 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.IO;
-using System.Text;
-using System;
-using DAL.Entities;
+﻿using DAL.Entities;
 using DAL.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace DAL.EF
 {
-    public class ApplicationDbContext : DbContext
+	public class ApplicationDbContext : DbContext
 	{
 		public DbSet<User> Users { get; set; }
 		public DbSet<Server> Servers { get; set; }
-		public DbSet<SecurityQuestion> SecurityQuestions { get; set; }
+		public DbSet<SequrityQuestion> SecurityQuestions { get; set; }
 		public ApplicationDbContext()
 		{
 			Database.EnsureCreated();
@@ -39,15 +37,15 @@ namespace DAL.EF
 				File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "logger.txt"), $"Login:Admin\nPassword:{res.ToString()}\n");
 				File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "logger.txt"), "=============================\n ");
 
-				modelBuilder.Entity<User>().HasData(new User { id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 1, Questions = "Какое прозвище было у вас в детстве?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 3, Questions = "На какой улице вы жили в третьем классе?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 4, Questions = "Какую школу вы посещали в шестом классе?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 5, Questions = "Как звали вашу первую плюшевую игрушку?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 6, Questions = "В каком месте встретились ваши родители?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion{ id = 7, Questions = "Как звали вашего учителя в третьем классе?" });
-				modelBuilder.Entity<SecurityQuestion>().HasData(new SecurityQuestion { id = 8, Questions = "В каком городе живет ваш ближайший родственник?" });
+				modelBuilder.Entity<User>().HasData(new User { id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin",AnswerSecurityQ=string.Empty });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 1, Questions = "Какое прозвище было у вас в детстве?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 3, Questions = "На какой улице вы жили в третьем классе?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 4, Questions = "Какую школу вы посещали в шестом классе?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 5, Questions = "Как звали вашу первую плюшевую игрушку?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 6, Questions = "В каком месте встретились ваши родители?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 7, Questions = "Как звали вашего учителя в третьем классе?" });
+				modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 8, Questions = "В каком городе живет ваш ближайший родственник?" });
 			}
 		}
 	}
