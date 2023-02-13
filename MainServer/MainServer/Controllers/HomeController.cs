@@ -22,10 +22,6 @@ namespace MainServer.Controllers
 		{
 			return await _repository.GetAll();
 		}
-		[HttpGet("Get2")]
-		public async Task<IEnumerable<User>> Get2()
-		{
-			return await _repository.GetAll();
-		}
+
 	}
 }

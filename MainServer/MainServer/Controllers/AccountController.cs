@@ -1,11 +1,13 @@
 ﻿using DAL.Entities;
 using MainServer.Attributes;
 using MainServer.DAL.Interfaces;
+using MainServer.DAL.UnitOfWork;
 using MainServer.Models.Captcha;
 using MainServer.Models.ViewModels;
 using MainServer.Token;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -24,26 +26,19 @@ namespace MainServer.Controllers
 	public class AccountController : ControllerBase
 	{
 		private readonly ILogger<AccountController> _logger;
-		private readonly IUserRepository _userRepository;
+		private readonly IUnitOfWork _unitOfWork;
 		private readonly IConfiguration _config;
-		public AccountController(ILogger<AccountController> logger, IConfiguration configuration, IUserRepository userRepository)
+		public AccountController(ILogger<AccountController> logger, IConfiguration configuration, IUnitOfWork unitOfWork)
 		{
 			_logger = logger;
 			_config = configuration;
-			_userRepository = userRepository;
+			_unitOfWork = unitOfWork;
 		}
-
-		[HttpGet("Get")]
-		public async Task<IEnumerable<User>> Get()
-		{
-			return await _userRepository.GetAll();
-		}
-
 
 		[HttpPost("Authorization")]
 		public async Task<IActionResult> AuthorizationAsync([FromBody] LoginViewModel authModel)//Авторизация
 		{
-			var user = await _userRepository.FindByName(authModel.Login);
+			var user = await _unitOfWork.Users.FindByName(authModel.Login);
 
 			if (string.IsNullOrEmpty(authModel.Password))
 				return Ok(GetJwt(new User { Login = authModel.Login, Role = "Anonymous" }));
@@ -56,6 +51,8 @@ namespace MainServer.Controllers
 
 			return BadRequest("Account not found");
 		}
+
+
 		//return new StatusCodeResult(1);//(int)response.StatusCode==1
 		[HttpPost("Registration")]
 		public async Task<IActionResult> RegistrationAsync([FromBody] RegisterViewModel RegModel)
@@ -65,11 +62,11 @@ namespace MainServer.Controllers
 			if (RegModel.Captcha != ServerCaptcha)
 				return BadRequest("Captcha was not correct");
 
-			var user = await _userRepository.FindByName(RegModel.Login);
+			var user = await _unitOfWork.Users.FindByName(RegModel.Login);
 
 			if (user != null) return Conflict($"User name {RegModel.Login} is already taken");
 
-			var questions = await _userRepository.GetSequrityQuestionById(RegModel.QuestionsId);
+			var questions = await _unitOfWork.SequrityQuestions.GetValue(RegModel.QuestionsId);
 
 			if (questions == null) return BadRequest("Secret question not found");
 
@@ -81,21 +78,26 @@ namespace MainServer.Controllers
 				SecurityQuestionId = questions.id,
 				AnswerSecurityQ = RegModel.AnswersecurityQ
 			};
-			var result = await _userRepository.AddNewUser(newUser);
+			await _unitOfWork.Users.Add(newUser);
+
+			await _unitOfWork.SaveChangesAsync();
 
 			return Ok(GetJwt(newUser));
 		}
+		
 		[HttpPost("СhangePasswordbySecurityQuestions")]
 		public async Task<IActionResult> СhangePasswordbySecurityQuestionsAsync([FromBody] ChangePassword ChangModel)
 		{
-			var user = await _userRepository.FindByName(ChangModel.Login);
+			var user = await _unitOfWork.Users.FindByName(ChangModel.Login);
 			if (user == null) return BadRequest("Account not found"); ;
 
 			if (user.SecurityQuestionId == ChangModel.QuestionsId && user.AnswerSecurityQ.ToLower() == ChangModel.AnswersecurityQ.ToLower())
 			{
 				user.Password = ChangModel.newPassword;
 
-				await _userRepository.Update(user);
+				await _unitOfWork.Users.Update(user);
+
+				await _unitOfWork.SaveChangesAsync();
 
 				return Ok("Your password has been successfully changed");
 			}
@@ -105,11 +107,11 @@ namespace MainServer.Controllers
 		[HttpPost("AddRole")]
 		public async Task<IActionResult> AddRoleAsync([FromBody] EditRoles addRole)
 		{
-			var opUser = await _userRepository.FindByName(addRole.roleTaker);
+			var opUser = await _unitOfWork.Users.FindByName(addRole.roleTaker);
 
 			if (opUser == null) return BadRequest("Пользователь с данным именем не найден");
 
-			var admin =await _userRepository.FindByName(addRole.Login);
+			var admin = await _unitOfWork.Users.FindByName(addRole.Login);
 
 			if (admin == null || admin.Password != addRole.Password || admin.Role != "Admin")
 				return Unauthorized("Неверный логин или пароль");
@@ -117,17 +119,21 @@ namespace MainServer.Controllers
 			if (addRole.roleTaker != "Admin" && (addRole.Role == "User" || addRole.Role == "Moderator"))
 			{
 				opUser.Role = addRole.Role;
-				await _userRepository.Update(opUser);
+				await _unitOfWork.Users.Update(opUser);
+
+				await _unitOfWork.SaveChangesAsync();
+
 				return Ok("Роль успешно установлена");
+				
 			}
 			return BadRequest("Роль может быть только User или Moderator");
 		}
-		
-		//[HttpGet("SecurityQuestions")]
-		//public IActionResult SecurityQuestions()
-		//{
-		//	//return Ok(db.SecurityQuestions.Select(x => new { x.id, x.Questions }).ToList());
-		//}
+
+		[HttpGet("SecurityQuestions")]
+		public async Task<IActionResult> SecurityQuestions()
+		{
+			return Ok(await _unitOfWork.SequrityQuestions.GetAll());
+		}
 
 
 		[HttpPost("CaptchaGenerator")]

@@ -8,7 +8,7 @@ namespace MainServer.DAL.Interfaces
 {
     public interface IBaseRepository<T> where T : class
 	{
-        Task<bool> Create(T entity);
+        Task<bool> Add(T entity);
 
         Task<T> GetValue(int id);
 

@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerChat", "SignalRServer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2AFE81EE-F11F-4B14-A20A-FF825772BBD6}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -24,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC-servers", "LC-servers\LC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainServer", "MainServer\MainServer\MainServer.csproj", "{C53DFE3D-4E04-4A83-A6C7-2AD101E4CCD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainServer.DAL", "DAL\MainServer.DAL.csproj", "{44018F80-6531-45C9-9FB2-F3F941A175D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainServer.DAL", "DAL\MainServer.DAL.csproj", "{44018F80-6531-45C9-9FB2-F3F941A175D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

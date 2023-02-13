@@ -9,6 +9,9 @@
     <UserSecretsId>dfd504ca-65cc-44cd-8008-0de316144321</UserSecretsId>
   
 </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
 
 
   <!-- <ItemGroup>

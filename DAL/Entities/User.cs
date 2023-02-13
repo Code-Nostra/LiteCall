@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainServer.DAL.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-	public class User
+	public class User:IEntity
 	{
 		[Key]
 		public int id { get; set; }
