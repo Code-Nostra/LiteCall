@@ -1,4 +1,4 @@
-﻿using MainServer.DAL.Interfaces;
+﻿using DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

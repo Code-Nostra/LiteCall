@@ -18,7 +18,7 @@ namespace MainServer
     {
         public static void Main(string[] args)
         {
-            using (var db = new ApplicationDbContext())
+            using (var db = new MainServerDbContext())
             {
                 db.Database.Migrate();
             }

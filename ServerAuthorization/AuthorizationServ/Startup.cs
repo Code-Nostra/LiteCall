@@ -25,6 +25,10 @@ using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
 using ServerAuthorization.Models;
+using DAL.UnitOfWork.MainServer;
+using DAL.UnitOfWork.ServerAuthorization;
+using DAL.EF;
+using ServerAuthorization.Mappings;
 
 namespace AuthorizationServ
 {
@@ -36,17 +40,22 @@ namespace AuthorizationServ
         {
             this.Configuration = configuration;
 
-            Sync.Synch(configuration);
+            //Sync.Synch(configuration);
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
-            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
-            services.AddOptions();
+            
+            services.AddEntityFrameworkSqlite().AddDbContext<ServerAuthDbContext>();
+			services.AddScoped<IUnitOfWorkAuth, UnitOfWorkAuth>();
+
+			services.AddAutoMapper(typeof(MappingProfilesServer));
+
+			services.AddOptions();
 
             services.AddControllers();
-
+			
 			services.AddCors();
             services.AddSession(options =>
             {

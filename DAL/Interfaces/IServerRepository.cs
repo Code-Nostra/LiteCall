@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<User> 
-    {
-		IQueryable<User> Users { get; }
-		Task<User> FindByName(string name);
+	public interface IServerRepository:IBaseRepository<Server>
+	{
+		Task<Server> GetByTitle(string id);
 
+		Task<Server> GetByIdent(string id);
 	}
 }

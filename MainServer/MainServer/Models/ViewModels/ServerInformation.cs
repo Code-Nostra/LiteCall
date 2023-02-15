@@ -13,6 +13,11 @@ namespace MainServer.Models.ViewModels
 
 		public string Ident { get; set; }
 
+		public string Country { get; set; }
+		public string City { get; set; }
+
+		public string Description { get; set; }
+
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
 			List<ValidationResult> errors = new List<ValidationResult>();
@@ -29,7 +34,18 @@ namespace MainServer.Models.ViewModels
 			{
 				errors.Add(new ValidationResult("Неверный идентификатор!"));
 			}
-
+			if (string.IsNullOrWhiteSpace(this.Country))
+			{
+				errors.Add(new ValidationResult("Страна не задана!"));
+			}
+			if (string.IsNullOrWhiteSpace(this.City))
+			{
+				errors.Add(new ValidationResult("Город не задан!"));
+			}
+			if (string.IsNullOrWhiteSpace(this.Description))
+			{
+				errors.Add(new ValidationResult("Описание не задано!"));
+			}
 			return errors;
 		}
 	}

@@ -5,24 +5,24 @@ using System.Text;
 
 namespace DAL.EF
 {
-	public class ApplicationDbContext : DbContext
+	public class MainServerDbContext : DbContext
 	{
 		public DbSet<User> Users { get; set; }
 		public DbSet<Server> Servers { get; set; }
 		public DbSet<SequrityQuestion> SecurityQuestions { get; set; }
-		public ApplicationDbContext()
+		public MainServerDbContext()
 		{
 			Database.EnsureCreated();
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "Servers.db")}");
+			optionsBuilder.UseSqlite($"Data Source={Path.Combine(AppContext.BaseDirectory, "MainServer.db")}");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "Servers.db")))
+			if (!File.Exists(Path.Combine(AppContext.BaseDirectory, "MainServer.db")))
 			{
 				const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 				StringBuilder res = new StringBuilder();

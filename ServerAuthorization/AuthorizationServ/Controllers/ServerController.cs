@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text.Json;
 using ServerAuthorization.Models.ViewModels;
 using ServerAuthorization.Models;
+using DAL.UnitOfWork.ServerAuthorization;
+using System.Threading.Tasks;
+using AutoMapper;
 
 namespace ServerAuthorization.Controllers
 {
@@ -16,71 +19,69 @@ namespace ServerAuthorization.Controllers
     public class ServerController : ControllerBase
     {
         private readonly IConfiguration config;
-        private readonly ApplicationDbContext db;
-        public ServerController(IConfiguration configuration, ApplicationDbContext database)
+        private readonly IUnitOfWorkAuth _unitOfWork;
+		private readonly IMapper mapper;
+		public ServerController(IConfiguration configuration, IUnitOfWorkAuth unitOfWork, IMapper _mapper)
         {
             config = configuration;
-            db = database;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("ServerGetInfo")]
-        public IActionResult ServerGetInfo()//Вернуть информацию
+        public async Task<IActionResult> ServerGetInfoAsync()//Вернуть информацию
         {
-            var Server = db.Servers.FirstOrDefault();
+            var Server = await _unitOfWork.Servers.GetFirstDefault();
 
             if (Server != null)
             {
                 try
                 {
                     if (string.IsNullOrEmpty(Server.Ip)) Server.Ip = config["IPchat"];
-                    db.SaveChanges();
+                    
                 }
                 catch
                 {
                     Console.WriteLine("Specify chat IP in ServerAuthorization.json");
                     Server.Ip = "Set the IP of the chat server using IPchat";
                 }
-                return Ok(Server);
+				await _unitOfWork.SaveChangesAsync();
+				return Ok(Server);
             }
             else return BadRequest();
         }
 
         [HttpPost("ServerSetInfo")]
-        public IActionResult ServerSetInfo([FromBody] ServerInformation server)
+        public async Task<IActionResult> ServerSetInfo([FromBody] ServerInformation newServerInfo)
         {
-            var admin = db.Users.FirstOrDefault(x => x.Login == server.Login);
+            var admin = await _unitOfWork.Users.FindByName(newServerInfo.Login);
 
-            if (admin == null || admin.Role != "Admin" || admin.Password != server.Password)
+            if (admin == null || admin.Role != "Admin" || admin.Password != newServerInfo.Password)
                 return Unauthorized("\nНеверный логин или пароль");
 
-            var Server = db.Servers.FirstOrDefault();
+            var oldServerInfo = await _unitOfWork.Servers.GetFirstDefault();
 
-            if (Server != null)
+            if (oldServerInfo != null)
             {
-                Server.Title = string.IsNullOrEmpty(server.Title) ? Server.Title : server.Title;
-                Server.Country = string.IsNullOrEmpty(server.Country) ? Server.Country : server.Country;
-                Server.City = string.IsNullOrEmpty(server.City) ? Server.City : server.City;
-                Server.Description = string.IsNullOrEmpty(server.Description) ? Server.Description : server.Description;
-                Server.Ip = string.IsNullOrEmpty(server.Ip) ? config["IPchat"] : server.Ip;
+				mapper.Map(newServerInfo, oldServerInfo);
 
-                try
+				try
                 {
                     string path = Path.Combine(AppContext.BaseDirectory, @"..\files\ServerAuthorization.json");
                     string requestBody = System.IO.File.ReadAllText(path);
                     ConfigSettings data = JsonSerializer.Deserialize<ConfigSettings>(requestBody);
-                    data.IPchat = Server.Ip;
+                    data.IPchat = oldServerInfo.Ip;
                     System.IO.File.WriteAllText(path, JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
 
                     path = Path.Combine(AppContext.BaseDirectory, @"..\..\files\ServerChat.json");
                     requestBody = System.IO.File.ReadAllText(path);
                     data = JsonSerializer.Deserialize<ConfigSettings>(requestBody);
-                    data.IPchat = Server.Ip;
+                    data.IPchat = oldServerInfo.Ip;
                     System.IO.File.WriteAllText(path, JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true, IgnoreNullValues = true }));
                 }
                 catch (Exception e)
                 {
                 }
-                db.SaveChanges();
+                await _unitOfWork.SaveChangesAsync();
                 return Ok("\nНастройки успешно применены");
             }
 

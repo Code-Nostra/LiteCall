@@ -11,17 +11,18 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Net.Http;
 using System.Net.Mime;
-using ServerAuthorization.Infrastructure;
+using DAL.Entities;
+using DAL.Infrastructure;
 
-namespace ServerAuthorization.Models
+namespace DAL.EF
 {
-    public class ApplicationDbContext : DbContext
+    public class ServerAuthDbContext : DbContext
     {
-        public DbSet<UserDB> Users { get; set; }
-        public DbSet<ServerDB> Servers { get; set; }
-        public DbSet<SecurityQuestions> SecurityQuestions { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Server> Servers { get; set; }
+        public DbSet<SequrityQuestion> SecurityQuestions { get; set; }
 
-        public ApplicationDbContext()
+        public ServerAuthDbContext()
         {
             Database.EnsureCreated();
         }
@@ -99,16 +100,16 @@ namespace ServerAuthorization.Models
                 File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "logger.txt"), $"Login:Admin\nPassword:{res.ToString()}\n");
                 File.AppendAllText(Path.Combine(AppContext.BaseDirectory, "logger.txt"), "=============================\n ");
 
-                modelBuilder.Entity<UserDB>().HasData(new UserDB { id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
-                modelBuilder.Entity<ServerDB>().HasData(new ServerDB { id = 1, Title = "LiteCall", Description = "Community Server", Ident = _Ident });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 1, Questions = "Какое прозвище было у вас в детстве?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 3, Questions = "На какой улице вы жили в третьем классе?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 4, Questions = "Какую школу вы посещали в шестом классе?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 5, Questions = "Как звали вашу первую плюшевую игрушку?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 6, Questions = "В каком месте встретились ваши родители?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 7, Questions = "Как звали вашего учителя в третьем классе?" });
-                modelBuilder.Entity<SecurityQuestions>().HasData(new SecurityQuestions { id = 8, Questions = "В каком городе живет ваш ближайший родственник?" });
+                modelBuilder.Entity<User>().HasData(new User { id = 1, Login = "Admin", Password = res.ToString().GetSha1().GetSha1(), Role = "Admin" });
+                modelBuilder.Entity<Server>().HasData(new Server { id = 1, Title = "LiteCall", Description = "Community Server", Ident = _Ident });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 1, Questions = "Какое прозвище было у вас в детстве?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 2, Questions = "Как звали вашего лучшего друга детства?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 3, Questions = "На какой улице вы жили в третьем классе?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 4, Questions = "Какую школу вы посещали в шестом классе?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 5, Questions = "Как звали вашу первую плюшевую игрушку?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 6, Questions = "В каком месте встретились ваши родители?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 7, Questions = "Как звали вашего учителя в третьем классе?" });
+                modelBuilder.Entity<SequrityQuestion>().HasData(new SequrityQuestion { id = 8, Questions = "В каком городе живет ваш ближайший родственник?" });
             }
         }
     }

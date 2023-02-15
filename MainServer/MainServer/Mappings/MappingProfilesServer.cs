@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DAL.Entities;
 using MainServer.Models;
 using MainServer.Models.ViewModels;
 using MainServer.Token;
@@ -10,9 +11,9 @@ namespace MainServer.Mappings
 	{
 		public MappingProfilesServer() 
 		{
-			CreateMap<ServerInformation,ServerDB >()
+			CreateMap<ServerInformation,Server >()
 					.ForAllMembers(x => x.Condition(
-					(src, dest, sourceValue) =>sourceValue.ToString() != "null"));
+					(src, dest, sourceValue) =>sourceValue.ToString() != "null" && sourceValue!= null));
 
 		}
 	}

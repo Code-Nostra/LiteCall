@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainServer.DAL.Interfaces
+namespace DAL.Interfaces
 {
     public interface IBaseRepository<T> where T : class
 	{
         Task<bool> Add(T entity);
 
-        Task<T> GetValue(int id);
+        Task<T> GetValueByid(int id);
+
+		Task<T> GetFirstDefault();
 
 		Task<IEnumerable<T>> GetAll();
 

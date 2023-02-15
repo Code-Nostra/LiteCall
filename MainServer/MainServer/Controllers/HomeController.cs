@@ -1,6 +1,6 @@
 ﻿using DAL.Entities;
-using MainServer.DAL.Interfaces;
-using MainServer.DAL.Repositories;
+using DAL.Interfaces;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +13,7 @@ namespace MainServer.Controllers
 	{
 		private readonly IUserRepository _userRepository;
 
-		public HomeController(IUserRepository userRepository,IBaseRepository<User> repository) : base(repository)
+		public HomeController(IUserRepository userRepository, IBaseRepository<User> repository) : base(repository)
 		{
 			_userRepository = userRepository;
 		}

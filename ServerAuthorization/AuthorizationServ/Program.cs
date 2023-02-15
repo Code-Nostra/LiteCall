@@ -1,3 +1,4 @@
+using DAL.EF;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace AuthorizationServ
     {
         public static void Main(string[] args)
         {
-            using (var db = new ApplicationDbContext())
+            using (var db = new ServerAuthDbContext())
             {
                 db.Database.Migrate();
             }

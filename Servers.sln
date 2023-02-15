@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC-servers", "LC-servers\LC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainServer", "MainServer\MainServer\MainServer.csproj", "{C53DFE3D-4E04-4A83-A6C7-2AD101E4CCD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainServer.DAL", "DAL\MainServer.DAL.csproj", "{44018F80-6531-45C9-9FB2-F3F941A175D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{44018F80-6531-45C9-9FB2-F3F941A175D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
 ﻿using DAL.EF;
-using MainServer.DAL.Interfaces;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,17 +9,17 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace MainServer.DAL.Repositories
+namespace DAL.Repositories
 {
-	public class BaseRepository<T> : IBaseRepository<T> where T : class, IEntity
+	public class BaseRepository<TContext,T> : IBaseRepository<T> where T : class, IEntity where TContext : DbContext
 	{
 
-		private readonly ApplicationDbContext _db;
+		private readonly TContext _db;
 		protected readonly DbSet<T> _dbSet;
 		protected IQueryable<T> table => _dbSet;
 		public readonly ILogger _logger;
 
-		public BaseRepository(ApplicationDbContext db, ILogger logger)
+		public BaseRepository(TContext db, ILogger logger)
 		{
 			_db = db;
 			_dbSet = db.Set<T>();
@@ -60,9 +60,14 @@ namespace MainServer.DAL.Repositories
 			return await _dbSet.ToListAsync();
 		}
 
-		public async Task<T> GetValue(int id)
+		public async Task<T> GetValueByid(int id)
 		{
 			return await table.SingleOrDefaultAsync(t=>t.id== id);
+		}
+
+		public async Task<T> GetFirstDefault()
+		{
+			return await table.FirstOrDefaultAsync();
 		}
 
 		public async Task<bool> Update(T entity)

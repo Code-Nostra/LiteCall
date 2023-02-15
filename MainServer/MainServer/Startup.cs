@@ -1,8 +1,5 @@
 using DAL.EF;
-using DAL.Entities;
-using MainServer.DAL.Interfaces;
-using MainServer.DAL.Repositories;
-using MainServer.DAL.UnitOfWork;
+using DAL.UnitOfWork.MainServer;
 using MainServer.Mappings;
 using MainServer.Token;
 using Microsoft.AspNetCore.Builder;
@@ -35,10 +32,8 @@ namespace MainServer
 			services.AddControllersWithViews();
 
 			IdentityModelEventSource.ShowPII = true;
-            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
-
-
-			services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddEntityFrameworkSqlite().AddDbContext<MainServerDbContext>();
+			services.AddScoped<IUnitOfWorkMain, UnitOfWorkMain>();
 
 			//services.AddScoped<IUserRepository,UserRepository>();
             //temo

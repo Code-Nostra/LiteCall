@@ -1,7 +1,7 @@
 ﻿using DAL.Entities;
 using MainServer.Attributes;
-using MainServer.DAL.Interfaces;
-using MainServer.DAL.UnitOfWork;
+using DAL.Interfaces;
+using DAL.UnitOfWork.MainServer;
 using MainServer.Models.Captcha;
 using MainServer.Models.ViewModels;
 using MainServer.Token;
@@ -20,15 +20,15 @@ using System.Threading.Tasks;
 
 namespace MainServer.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	[ApiKey]
 	public class AccountController : ControllerBase
 	{
 		private readonly ILogger<AccountController> _logger;
-		private readonly IUnitOfWork _unitOfWork;
+		private readonly IUnitOfWorkMain _unitOfWork;
 		private readonly IConfiguration _config;
-		public AccountController(ILogger<AccountController> logger, IConfiguration configuration, IUnitOfWork unitOfWork)
+		public AccountController(ILogger<AccountController> logger, IConfiguration configuration, IUnitOfWorkMain unitOfWork)
 		{
 			_logger = logger;
 			_config = configuration;
@@ -66,7 +66,7 @@ namespace MainServer.Controllers
 
 			if (user != null) return Conflict($"User name {RegModel.Login} is already taken");
 
-			var questions = await _unitOfWork.SequrityQuestions.GetValue(RegModel.QuestionsId);
+			var questions = await _unitOfWork.SequrityQuestions.GetValueByid(RegModel.QuestionsId);
 
 			if (questions == null) return BadRequest("Secret question not found");
 
