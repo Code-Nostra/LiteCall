@@ -3,10 +3,11 @@
     "MainServer": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:49966;http://localhost:49967"
+      "applicationUrl": "https://localhost:43800;http://localhost:49967"
     }
   }
 }

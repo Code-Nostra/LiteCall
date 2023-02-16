@@ -1,4 +1,6 @@
 using DAL.EF;
+using DAL.Interfaces;
+using DAL.Repositories;
 using DAL.UnitOfWork.MainServer;
 using MainServer.Mappings;
 using MainServer.Token;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using System.Threading;
@@ -29,6 +32,9 @@ namespace MainServer
 
 			services.AddAutoMapper(typeof(MappingProfilesServer));
 
+            //https://localhost:43800/swagger/v1/swagger.json
+            services.AddSwaggerGen();
+
 			services.AddControllersWithViews();
 
 			IdentityModelEventSource.ShowPII = true;
@@ -37,7 +43,7 @@ namespace MainServer
 
 			//services.AddScoped<IUserRepository,UserRepository>();
             //temo
-			//services.AddScoped(typeof(IBaseRepository<>), typeof(GenericRepo<>));
+		//	services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<,>));
 
 
 			services.AddOptions();
@@ -65,15 +71,22 @@ namespace MainServer
 
 			//Для капчи
 			services.AddDistributedMemoryCache();
-           
-        }
+
+		
+
+		}
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+                app.UseSwagger();
+				app.UseSwaggerUI(c =>
+				{
+					c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+				});
+			}
 			
 
 			app.UseSession();

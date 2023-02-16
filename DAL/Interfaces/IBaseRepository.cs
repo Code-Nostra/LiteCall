@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseRepository<T> 
+		where T : class
+
 	{
         Task<bool> Add(T entity);
 

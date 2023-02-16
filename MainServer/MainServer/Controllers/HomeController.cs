@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using DAL.EF;
+using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -9,13 +10,13 @@ namespace MainServer.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class HomeController : EntityController<User>
+	public class HomeController : EntityController<MainServerDbContext,User>
 	{
-		private readonly IUserRepository _userRepository;
+		//private readonly IUserRepository _userRepository;
 
-		public HomeController(IUserRepository userRepository, IBaseRepository<User> repository) : base(repository)
+		public HomeController(IBaseRepository<User> repository) : base(repository)
 		{
-			_userRepository = userRepository;
+			//_userRepository = userRepository;
 		}
 		[HttpGet("Get2")]
 		public async Task<IEnumerable<User>> Get2()

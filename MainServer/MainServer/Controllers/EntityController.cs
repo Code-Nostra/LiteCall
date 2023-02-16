@@ -7,7 +7,7 @@ namespace MainServer.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class EntityController<T> : ControllerBase where T : class
+	public class EntityController<TContext,T> : ControllerBase where T : class
 	{
 		public EntityController(IBaseRepository<T> repository)
 		{
