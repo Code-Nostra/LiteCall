@@ -12,11 +12,11 @@ namespace DAL.UnitOfWork.ServerAuthorization
 {
     public interface IUnitOfWorkAuth
     {
-        IUserRepository Users { get; }
+        IUserRepository<ServerAuthDbContext> Users { get; }
 
-        IBaseRepository<SequrityQuestion> SequrityQuestions { get; }
+        IBaseRepository<ServerAuthDbContext,SequrityQuestion> SequrityQuestions { get; }
 
-		IServerRepository Servers { get; }
+		IServerRepository<ServerAuthDbContext> Servers { get; }
 
 		Task<int> SaveChangesAsync();
     }

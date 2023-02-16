@@ -13,16 +13,16 @@ namespace DAL.UnitOfWork.ServerAuthorization
         private readonly ILogger _logger;
 
 
-        private IUserRepository _userRepository;
-        public IUserRepository Users =>
+        private IUserRepository<ServerAuthDbContext> _userRepository;
+        public IUserRepository<ServerAuthDbContext> Users =>
             _userRepository ??= new UserRepository<ServerAuthDbContext>(_db, _logger);
 
-        private IBaseRepository<SequrityQuestion> _sequrityQuestion;
-        public IBaseRepository<SequrityQuestion> SequrityQuestions =>
+        private IBaseRepository<ServerAuthDbContext,SequrityQuestion> _sequrityQuestion;
+        public IBaseRepository<ServerAuthDbContext,SequrityQuestion> SequrityQuestions =>
             _sequrityQuestion ??= new BaseRepository<ServerAuthDbContext, SequrityQuestion>(_db, _logger);
 
-		private IServerRepository _servers;
-		public IServerRepository Servers => _servers ??= new ServerRepository<ServerAuthDbContext>(_db, _logger);
+		private IServerRepository<ServerAuthDbContext> _servers;
+		public IServerRepository<ServerAuthDbContext> Servers => _servers ??= new ServerRepository<ServerAuthDbContext>(_db, _logger);
 
 		#region Подробнее
 		//public IBaseRepository<SequrityQuestion> SequrityQuestions

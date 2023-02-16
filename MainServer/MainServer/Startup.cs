@@ -43,7 +43,7 @@ namespace MainServer
 
 			//services.AddScoped<IUserRepository,UserRepository>();
             //temo
-		//	services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<,>));
+			services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepositoryGeneric<,>));
 
 
 			services.AddOptions();

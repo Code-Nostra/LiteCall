@@ -13,16 +13,16 @@ namespace DAL.UnitOfWork.MainServer
         private readonly ILogger _logger;
 
 
-        private IUserRepository _userRepository;
-        public IUserRepository Users =>
+        private IUserRepository<MainServerDbContext> _userRepository;
+        public IUserRepository<MainServerDbContext> Users =>
             _userRepository ??= new UserRepository<MainServerDbContext>(_db, _logger);
 
-        private IBaseRepository<SequrityQuestion> _sequrityQuestions;
-        public IBaseRepository<SequrityQuestion> SequrityQuestions =>
+        private IBaseRepository<MainServerDbContext,SequrityQuestion> _sequrityQuestions;
+        public IBaseRepository<MainServerDbContext,SequrityQuestion> SequrityQuestions =>
             _sequrityQuestions ??= new BaseRepository<MainServerDbContext, SequrityQuestion>(_db, _logger);
 
-        private IServerRepository _servers;
-        public IServerRepository Servers=>_servers ??=new ServerRepository<MainServerDbContext>(_db, _logger);
+        private IServerRepository<MainServerDbContext> _servers;
+        public IServerRepository<MainServerDbContext> Servers=>_servers ??=new ServerRepository<MainServerDbContext>(_db, _logger);
 
         #region Подробнее
         //public IBaseRepository<SequrityQuestion> SequrityQuestions

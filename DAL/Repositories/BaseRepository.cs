@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-	public class BaseRepository<TContext,T> : IBaseRepository<T> where T : class, IEntity where TContext : DbContext
+	public class BaseRepository<TContext,T> : IBaseRepository<TContext, T> 
+		where T : class, IEntity 
+		where TContext : DbContext
 	{
 
 		private readonly TContext _db;

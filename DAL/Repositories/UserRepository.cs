@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DAL.Repositories
 {
-	public class UserRepository<TContext> : BaseRepository<TContext,User>, IUserRepository where TContext : DbContext
+	public class UserRepository<TContext> : BaseRepository<TContext,User>, IUserRepository<TContext> where TContext : DbContext
 	{
 		private readonly TContext _db;
 

@@ -12,11 +12,11 @@ namespace DAL.UnitOfWork.MainServer
 {
     public interface IUnitOfWorkMain
     {
-        IUserRepository Users { get; }
+        IUserRepository<MainServerDbContext> Users { get; }
 
-        IBaseRepository<SequrityQuestion> SequrityQuestions { get; }
+        IBaseRepository<MainServerDbContext,SequrityQuestion> SequrityQuestions { get; }
 
-        IServerRepository Servers { get; }
+        IServerRepository<MainServerDbContext> Servers { get; }
 
         Task<int> SaveChangesAsync();
     }

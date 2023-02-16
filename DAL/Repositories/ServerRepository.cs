@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-	public class ServerRepository<TContext> : BaseRepository<TContext, Server>, IServerRepository where TContext : DbContext
+	public class ServerRepository<TContext> : BaseRepository<TContext, Server>, IServerRepository<TContext> where TContext : DbContext
 	{
 		private readonly TContext _db;
 

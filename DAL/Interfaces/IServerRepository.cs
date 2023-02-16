@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-	public interface IServerRepository:IBaseRepository<Server>
+	public interface IServerRepository<TContext>:IBaseRepository<TContext,Server> 
+		where TContext:DbContext
 	{
 		Task<Server> GetByTitle(string id);
 
