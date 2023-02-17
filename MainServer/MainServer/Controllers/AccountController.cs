@@ -40,7 +40,7 @@ namespace MainServer.Controllers
 		{
 			var user = await _unitOfWork.Users.FindByName(authModel.Login);
 
-			if (string.IsNullOrEmpty(authModel.Password))
+			if (string.IsNullOrEmpty(authModel.Password) && user==null)
 				return Ok(GetJwt(new User { Login = authModel.Login, Role = "Anonymous" }));
 
 			if (user == null || user.Password != authModel.Password)

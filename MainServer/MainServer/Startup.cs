@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
@@ -32,8 +33,33 @@ namespace MainServer
 
 			services.AddAutoMapper(typeof(MappingProfilesServer));
 
-            //https://localhost:43800/swagger/v1/swagger.json
-            services.AddSwaggerGen();
+			//https://localhost:43800/swagger/v1/swagger.json
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v2", new OpenApiInfo { Title = "Api Key Auth", Version = "v2" });
+				c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+				{
+					Description = "ApiKey must appear in header",
+					Type = SecuritySchemeType.ApiKey,
+					Name = "ApiKey",
+					In = ParameterLocation.Header,
+					Scheme = "ApiKeyScheme"
+				});
+				var key = new OpenApiSecurityScheme()
+				{
+					Reference = new OpenApiReference
+					{
+						Type = ReferenceType.SecurityScheme,
+						Id = "ApiKey"
+					},
+					In = ParameterLocation.Header
+				};
+				var requirement = new OpenApiSecurityRequirement
+					{
+							 { key, new List<string>() }
+					};
+				c.AddSecurityRequirement(requirement);
+			});
 
 			services.AddControllersWithViews();
 
@@ -71,8 +97,9 @@ namespace MainServer
 
 			//Для капчи
 			services.AddDistributedMemoryCache();
-
-		
+			
+            
+			
 
 		}
 
@@ -84,7 +111,7 @@ namespace MainServer
                 app.UseSwagger();
 				app.UseSwaggerUI(c =>
 				{
-					c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+					c.SwaggerEndpoint("/swagger/v2/swagger.json", "IRIEO.API");
 				});
 			}
 			

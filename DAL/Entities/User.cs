@@ -17,8 +17,9 @@ namespace DAL.Entities
 		[Required]
 		public string Password { get; set; }
 		[Required]
-		public string Role { get; set; }
-		public int SecurityQuestionId { get; set; }
-		public string AnswerSecurityQ { get; set; }
+		public string? Role { get; set; }
+		
+		public int? SecurityQuestionId { get; set; }
+		public string? AnswerSecurityQ { get; set; }
 	}
 }
